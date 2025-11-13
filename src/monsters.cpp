@@ -852,6 +852,29 @@ bool Monsters::loadMonster(const std::string& file, const std::string& monsterNa
 		mType->info.skull = getSkullType(attr.as_string());
 	}
 
+	// optional weighted random skull options
+	{
+		pugi::xml_node skullNode = monsterNode.child("skullrandom");
+		if (skullNode) {
+			for (auto optionNode : skullNode.children()) {
+				pugi::xml_attribute optionAttr;
+				if ((optionAttr = optionNode.attribute("skull"))) {
+					Skulls_t skull = getSkullType(optionAttr.as_string());
+					uint32_t chance = 0;
+					if ((optionAttr = optionNode.attribute("chance"))) {
+						chance = pugi::cast<uint32_t>(optionAttr.value());
+					}
+					mType->info.skullOptions.emplace_back();
+					auto& so = mType->info.skullOptions.back();
+					so.skull = skull;
+					so.chance = chance;
+				} else {
+					std::cout << "[Warning - Monsters::loadMonster] Missing skull attribute in skullrandom option. " << file << std::endl;
+				}
+			}
+		}
+	}
+
 	if ((attr = monsterNode.attribute("script"))) {
 		monsterScriptList.emplace_back(mType, attr.as_string());
 	}

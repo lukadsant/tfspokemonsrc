@@ -4455,7 +4455,8 @@ int LuaScriptInterface::luaGameCreateMonster(lua_State* L) //pota
 	if (!bst) {
 		bst = 0;
 	}
-	Monster* monster = Monster::createMonster(getString(L, 1), lvl, bst);
+	Skulls_t skull = getNumber<Skulls_t>(L, 7, SKULL_NONE);
+	Monster* monster = Monster::createMonster(getString(L, 1), lvl, bst, skull);
 	if (!monster) {
 		lua_pushnil(L);
 		return 1;
@@ -7376,7 +7377,9 @@ int LuaScriptInterface::luaCreatureSetSkull(lua_State* L)
 	// creature:setSkull(skull)
 	Creature* creature = getUserdata<Creature>(L, 1);
 	if (creature) {
-		creature->setSkull(getNumber<Skulls_t>(L, 2));
+		// Atomically set skull and lock it to avoid a short two-call window where C++
+		// code could overwrite the value between setSkull(...) and setSkullLocked(true).
+		creature->setSkullAndLock(getNumber<Skulls_t>(L, 2));
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);

@@ -33,16 +33,16 @@ int32_t Monster::despawnRadius;
 
 uint32_t Monster::monsterAutoID = 0x40000000;
 
-Monster* Monster::createMonster(const std::string& name, uint16_t lvl, uint16_t bst) //pota
+Monster* Monster::createMonster(const std::string& name, uint16_t lvl, uint16_t bst, Skulls_t skull) //pota
 {
 	MonsterType* mType = g_monsters.getMonsterType(name);
 	if (!mType) {
 		return nullptr;
 	}
-	return new Monster(mType, lvl, bst);
+	return new Monster(mType, lvl, bst, skull);
 }
 
-Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst) : //pota
+Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst, Skulls_t initSkull) : //pota
 	Creature(),
 	strDescription(asLowerCaseString(mtype->nameDescription)),
 	mType(mtype)
@@ -62,7 +62,44 @@ Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst) : //pota
 	}
 	defaultOutfit = mType->info.outfit;
 	currentOutfit = mType->info.outfit;
-	skull = mType->info.skull;
+	// Set skull for monsters and summons with the following precedence:
+	// 1) If the monster type defines a skull, use it.
+	// 2) Else if an explicit initSkull was provided by the creator (scripts), use it.
+	// 3) Else if not a summon, pick randomized skull (gender) using weighted options or uniform fallback.
+	// 4) Else (summons without predefined skull) keep SKULL_NONE.
+	if (mType->info.skull != SKULL_NONE) {
+		setSkull(mType->info.skull);
+	} else if (initSkull != SKULL_NONE) {
+		setSkull(initSkull);
+	} else if (!isSummon()) {
+		// If the monster type defines weighted skull options, pick by weight.
+		if (!mType->info.skullOptions.empty()) {
+			uint32_t total = 0;
+			for (const auto& o : mType->info.skullOptions) {
+				total += o.chance;
+			}
+			if (total == 0) {
+				// fallback to uniform selection if chances are all zero
+				setSkull((Skulls_t)uniform_random(2, 4));
+			} else {
+				uint32_t r = uniform_random(1, total);
+				uint32_t acc = 0;
+				for (const auto& o : mType->info.skullOptions) {
+					acc += o.chance;
+					if (r <= acc) {
+						setSkull(o.skull);
+						break;
+					}
+				}
+			}
+		} else {
+			// use existing uniform_random utility for consistent random numbers
+			setSkull((Skulls_t)uniform_random(2, 4));
+		}
+	} else {
+		// summons without predefined skull keep SKULL_NONE
+		setSkull(SKULL_NONE);
+	}
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
 

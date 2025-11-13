@@ -492,10 +492,24 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 		}
 
 		if (const Monster* monster = creature->getMonster()) {
-			if (hasFlag(TILESTATE_PROTECTIONZONE | TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT)) {
-				return RETURNVALUE_NOTPOSSIBLE;
-			}
+			const bool isSummon = creature->isSummon();
+			// For non-summon monsters: block protection zones, floor changes and teleports
+			if (!isSummon) {
+				if (hasFlag(TILESTATE_PROTECTIONZONE | TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT)) {
+					return RETURNVALUE_NOTPOSSIBLE;
+				}
+			} else {
+				// For summons: allow entering protection zones (player summons), but still block
+				// floor changes / teleports and solid-blocked tiles.
+				if (hasFlag(TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT)) {
+					return RETURNVALUE_NOTPOSSIBLE;
+				}
 
+				if (hasFlag(TILESTATE_BLOCKSOLID)) {
+					return RETURNVALUE_NOTPOSSIBLE;
+				}
+				// Note: continue with the remaining checks below (pushing, fields, etc.).
+			}
 			const CreatureVector* creatures = getCreatures();
 			if (monster->canPushCreatures() && !monster->isSummon()) {
 				if (creatures) {
