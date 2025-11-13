@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Charizard" nameDescription="a charizard" race="fire" race2="flying" experience="53" speed="200" manacost="0">
+	<level min="30" max="50"/>
+	<health now="780" max="780" />
+	<look type="909" head="113" body="57" legs="95" feet="113" corpse="26867" />
+	<targetchange interval="2000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="6" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="10" />
+		<flag moveMagicAttackBase="109" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+		<move name="fireball" interval="5000" isTarget="1"/>
+		<move name="flamethrower" interval="9000"/>
+		<move name="fire blast" interval="15000"/>
+		<move name="inferno" interval="14000"/>
+		<move name="wing attack" interval="20000"/>
+		<move name="flame storm" interval="25000"/>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-84" max="-84" />
+		<attack name="fireball" interval="5000" chance="35"/>
+		<attack name="flamethrower" interval="9000" chance="35"/>
+		<attack name="fire blast" interval="15000" chance="35"/>
+		<attack name="inferno" interval="14000" chance="35"/>
+		<attack name="wing attack" interval="20000" chance="35"/>
+		<attack name="flame storm" interval="25000" chance="35"/>
+
+	</attacks>
+	<defenses armor="78" defense="85" />
+	<elements>
+	</elements>
+	<voices interval="5000" chance="10">
+		<voice sentence="CHARIZARD!" />
+	</voices>
+	<loot>
+		<item name="gold coin" countmax="12" chance="30000" />
+	</loot>
+</monster>

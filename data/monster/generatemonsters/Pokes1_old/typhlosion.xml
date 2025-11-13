@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Typhlosion" nameDescription="a typhlosion" race="fire" race2="none" experience="53" speed="200" manacost="0">
+	<level min="1" max="15"/>
+	<health now="780" max="780" />
+	<look type="1060" head="113" body="57" legs="95" feet="113" corpse="27018" />
+	<targetchange interval="2000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="157" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="10" />
+		<flag moveMagicAttackBase="109" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-84" max="-84" />
+
+	</attacks>
+	<defenses armor="78" defense="85" />
+	<elements>
+	</elements>
+	<voices interval="5000" chance="10">
+		<voice sentence="TYPHLOSION!" />
+	</voices>
+	<loot>
+		<item name="gold coin" countmax="12" chance="30000" />
+	</loot>
+</monster>

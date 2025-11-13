@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Pinsir" nameDescription="a pinsir" race="bug" race2="none" experience="50" speed="170" manacost="0">
+	<level min="20" max="35"/>
+	<health now="650" max="650" />
+	<look type="1030" head="113" body="57" legs="95" feet="113" corpse="26988" />
+	<targetchange interval="2000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="127" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="10" />
+		<flag moveMagicAttackBase="55" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-125" max="-125" />
+
+	</attacks>
+	<defenses armor="100" defense="70" />
+	<elements>
+	</elements>
+	<voices interval="5000" chance="10">
+		<voice sentence="PINSIR!" />
+	</voices>
+	<loot>
+		<item name="gold coin" countmax="12" chance="30000" />
+	</loot>
+</monster>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Ancient Arcanine" nameDescription="an ancient arcanine" race="fire" race2="none" experience="110" speed="380" manacost="0">
+	<level min="80" max="100"/>
+	<health now="2250" max="2250" />
+	<look type="1904" head="113" body="57" legs="95" feet="113" corpse="0" />
+	<targetchange interval="5000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag passive="0" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="3007" />
+		<flag portraitid="30123" />
+		<flag hasshiny="0" />
+		<flag hasmega="0" />
+		<flag flyable="0" />
+		<flag rideable="1361" />
+		<flag surfable="0" />
+		<flag canteleport="0" />
+		<flag catchchance="0" />
+		<flag moveMagicAttackBase="200" />
+		<flag moveMagicDefenseBase="160" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+        	<event name="CorpseLevel"/>
+        	<event name="CorpseLoot"/>
+	</script>
+	<moves>
+		<move name="tackle" interval="3000" isTarget="1" range="1"/>
+		<move name="bubble" interval="3000" isTarget="1"/>
+		<move name="water gun" interval="8000"/>
+		<move name="bite" interval="3000" isTarget="1" range="1"/>
+		<move name="water pulse" interval="17000"/>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-220" max="-220" />
+		<attack name="tackle" interval="3000" chance="35"/>
+		<attack name="bubble" interval="3000" chance="35"/>
+		<attack name="water gun" interval="8000" chance="35"/>
+		<attack name="bite" interval="3000" chance="35"/>
+		<attack name="water pulse" interval="17000" chance="35"/>
+		<attack name="passive fire" interval="60000" chance="35"/>
+
+	</attacks>
+	<defenses armor="0" defense="160" >
+		<defense name="passive fire" interval="60000" chance="100"/>
+
+	</defenses>
+	<elements>
+	</elements>
+	<immunities>
+
+	</immunities>
+	<voices interval="5000" chance="10">
+		<voice sentence="ANCIENT ARCANINE!" />
+	</voices>
+	<loot>
+		<item name="fire stone" countmax="1" chance="450"/>
+		<item name="gold coin" countmax="180" chance="40000"/>
+		<item name="essence of fire" countmax="3" chance="40000"/>
+		<item name="fur" countmax="1" chance="5000"/>
+		<item name="nail" countmax="1" chance="5000"/>
+		<item name="pot of lava" countmax="1" chance="5000"/>
+		<item name="giant piece of fur" countmax="1" chance="5000"/>
+
+	</loot>
+</monster>

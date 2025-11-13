@@ -1,0 +1,72 @@
+Performing C++ SOURCE FILE Test COMPILER_KNOWS_STDLIB failed with the following output:
+Change Dir: /home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0e32c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_0e32c.dir/build.make CMakeFiles/cmTC_0e32c.dir/build
+make[1]: Entering directory '/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_0e32c.dir/src.cxx.o
+/usr/bin/c++     -DCOMPILER_KNOWS_STDLIB   -stdlib=libc++ -o CMakeFiles/cmTC_0e32c.dir/src.cxx.o -c /home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-stdlib=libc++'
+CMakeFiles/cmTC_0e32c.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_0e32c.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_0e32c.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_0e32c/fast' failed
+make: *** [cmTC_0e32c/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_01222/fast"
+/usr/bin/make -f CMakeFiles/cmTC_01222.dir/build.make CMakeFiles/cmTC_01222.dir/build
+make[1]: Entering directory '/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_01222.dir/CheckSymbolExists.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_01222.dir/CheckSymbolExists.c.o   -c /home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_01222
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_01222.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_01222.dir/CheckSymbolExists.c.o  -o cmTC_01222 -rdynamic 
+CMakeFiles/cmTC_01222.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_01222.dir/build.make:97: recipe for target 'cmTC_01222' failed
+make[1]: *** [cmTC_01222] Error 1
+make[1]: Leaving directory '/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_01222/fast' failed
+make: *** [cmTC_01222/fast] Error 2
+
+File /home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_75e06/fast"
+/usr/bin/make -f CMakeFiles/cmTC_75e06.dir/build.make CMakeFiles/cmTC_75e06.dir/build
+make[1]: Entering directory '/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_75e06.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_75e06.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.5/Modules/CheckFunctionExists.c
+Linking C executable cmTC_75e06
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_75e06.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_75e06.dir/CheckFunctionExists.c.o  -o cmTC_75e06 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_75e06.dir/build.make:97: recipe for target 'cmTC_75e06' failed
+make[1]: *** [cmTC_75e06] Error 1
+make[1]: Leaving directory '/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_75e06/fast' failed
+make: *** [cmTC_75e06/fast] Error 2
+
+

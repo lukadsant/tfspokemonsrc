@@ -1,0 +1,7 @@
+distrobox enter ubuntu-antigo
+cd build
+rm -rf *
+cmake ..
+make -j$(nproc)
+mv tfs  /home/lukadsant/Downloads/pokedashpota1.0_release/pokedashpota1.0/
+./tfs

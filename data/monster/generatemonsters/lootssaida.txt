@@ -1,0 +1,1000 @@
+
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	bulb	5000	1	
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	bulb	5000	1	
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	bulb	5000	1	
+essence_of_fire	20000	10	pot_of_lava	5000	1	fire_tail	5000	1	
+essence_of_fire	20000	10	pot_of_lava	5000	1	fire_tail	5000	1	
+dragon_tooth	5000	1	essence_of_fire	20000	10	pot_of_lava	5000	1	fire_tail	5000	1	
+water_gem	20000	10	water_pendant	5000	1	squirtle_hull	5000	1	
+water_gem	20000	10	water_pendant	5000	1	squirtle_hull	5000	1	
+water_gem	20000	10	water_pendant	5000	1	squirtle_hull	5000	1	
+bug_gosme	20000	10	pot_of_moss_bug	5000	1	butterfly_wing	5000	1	
+bug_gosme	20000	10	pot_of_moss_bug	5000	1	butterfly_wing	5000	1	
+bag_of_pollem	5000	1	bug_gosme	20000	10	pot_of_moss_bug	5000	1	straw	20000	10	butterfly_wing	5000	1	
+bottle_of_poison	20000	10	bug_gosme	20000	10	pot_of_moss_bug	5000	1	bee_sting	5000	1	
+bottle_of_poison	20000	10	bug_gosme	20000	10	pot_of_moss_bug	5000	1	bee_sting	5000	1	
+bottle_of_poison	20000	10	bug_gosme	20000	10	pot_of_moss_bug	5000	1	bee_sting	5000	1	
+feather	5000	1	rubber_ball	20000	10	straw	20000	10	colored_feather	5000	1	
+bird_beak	5000	1	feather	5000	1	rubber_ball	20000	10	straw	20000	10	colored_feather	5000	1	
+bird_beak	5000	1	feather	5000	1	rubber_ball	20000	10	straw	20000	10	colored_feather	5000	1	
+bitten_apple	5000	2	rubber_ball	20000	10	rat_tail	5000	1	
+bitten_apple	5000	2	rubber_ball	20000	10	rat_tail	5000	1	
+feather	5000	1	rubber_ball	20000	10	straw	20000	10	red_wing	5000	1	
+bird_beak	5000	1	feather	5000	1	rubber_ball	20000	10	straw	20000	10	red_wing	5000	1	
+bottle_of_poison	20000	10	tooth	5000	1	snake_tail	5000	1	
+bottle_of_poison	20000	10	tooth	5000	1	snake_tail	5000	1	
+electric_box	5000	1	screw	20000	10	electric_rat_tail	5000	1	
+electric_box	5000	1	screw	20000	10	electric_rat_tail	5000	1	
+earth_ball	20000	10	sandbag	5000	1	armadillo_claw	5000	1	
+earth_ball	20000	10	sandbag	5000	1	armadillo_claw	5000	1	
+
+bottle_of_poison	20000	10	sandbag	5000	1	female_ear	5000	1	
+bottle_of_poison	20000	10	sandbag	5000	1	female_ear	5000	1	
+
+sandbag	5000	1	male_ear	5000	1	
+bottle_of_poison	20000	10	sandbag	5000	1	male_ear	5000	1	
+comb	5000	1	rubber_ball	20000	10	topknot	5000	1	
+comb	5000	1	rubber_ball	20000	10	topknot	5000	1	
+comb	5000	1	essence_of_fire	20000	10	fur	5000	1	pot_of_lava	5000	1	fox_tail	5000	1	
+comb	5000	1	essence_of_fire	20000	10	fur	5000	1	pot_of_lava	5000	1	fox_tail	5000	1	
+comb	5000	1	rubber_ball	20000	10	microphone	5000	1	
+comb	5000	1	rubber_ball	20000	10	microphone	5000	1	
+bottle_of_poison	20000	10	straw	20000	10	tooth	5000	1	bat_wing	5000	1	
+bottle_of_poison	20000	10	straw	20000	10	tooth	5000	1	bat_wing	5000	1	
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	strange_flower	5000	1	
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	strange_flower	5000	1	
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	strange_flower	5000	1	
+bug_gosme	20000	10	seed	20000	10	mushroom	5000	1	
+bag_of_pollem	5000	1	bug_gosme	20000	10	seed	20000	10	mushroom	5000	1	
+bottle_of_poison	20000	10	bug_gosme	20000	10	tooth	5000	1	bug_antenna	5000	1	
+bottle_of_poison	20000	10	bug_gosme	20000	10	bug_venom	5000	1	
+earth_ball	20000	10	sandbag	5000	1	piece_of_diglett	5000	1	
+earth_ball	20000	10	sandbag	5000	1	piece_of_diglett	5000	1	
+nail	5000	1	rubber_ball	20000	10	luck_medallion	5000	1	wool_ball	5000	1	
+nail	5000	1	rubber_ball	20000	10	ruby	5000	1	luck_medallion	5000	1	wool_ball	5000	1	
+water_gem	20000	10	water_pendant	5000	1	psyduck_mug	5000	1	
+ruby	5000	1	water_gem	20000	10	water_pendant	5000	1	karate_duck	5000	1	psyduck_mug	5000	1	
+band_aid	20000	10	fur	5000	1	iron_bracelet	5000	1	
+band_aid	20000	10	fur	5000	1	iron_bracelet	5000	1	
+essence_of_fire	20000	10	fur	5000	1	nail	5000	1	pot_of_lava	5000	1	giant_piece_of_fur	5000	1	
+essence_of_fire	20000	10	fur	5000	1	nail	5000	1	pot_of_lava	5000	1	giant_piece_of_fur	5000	1	
+water_gem	20000	10	water_pendant	5000	1	strange_thing	5000	1	
+water_gem	20000	10	water_pendant	5000	1	strange_thing	5000	1	
+water_gem	20000	10	water_pendant	5000	1	strange_thing	5000	1	
+enchanted_gem	20000	10	future_orb	5000	1	
+enchanted_gem	20000	10	future_orb	5000	1	psychic_spoon	5000	1	
+enchanted_gem	20000	10	future_orb	5000	1	psychic_spoon	5000	1	
+band_aid	20000	10	belt_of_champion	5000	1	
+band_aid	20000	10	belt_of_champion	5000	1	
+band_aid	20000	10	belt_of_champion	5000	1	
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	plant_tail	5000	1	
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	plant_tail	5000	1	
+bag_of_pollem	5000	1	bottle_of_poison	20000	10	leaves	5000	1	seed	20000	10	plant_tail	5000	1	
+bottle_of_poison	20000	10	ruby	5000	1	water_gem	20000	10	water_pendant	5000	1	giant_ruby	5000	1	
+bottle_of_poison	20000	10	ruby	5000	1	water_gem	20000	10	water_pendant	5000	1	giant_ruby	5000	1	
+earth_ball	20000	10	small_stone	20000	10	stone_orb	5000	1	strange_rock	5000	1	
+earth_ball	20000	10	small_stone	20000	10	stone_orb	5000	1	strange_rock	5000	1	
+earth_ball	20000	10	small_stone	20000	10	stone_orb	5000	1	strange_rock	5000	1	
+essence_of_fire	20000	10	pot_of_lava	5000	1	fire_horse_foot	5000	1	
+essence_of_fire	20000	10	pot_of_lava	5000	1	fire_horse_foot	5000	1	
+enchanted_gem	20000	10	water_gem	20000	10	water_pendant	5000	1	slow_tail	5000	1	
+enchanted_gem	20000	10	water_gem	20000	10	water_pendant	5000	1	slow_tail	5000	1	
+electric_box	5000	1	piece_of_steel	20000	10	screw	20000	10	magnet	5000	1	
+electric_box	5000	1	piece_of_steel	20000	10	screw	20000	10	magnet	5000	1	
+feather	5000	1	rubber_ball	20000	10	straw	20000	10	farfetch'd_stick	5000	1	
+bird_beak	5000	1	feather	5000	1	rubber_ball	20000	10	straw	20000	10	dodrio_feather	5000	1	
+bird_beak	5000	1	feather	5000	1	rubber_ball	20000	10	straw	20000	10	dodrio_feather	5000	1	
+ice_orb	5000	1	water_gem	20000	10	water_pendant	5000	1	seal_tail	5000	1	
+ice_orb	5000	1	snowball	20000	10	water_gem	20000	10	water_pendant	5000	1	seal_tail	5000	1	
+bottle_of_poison	20000	10	gosme	5000	1	
+bottle_of_poison	20000	10	gosme	5000	1	sticky_hand	5000	1	
+ice_orb	5000	1	water_gem	20000	10	water_pendant	5000	1	locksmith_of_shell	5000	1	
+ice_orb	5000	1	snowball	20000	10	water_gem	20000	10	water_pendant	5000	1	locksmith_of_shell	5000	1	strange_spike	5000	1	
+bottle_of_poison	20000	10	ghost_essence	20000	10	traces_of_ghost	5000	1	
+bottle_of_poison	20000	10	ghost_essence	20000	10	traces_of_ghost	5000	1	
+bottle_of_poison	20000	10	ghost_essence	20000	10	traces_of_ghost	5000	1	
+earth_ball	20000	10	small_stone	20000	10	stone_orb	5000	1	onix_tail	5000	1	
+enchanted_gem	20000	10	future_orb	5000	1	linearly_guided_hypnose	5000	1	
+enchanted_gem	20000	10	future_orb	5000	1	linearly_guided_hypnose	5000	1	
+water_gem	20000	10	crab_claw	5000	1	
+water_gem	20000	10	crab_claw	5000	1	
+electric_box	5000	1	screw	20000	10	
+electric_box	5000	1	screw	20000	10	
+enchanted_gem	20000	10	leaves	5000	1	seed	20000	10	plant_foot	5000	1	
+enchanted_gem	20000	10	leaves	5000	1	seed	20000	10	
+earth_ball	20000	10	sandbag	5000	1	bone	5000	1	
+earth_ball	20000	10	sandbag	5000	1	bone	5000	1	
+band_aid	20000	10	kick_machine	5000	1	
+band_aid	20000	10	punch_machine	5000	1	
+rubber_ball	20000	10	tongue	5000	1	
+bottle_of_poison	20000	10	venom_flute	5000	1	
+bottle_of_poison	20000	10	venom_flute	5000	1	
+earth_ball	20000	10	horn	5000	1	small_stone	20000	10	horn_drill	5000	1	
+earth_ball	20000	10	horn	5000	1	small_stone	20000	10	horn_drill	5000	1	
+
+seed	20000	10	blue_vines	5000	1	
+horn	5000	1	rubber_ball	20000	10	kanga_ear	5000	1	
+water_gem	20000	10	water_pendant	5000	1	seahorse_tail	5000	1	
+water_gem	20000	10	water_pendant	5000	1	seahorse_tail	5000	1	
+horn	5000	1	water_gem	20000	10	water_pendant	5000	1	fish_fin	5000	1	
+horn	5000	1	water_gem	20000	10	water_pendant	5000	1	fish_fin	5000	1	
+ruby	5000	1	water_gem	20000	10	water_pendant	5000	1	gem_star	5000	1	
+enchanted_gem	20000	10	future_orb	5000	1	ruby	5000	1	water_gem	20000	10	water_pendant	5000	1	gem_star	5000	1	
+
+bug_gosme	20000	10	pot_of_moss_bug	5000	1	straw	20000	10	scythe	5000	1	
+enchanted_gem	20000	10	future_orb	5000	1	ice_orb	5000	1	snowball	20000	10	ice_bra	5000	1	
+electric_box	5000	1	screw	20000	10	electric_tail	5000	1	
+essence_of_fire	20000	10	pot_of_lava	5000	1	magma_foot	5000	1	
+bug_gosme	20000	10	pot_of_moss_bug	5000	1	pinsir_horn	5000	1	
+horn	5000	1	rubber_ball	20000	10	bull_tail	5000	1	
+magikarp_fin	6666	3	water_gem	20000	10	
+straw	20000	10	water_gem	20000	10	gyarados_tail	5000	1	
+snowball	20000	10	water_gem	20000	10	water_pendant	5000	1	giant_fin	5000	1	
+
+
+
+
+
+
+small_stone	20000	10	water_gem	20000	10	water_pendant	5000	1	helix_fossil	5000	1	
+small_stone	20000	10	water_gem	20000	10	water_pendant	5000	1	helix_fossil	5000	1	
+small_stone	20000	10	stone_orb	5000	1	water_gem	20000	10	dome_fossil	5000	1	
+small_stone	20000	10	stone_orb	5000	1	water_gem	20000	10	dome_fossil	5000	1	
+small_stone	20000	10	stone_orb	5000	1	straw	20000	10	old_amber	5000	1	
+rubber_ball	20000	10	
+
+
+
+dragon_scale	20000	10	dragon_tooth	5000	1	dragon_tail	5000	1	
+dragon_scale	20000	10	dragon_tooth	5000	1	dragon_tail	5000	1	
+dragon_scale	20000	10	dragon_tooth	5000	1	straw	20000	10	dragon_tail	5000	1	
+
+
+bag_of_pollem	5000	1	leaves	5000	1	seed	20000	10	great_petals	5000	1	
+bag_of_pollem	5000	1	leaves	5000	1	seed	20000	10	great_petals	5000	1	
+bag_of_pollem	5000	1	leaves	5000	1	seed	20000	10	great_petals	5000	1	
+essence_of_fire	20000	10	fur	5000	1	pot_of_lava	5000	1	hot_fur	5000	1	
+essence_of_fire	20000	10	fur	5000	1	pot_of_lava	5000	1	hot_fur	5000	1	
+essence_of_fire	20000	10	fur	5000	1	pot_of_lava	5000	1	hot_fur	5000	1	
+nail	5000	1	water_gem	20000	10	water_pendant	5000	1	red_scale	5000	1	
+nail	5000	1	water_gem	20000	10	water_pendant	5000	1	red_scale	5000	1	
+nail	5000	1	water_gem	20000	10	water_pendant	5000	1	red_scale	5000	1	
+rubber_ball	20000	10	squirrel_tail	5000	1	
+fur	5000	1	rubber_ball	20000	10	squirrel_tail	5000	1	
+feather	5000	1	rubber_ball	20000	10	straw	20000	10	owl_feather	5000	1	
+feather	5000	1	rubber_ball	20000	10	straw	20000	10	owl_feather	5000	1	
+bug_gosme	20000	10	straw	20000	10	ladybug_wing	5000	1	
+bug_gosme	20000	10	straw	20000	10	ladybug_wing	5000	1	
+bottle_of_poison	20000	10	bug_gosme	20000	10	spider_legs	5000	1	
+bottle_of_poison	20000	10	bug_gosme	20000	10	spider_legs	5000	1	
+bottle_of_poison	20000	10	straw	20000	10	bat_wing	5000	1	giant_bat_wing	5000	1	
+electric_box	5000	1	screw	20000	10	water_gem	20000	10	water_pendant	5000	1	point_of_light	5000	1	
+electric_box	5000	1	screw	20000	10	water_gem	20000	10	water_pendant	5000	1	point_of_light	5000	1	
+electric_box	5000	1	screw	20000	10	electric_rat_tail	5000	1	
+rubber_ball	20000	10	topknot	5000	1	
+rubber_ball	20000	10	
+rubber_ball	20000	10	egg_shell	5000	1	
+rubber_ball	20000	10	straw	20000	10	egg_shell	5000	1	
+enchanted_gem	20000	10	feather	5000	1	straw	20000	10	strange_feather	5000	1	
+enchanted_gem	20000	10	feather	5000	1	straw	20000	10	strange_feather	5000	1	
+electric_box	5000	1	screw	20000	10	sheep_wool	5000	1	
+screw	20000	10	sheep_wool	5000	1	
+electric_box	5000	1	screw	20000	10	sheep_wool	5000	1	
+bag_of_pollem	5000	1	seed	20000	10	yellow_flower	5000	1	
+water_gem	20000	10	water_pendant	5000	1	blue_ball	5000	1	
+water_gem	20000	10	water_pendant	5000	1	blue_ball	5000	1	
+small_stone	20000	10	stone_orb	5000	1	branch_of_stone	5000	1	
+water_gem	20000	10	water_pendant	5000	1	strange_thing	5000	1	
+seed	20000	10	straw	20000	10	helicopter_leaves	5000	1	yellow_flower	5000	1	
+seed	20000	10	straw	20000	10	yellow_flower	5000	1	
+seed	20000	10	straw	20000	10	yellow_flower	5000	1	
+rubber_ball	20000	10	monkey_paw	5000	1	
+leaves	5000	1	seed	20000	10	
+leaves	5000	1	seed	20000	10	
+bug_gosme	20000	10	pot_of_moss_bug	5000	1	straw	20000	10	insect_tail	5000	1	
+earth_ball	20000	10	sandbag	5000	1	water_gem	20000	10	water_pendant	5000	1	wooper_horn	5000	1	
+earth_ball	20000	10	sandbag	5000	1	water_gem	20000	10	water_pendant	5000	1	wooper_horn	5000	1	
+
+
+dark_gem	20000	10	feather	5000	1	straw	20000	10	dark_beak	5000	1	
+
+ghost_essence	20000	10	miss_traces	5000	1	traces_of_ghost	5000	1	
+
+enchanted_gem	20000	10	strange_tail	5000	1	
+enchanted_gem	20000	10	rubber_ball	20000	10	strange_antenna	5000	1	
+bug_gosme	20000	10	pot_of_moss_bug	5000	1	piece_of_shell	5000	1	
+bug_gosme	20000	10	piece_of_steel	20000	10	pot_of_moss_bug	5000	1	piece_of_shell	5000	1	
+rubber_ball	20000	10	small_wings	5000	1	
+earth_ball	20000	10	sandbag	5000	1	straw	20000	10	gligar_claw	5000	1	
+earth_ball	20000	10	piece_of_steel	20000	10	steelix_tail	5000	1	
+rubber_ball	20000	10	dog_ears	5000	1	
+rubber_ball	20000	10	dog_ears	5000	1	
+bottle_of_poison	20000	10	water_gem	20000	10	water_pendant	5000	1	small_tail	5000	1	
+bug_gosme	20000	10	piece_of_steel	20000	10	scizor_claw	5000	1	
+
+band_aid	20000	10	bug_gosme	20000	10	pot_of_moss_bug	5000	1	insect_claw	5000	1	
+dark_gem	20000	10	ice_orb	5000	1	snowball	20000	10	cat_ear	5000	1	
+fur	5000	1	rubber_ball	20000	10	
+fur	5000	1	rubber_ball	20000	10	bear_paw	5000	1	
+essence_of_fire	20000	10	pot_of_lava	5000	1	fire_ear	5000	1	
+essence_of_fire	20000	10	pot_of_lava	5000	1	small_stone	20000	10	fire_ear	5000	1	
+earth_ball	20000	10	fur	5000	1	snowball	20000	10	tusk	5000	1	
+earth_ball	20000	10	snowball	20000	10	tusk	5000	1	
+small_stone	20000	10	water_gem	20000	10	piece_of_coral	5000	1	
+water_gem	20000	10	water_pendant	5000	1	
+water_gem	20000	10	water_pendant	5000	1	tentacle	5000	1	
+ice_orb	5000	1	snowball	20000	10	straw	20000	10	gift_bag	5000	1	
+straw	20000	10	water_gem	20000	10	water_pendant	5000	1	fish_fin	5000	1	streak_tail	5000	1	
+bird_beak	5000	1	piece_of_steel	20000	10	straw	20000	10	steel_wings	5000	1	
+dark_gem	20000	10	essence_of_fire	20000	10	pot_of_lava	5000	1	strange_bone	5000	1	
+dark_gem	20000	10	essence_of_fire	20000	10	pot_of_lava	5000	1	strange_bone	5000	1	
+dragon_scale	20000	10	water_gem	20000	10	water_pendant	5000	1	seahorse_tail	5000	1	
+earth_ball	20000	10	sandbag	5000	1	elephant_foot	5000	1	
+earth_ball	20000	10	sandbag	5000	1	elephant_foot	5000	1	
+
+rubber_ball	20000	10	reindeer_horn	5000	1	
+brush	5000	1	
+band_aid	20000	10	
+band_aid	20000	10	spin_machine	5000	1	
+enchanted_gem	20000	10	ice_orb	5000	1	snowball	20000	10	ice_bra	5000	1	
+electric_box	5000	1	screw	20000	10	electric_tail	5000	1	
+essence_of_fire	20000	10	pot_of_lava	5000	1	magma_foot	5000	1	
+rubber_ball	20000	10	cow_tail	5000	1	
+
+
+
+
+earth_ball	20000	10	small_stone	20000	10	stone_orb	5000	1	lizard_tail	5000	1	
+earth_ball	20000	10	small_stone	20000	10	stone_orb	5000	1	lizard_tail	5000	1	
+earth_ball	20000	10	small_stone	20000	10	stone_orb	5000	1	lizard_tail	5000	1	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

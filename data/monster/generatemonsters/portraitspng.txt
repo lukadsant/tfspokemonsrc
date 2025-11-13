@@ -1,0 +1,1066 @@
+bulbasaur 24701
+ivysaur 24702
+venusaur 24703
+charmander 24704
+charmeleon 24705
+charizard 24706
+squirtle 24707
+wartortle 24708
+blastoise 24709
+caterpie 24710
+metapod 24711
+butterfree 24712
+weedle 24713
+kakuna 24714
+beedrill 24715
+pidgey 24716
+pidgeotto 24717
+pidgeot 24718
+rattata 24719
+raticate 24720
+spearow 24721
+fearow 24722
+ekans 24723
+arbok 24724
+pikachu 24725
+raichu 24726
+sandshrew 24727
+sandslash 24728
+nidoran female 24729
+nidorina 24730
+nidoqueen 24731
+nidoran male 24732
+nidorino 24733
+nidoking 24734
+clefairy 24735
+clefable 24736
+vulpix 24737
+ninetales 24738
+jigglypuff 24739
+wigglytuff 24740
+zubat 24741
+golbat 24742
+oddish 24743
+gloom 24744
+vileplume 24745
+paras 24746
+parasect 24747
+venonat 24748
+venomoth 24749
+diglett 24750
+dugtrio 24751
+meowth 24752
+persian 24753
+psyduck 24754
+golduck 24755
+mankey 24756
+primeape 24757
+growlithe 24758
+arcanine 24759
+poliwag 24760
+poliwhirl 24761
+poliwrath 24762
+abra 24763
+kadabra 24764
+alakazam 24765
+machop 24766
+machoke 24767
+machamp 24768
+bellsprout 24769
+weepinbell 24770
+victreebel 24771
+tentacool 24772
+tentacruel 24773
+geodude 24774
+graveler 24775
+golem 24776
+ponyta 24777
+rapidash 24778
+slowpoke 24779
+slowbro 24780
+magnemite 24781
+magneton 24782
+farfetch'd 24783
+doduo 24784
+dodrio 24785
+seel 24786
+dewgong 24787
+grimer 24788
+muk 24789
+shellder 24790
+cloyster 24791
+gastly 24792
+haunter 24793
+gengar 24794
+onix 24795
+drowzee 24796
+hypno 24797
+krabby 24798
+kingler 24799
+voltorb 24800
+electrode 24801
+exeggcute 24802
+exeggutor 24803
+cubone 24804
+marowak 24805
+hitmonlee 24806
+hitmonchan 24807
+lickitung 24808
+koffing 24809
+weezing 24810
+rhyhorn 24811
+rhydon 24812
+chansey 24813
+tangela 24814
+kangaskhan 24815
+horsea 24816
+seadra 24817
+goldeen 24818
+seaking 24819
+staryu 24820
+starmie 24821
+mr. mime 24822
+scyther 24823
+jynx 24824
+electabuzz 24825
+magmar 24826
+pinsir 24827
+tauros 24828
+magikarp 24829
+gyarados 24830
+lapras 24831
+ditto 24832
+eevee 24833
+vaporeon 24834
+jolteon 24835
+flareon 24836
+porygon 24837
+omanyte 24838
+omastar 24839
+kabuto 24840
+kabutops 24841
+aerodactyl 24842
+snorlax 24843
+articuno 24844
+zapdos 24845
+moltres 24846
+dratini 24847
+dragonair 24848
+dragonite 24849
+mewtwo 24850
+mew 24851
+chikorita 24852
+bayleef 24853
+meganium 24854
+cyndaquil 24855
+quilava 24856
+typhlosion 24857
+totodile 24858
+croconaw 24859
+feraligatr 24860
+sentret 24861
+furret 24862
+hoothoot 24863
+noctowl 24864
+ledyba 24865
+ledian 24866
+spinarak 24867
+ariados 24868
+crobat 24869
+chinchou 24870
+lanturn 24871
+pichu 24872
+cleffa 24873
+igglybuff 24874
+togepi 24875
+togetic 24876
+natu 24877
+xatu 24878
+mareep 24879
+flaaffy 24880
+ampharos 24881
+bellossom 24882
+marill 24883
+azumarill 24884
+sudowoodo 24885
+politoed 24886
+hoppip 24887
+skiploom 24888
+jumpluff 24889
+aipom 24890
+sunkern 24891
+sunflora 24892
+yanma 24893
+wooper 24894
+quagsire 24895
+espeon 24896
+umbreon 24897
+murkrow 24898
+slowking 24899
+misdreavus 24900
+unown 24901
+wobbuffet 24902
+girafarig 24903
+pineco 24904
+forretress 24905
+dunsparce 24906
+gligar 24907
+steelix 24908
+snubbull 24909
+granbull 24910
+qwilfish 24911
+scizor 24912
+shuckle 24913
+heracross 24914
+sneasel 24915
+teddiursa 24916
+ursaring 24917
+slugma 24918
+magcargo 24919
+swinub 24920
+piloswine 24921
+corsola 24922
+remoraid 24923
+octillery 24924
+delibird 24925
+mantine 24926
+skarmory 24927
+houndour 24928
+houndoom 24929
+kingdra 24930
+phanpy 24931
+donphan 24932
+porygon2 24933
+stantler 24934
+smeargle 24935
+tyrogue 24936
+hitmontop 24937
+smoochum 24938
+elekid 24939
+magby 24940
+miltank 24941
+blissey 24942
+raikou 24943
+entei 24944
+suicune 24945
+larvitar 24946
+pupitar 24947
+tyranitar 24948
+lugia 24949
+ho-oh 24950
+celebi 24951
+treecko 25543
+grovyle 25544
+sceptile 25545
+torchic 25546
+combusken 25547
+blaziken 25548
+mudkip 25549
+marshtomp 25550
+swampert 25551
+poochyena 25552
+mightyena 25553
+zigzagoon 25554
+linoone 25555
+wurmple 25556
+silcoon 25557
+beautifly 25558
+cascoon 25559
+dustox 25560
+lotad 25561
+lombre 25562
+ludicolo 25563
+seedot 25564
+nuzleaf 25565
+shiftry 25566
+taillow 25567
+swellow 25568
+wingull 25569
+pelipper 25570
+ralts 25571
+kirlia 25572
+gardevoir 25573
+surskit 25574
+masquerain 25575
+shroomish 25576
+breloom 25577
+slakoth 25578
+vigoroth 25579
+slaking 25580
+nincada 25581
+ninjask 25582
+shedinja 25583
+whismur 25584
+loudred 25585
+exploud 25586
+makuhita 25587
+hariyama 25588
+azurill 25589
+nosepass 25590
+skitty 25591
+delcatty 25592
+sableye 25593
+mawile 25594
+aron 25595
+lairon 25596
+aggron 25597
+meditite 25598
+medicham 25599
+electrike 25600
+manectric 25601
+plusle 25602
+minun 25603
+volbeat 25604
+illumise 25605
+roselia 25606
+gulpin 25607
+swalot 25608
+carvanha 25609
+sharpedo 25610
+wailmer 25611
+wailord 25612
+numel 25613
+camerupt 25614
+torkoal 25615
+spoink 25616
+grumpig 25617
+spinda 25618
+trapinch 25619
+vibrava 25620
+flygon 25621
+cacnea 25622
+cacturne 25623
+swablu 25624
+altaria 25625
+zangoose 25626
+seviper 25627
+lunatone 25628
+solrock 25629
+barboach 25630
+whiscash 25631
+corphish 25632
+crawdaunt 25633
+baltoy 25634
+claydol 25635
+lileep 25636
+cradily 25637
+anorith 25638
+armaldo 25639
+feebas 25640
+milotic 25641
+castform 25642
+kecleon 25643
+shuppet 25644
+banette 25645
+duskull 25646
+dusclops 25647
+tropius 25648
+chimecho 25649
+absol 25650
+wynaut 25651
+snorunt 25652
+glalie 25653
+spheal 25654
+sealeo 25655
+walrein 25656
+clamperl 25657
+huntail 25658
+gorebyss 25659
+relicanth 25660
+luvdisc 25661
+bagon 25662
+shelgon 25663
+salamence 25664
+beldum 25665
+metang 25666
+metagross 25667
+regirock 25668
+regice 25669
+registeel 25670
+latias 25671
+latios 25672
+kyogre 25673
+groudon 25674
+rayquaza 25675
+jirachi 25676
+deoxys 25677
+shiny bulbasaur 24952
+shiny ivysaur 24953
+shiny venusaur 24954
+shiny charmander 24955
+shiny charmeleon 24956
+shiny charizard 24957
+shiny squirtle 24958
+shiny wartortle 24959
+shiny blastoise 24960
+shiny caterpie 24961
+shiny metapod 24962
+shiny butterfree 24963
+shiny weedle 24964
+shiny kakuna 24965
+shiny beedrill 24966
+shiny pidgey 24967
+shiny pidgeotto 24968
+shiny pidgeot 24969
+shiny rattata 24970
+shiny raticate 24971
+shiny spearow 24972
+shiny fearow 24973
+shiny ekans 24974
+shiny arbok 24975
+shiny pikachu 24976
+shiny raichu 24977
+shiny sandshrew 24978
+shiny sandslash 24979
+shiny nidoran female 24980
+shiny nidorina 24981
+shiny nidoqueen 24982
+shiny nidoran male 24983
+shiny nidorino 24984
+shiny nidoking 24985
+shiny clefairy 24735
+shiny clefable 24736
+shiny vulpix 24986
+shiny ninetales 24987
+shiny jigglypuff 24739
+shiny wigglytuff 24740
+shiny zubat 24988
+shiny golbat 24989
+shiny oddish 24990
+shiny gloom 24991
+shiny vileplume 24992
+shiny paras 24993
+shiny parasect 24994
+shiny venonat 24995
+shiny venomoth 24996
+shiny diglett 24997
+shiny dugtrio 24998
+shiny meowth 24752
+shiny persian 24753
+shiny psyduck 24754
+shiny golduck 24755
+shiny mankey 24756
+shiny primeape 24757
+shiny growlithe 24999
+shiny arcanine 25000
+shiny poliwag 25001
+shiny poliwhirl 25002
+shiny poliwrath 25003
+shiny abra 25004
+shiny kadabra 25005
+shiny alakazam 25006
+shiny machop 25007
+shiny machoke 25008
+shiny machamp 25009
+shiny bellsprout 25010
+shiny weepinbell 25011
+shiny victreebel 25012
+shiny tentacool 25013
+shiny tentacruel 25014
+shiny geodude 25015
+shiny graveler 25016
+shiny golem 25017
+shiny ponyta 25018
+shiny rapidash 25019
+shiny slowpoke 24779
+shiny slowbro 24780
+shiny magnemite 25020
+shiny magneton 25021
+shiny farfetch'd 25022
+shiny doduo 25023
+shiny dodrio 25024
+shiny seel 25025
+shiny dewgong 25026
+shiny grimer 25027
+shiny muk 25028
+shiny shellder 25029
+shiny cloyster 25030
+shiny gastly 25031
+shiny haunter 25032
+shiny gengar 25033
+shiny onix 25034
+shiny drowzee 25035
+shiny hypno 25036
+shiny krabby 25037
+shiny kingler 25038
+shiny voltorb 25039
+shiny electrode 25040
+shiny exeggcute 25041
+shiny exeggutor 25042
+shiny cubone 25043
+shiny marowak 25044
+shiny hitmonlee 25045
+shiny hitmonchan 25046
+shiny lickitung 24808
+shiny koffing 25047
+shiny weezing 25048
+shiny rhyhorn 25049
+shiny rhydon 25050
+shiny chansey 24813
+shiny tangela 25051
+shiny kangaskhan 36322
+shiny horsea 25052
+shiny seadra 25053
+shiny goldeen 25054
+shiny seaking 25055
+shiny staryu 25056
+shiny starmie 25057
+shiny mr. mime 25058
+shiny scyther 25059
+shiny jynx 25060
+shiny electabuzz 25061
+shiny magmar 25062
+shiny pinsir 25063
+shiny tauros 25064
+shiny magikarp 25065
+shiny gyarados 25066
+shiny lapras 25067
+shiny ditto 25068
+shiny eevee 25069
+shiny vaporeon 24834
+shiny jolteon 24835
+shiny flareon 24836
+shiny porygon 25070
+shiny omanyte 25071
+shiny omastar 25072
+shiny kabuto 25073
+shiny kabutops 25074
+shiny aerodactyl 25075
+shiny snorlax 24843
+shiny articuno 25076
+shiny zapdos 24845
+shiny moltres 25077
+shiny dratini 25078
+shiny dragonair 25079
+shiny dragonite 25080
+shiny mewtwo 25081
+shiny mew 25082
+shiny chikorita 25799
+shiny bayleef 25800
+shiny meganium 25801
+shiny cyndaquil 25802
+shiny quilava 25803
+shiny typhlosion 25804
+shiny totodile 25805
+shiny croconaw 25806
+shiny feraligatr 25807
+shiny sentret 25808
+shiny furret 25809
+shiny hoothoot 25810
+shiny noctowl 25811
+shiny ledyba 25812
+shiny ledian 25813
+shiny spinarak 25814
+shiny ariados 25815
+shiny crobat 25816
+shiny chinchou 25817
+shiny lanturn 25818
+shiny pichu 25819
+shiny cleffa 25820
+shiny igglybuff 25821
+shiny togepi 25822
+shiny togetic 25823
+shiny natu 25824
+shiny xatu 25825
+shiny mareep 25826
+shiny flaaffy 25827
+shiny ampharos 25828
+shiny bellossom 25829
+shiny marill 25830
+shiny azumarill 25831
+shiny sudowoodo 25832
+shiny politoed 25833
+shiny hoppip 25834
+shiny skiploom 25835
+shiny jumpluff 25836
+shiny aipom 25837
+shiny sunkern 25838
+shiny sunflora 25839
+shiny yanma 25840
+shiny wooper 25841
+shiny quagsire 25842
+shiny espeon 25843
+shiny umbreon 25844
+shiny murkrow 25845
+shiny slowking 36319
+shiny misdreavus 25847
+shiny unown 25848
+shiny wobbuffet 25849
+shiny girafarig 25850
+shiny pineco 25851
+shiny forretress 25852
+shiny dunsparce 25853
+shiny gligar 25854
+shiny steelix 25855
+shiny snubbull 25856
+shiny granbull 25857
+shiny qwilfish 25858
+shiny scizor 25859
+shiny shuckle 25860
+shiny heracross 25861
+shiny sneasel 25862
+shiny teddiursa 25863
+shiny ursaring 25864
+shiny slugma 25865
+shiny magcargo 25866
+shiny swinub 25867
+shiny piloswine 25868
+shiny corsola 25869
+shiny remoraid 25870
+shiny octillery 25871
+shiny delibird 25872
+shiny mantine 25873
+shiny skarmory 25874
+shiny houndour 25875
+shiny houndoom 25876
+shiny kingdra 25877
+shiny phanpy 25878
+shiny donphan 25879
+shiny porygon2 25880
+shiny stantler 25881
+shiny smeargle 25882
+shiny tyrogue 25883
+shiny hitmontop 25884
+shiny smoochum 25885
+shiny elekid 25886
+shiny magby 25887
+shiny miltank 25888
+shiny blissey 25889
+shiny raikou 24943
+shiny entei 24944
+shiny suicune 24945
+shiny larvitar 25893
+shiny pupitar 25894
+shiny tyranitar 25895
+shiny lugia 24949
+shiny ho-oh 24950
+shiny celebi 24951
+shiny treecko 26020
+shiny grovyle 26021
+shiny sceptile 26022
+shiny torchic 26023
+shiny combusken 26024
+shiny blaziken 26025
+shiny mudkip 26026
+shiny marshtomp 26027
+shiny swampert 26028
+shiny poochyena 26029
+shiny mightyena 26030
+shiny zigzagoon 26031
+shiny linoone 26032
+shiny wurmple 26033
+shiny silcoon 26034
+shiny beautifly 26035
+shiny cascoon 26036
+shiny dustox 26037
+shiny lotad 26038
+shiny lombre 26039
+shiny ludicolo 26040
+shiny seedot 26041
+shiny nuzleaf 26042
+shiny shiftry 26043
+shiny taillow 26044
+shiny swellow 26045
+shiny wingull 26046
+shiny pelipper 26047
+shiny ralts 26048
+shiny kirlia 25572
+shiny gardevoir 26049
+shiny surskit 26050
+shiny masquerain 26051
+shiny shroomish 26052
+shiny breloom 26053
+shiny slakoth 26054
+shiny vigoroth 26055
+shiny slaking 26056
+shiny nincada 26057
+shiny ninjask 26058
+shiny shedinja 26059
+shiny whismur 26060
+shiny loudred 26061
+shiny exploud 26062
+shiny makuhita 26063
+shiny hariyama 26064
+shiny azurill 25830
+shiny nosepass 26065
+shiny skitty 26066
+shiny delcatty 26067
+shiny sableye 26068
+shiny mawile 26069
+shiny aron 26070
+shiny lairon 26071
+shiny aggron 26072
+shiny meditite 26073
+shiny medicham 26074
+shiny electrike 26075
+shiny manectric 26076
+shiny plusle 26077
+shiny minun 26078
+shiny volbeat 26079
+shiny illumise 26080
+shiny roselia 26081
+shiny gulpin 26082
+shiny swalot 26083
+shiny carvanha 26084
+shiny sharpedo 26085
+shiny wailmer 26086
+shiny wailord 26087
+shiny numel 26088
+shiny camerupt 26089
+shiny torkoal 26090
+shiny spoink 26091
+shiny grumpig 26092
+shiny spinda 26093
+shiny trapinch 26094
+shiny vibrava 26095
+shiny flygon 26096
+shiny cacnea 26097
+shiny cacturne 26098
+shiny swablu 26099
+shiny altaria 26100
+shiny zangoose 26101
+shiny seviper 26102
+shiny lunatone 26103
+shiny solrock 26104
+shiny barboach 26105
+shiny whiscash 26106
+shiny corphish 26107
+shiny crawdaunt 26108
+shiny baltoy 26109
+shiny claydol 26110
+shiny lileep 26111
+shiny cradily 26112
+shiny anorith 26113
+shiny armaldo 26114
+shiny feebas 26115
+shiny milotic 26116
+shiny castform 25642
+shiny kecleon 26117
+shiny shuppet 26118
+shiny banette 26119
+shiny duskull 26120
+shiny dusclops 26121
+shiny tropius 26122
+shiny chimecho 26123
+shiny absol 26124
+shiny wynaut 25651
+shiny snorunt 26125
+shiny glalie 26126
+shiny spheal 26127
+shiny sealeo 26128
+shiny walrein 26129
+shiny clamperl 26130
+shiny huntail 26131
+shiny gorebyss 26132
+shiny relicanth 26133
+shiny luvdisc 26134
+shiny bagon 26135
+shiny shelgon 26136
+shiny salamence 26137
+shiny beldum 26138
+shiny metang 26139
+shiny metagross 26140
+shiny regirock 26141
+shiny regice 26142
+shiny registeel 26143
+shiny latias 25671
+shiny latios 25672
+shiny kyogre 26144
+shiny groudon 26145
+shiny rayquaza 26146
+shiny jirachi 26147
+shiny deoxys 25677
+ancient venusaur 36320
+elder charizard 36311
+ancient blastoise 36310
+super raichu 36318
+ancient ninetales 36317
+ancient vileplume 24992
+ancient arcanine 36309
+dark abra 25084
+ancient muk 25028
+crystal onix 25083
+elite hitmonlee 36314
+elite hitmonchan 36313
+ancient mr. mime 36316
+ancient lapras 36315
+ancient aerodactyl 36308
+ancient dragonite 36312
+ancient slowking 25846
+mega venusaur -2416
+mega charizard x -2416
+mummy charmander 24955
+ghost pikachu 24725
+pirate raichu 24726
+raven fearow 24722
+werewolf nidoking 24734
+frankstein vileplume 24745
+skull golem 24776
+hauting haunter 24793
+panic hypno 24797
+pumpkin cubone 24804
+pumpkin marowak 24805
+executioner marowak 24805
+corsair weezing 24810
+witch chansey 24813
+hag jynx 24824
+wicked vaporeon 24834
+vampire jolteon 24835
+cultist flareon 24836
+undead omanyte 24838
+undead omastar 24839
+undead kabuto 24840
+undead kabutops 24841
+undead aerodactyl 24842
+devil scizor 24912
+santa snorlax 24843
+xmas diglett 24997
+xmas caterpie 24961
+xmas psyduck 24754
+xmas seel 25025
+xmas pikachu 24976
+xmas jynx 25060
+xmas bulbasaur 24952
+xmas ditto 25068
+xmas elekid 25886
+xmas eevee 25069
+xmas charmander 24955
+xmas squirtle 24958
+xmas rattata 24970
+xmas golbat 24989
+xmas aipom 25837
+xmas ledyba 25812
+xmas totodile 25805
+xmas abra 25004
+xmas chikorita 25799
+xmas meowth 24752
+xmas gastly 25031
+xmas jigglypuff 24739
+xmas clefairy 24735
+xmas wooper 25841
+xmas togepi 25822
+xmas teddiursa 25863
+xmas machop 25007
+xmas cubone 25043
+xmas hitmontop 25884
+xmas mantine 25873
+santa blissey 25889
+reindeer miltank 25888
+grinch armaldo 26114
+snowman aggron 26072
+decorated sudowoodo 25832
+grinch banette 26119
+turtwig -2416
+grotle -2416
+torterra -2416
+chimchar -2416
+monferno -2416
+infernape -2416
+piplup -2416
+prinplup -2416
+empoleon -2416
+starly -2416
+staravia -2416
+staraptor -2416
+bidoof -2416
+bibarel -2416
+kricketot -2416
+kricketune -2416
+shinx -2416
+luxio -2416
+luxray -2416
+budew -2416
+roserade -2416
+cranidos -2416
+rampardos -2416
+shieldon -2416
+bastiodon -2416
+burmy -2416
+wormadam -2416
+mothim -2416
+combee -2416
+vespiquen -2416
+pachirisu -2416
+buizel -2416
+floatzel -2416
+cherubi -2416
+cherrim -2416
+shellos -2416
+gastrodon -2416
+ambipom -2416
+drifloon -2416
+drifblim -2416
+buneary -2416
+lopunny -2416
+mismagius -2416
+honchkrow -2416
+glameow -2416
+purugly -2416
+chingling -2416
+stunky -2416
+skuntank -2416
+bronzor -2416
+bronzong -2416
+bonsly -2416
+mime jr -2416
+happiny -2416
+chatot -2416
+spiritomb -2416
+gible -2416
+gabite -2416
+garchomp -2416
+munchlax -2416
+riolu -2416
+lucario -2416
+hippopotas -2416
+hippowdon -2416
+skorupi -2416
+drapion -2416
+croagunk -2416
+toxicroak -2416
+carnivine -2416
+finneon -2416
+lumineon -2416
+mantyke -2416
+snover -2416
+abomasnow -2416
+weavile -2416
+magnezone -2416
+lickilicky -2416
+rhyperior -2416
+tangrowth -2416
+electivire -2416
+magmortar -2416
+togekiss -2416
+yanmega -2416
+leafeon -2416
+glaceon -2416
+gliscor -2416
+mamoswine -2416
+porygon-z -2416
+gallade -2416
+probopass -2416
+dusknoir -2416
+froslass -2416
+rotom -2416
+uxie -2416
+mesprit -2416
+azelf -2416
+dialga -2416
+palkia -2416
+heatran -2416
+regigigas -2416
+giratina -2416
+cresselia -2416
+phione -2416
+manaphy -2416
+darkrai -2416
+shaymin -2416
+arceus -2416
+shiny turtwig -2416
+shiny grotle -2416
+shiny torterra -2416
+shiny chimchar -2416
+shiny monferno -2416
+shiny infernape -2416
+shiny piplup -2416
+shiny prinplup -2416
+shiny empoleon -2416
+shiny starly -2416
+shiny staravia -2416
+shiny staraptor -2416
+shiny bidoof -2416
+shiny bibarel -2416
+shiny kricketot -2416
+shiny kricketune -2416
+shiny shinx -2416
+shiny luxio -2416
+shiny luxray -2416
+shiny budew -2416
+shiny roserade -2416
+shiny cranidos -2416
+shiny rampardos -2416
+shiny shieldon -2416
+shiny bastiodon -2416
+shiny burmy -2416
+shiny wormadam -2416
+shiny mothim -2416
+shiny combee -2416
+shiny vespiquen -2416
+shiny pachirisu -2416
+shiny buizel -2416
+shiny floatzel -2416
+shiny cherubi -2416
+shiny cherrim -2416
+shiny shellos -2416
+shiny gastrodon -2416
+shiny ambipom -2416
+shiny drifloon -2416
+shiny drifblim -2416
+shiny buneary -2416
+shiny lopunny -2416
+shiny mismagius -2416
+shiny honchkrow -2416
+shiny glameow -2416
+shiny purugly -2416
+shiny chingling -2416
+shiny stunky -2416
+shiny skuntank -2416
+shiny bronzor -2416
+shiny bronzong -2416
+shiny bonsly -2416
+shiny mime jr -2416
+shiny happiny -2416
+shiny chatot -2416
+shiny spiritomb -2416
+shiny gible -2416
+shiny gabite -2416
+shiny garchomp -2416
+shiny munchlax -2416
+shiny riolu -2416
+shiny lucario -2416
+shiny hippopotas -2416
+shiny hippowdon -2416
+shiny skorupi -2416
+shiny drapion -2416
+shiny croagunk -2416
+shiny toxicroak -2416
+shiny carnivine -2416
+shiny finneon -2416
+shiny lumineon -2416
+shiny mantyke -2416
+shiny snover -2416
+shiny abomasnow -2416
+shiny weavile -2416
+shiny magnezone -2416
+shiny lickilicky -2416
+shiny rhyperior -2416
+shiny tangrowth -2416
+shiny electivire -2416
+shiny magmortar -2416
+shiny togekiss -2416
+shiny yanmega -2416
+shiny leafeon -2416
+shiny glaceon -2416
+shiny gliscor -2416
+shiny mamoswine -2416
+shiny porygon-z -2416
+shiny gallade -2416
+shiny probopass -2416
+shiny dusknoir -2416
+shiny froslass -2416
+shiny rotom -2416
+shiny uxie -2416
+shiny mesprit -2416
+shiny azelf -2416
+shiny dialga -2416
+shiny palkia -2416
+shiny heatran -2416
+shiny regigigas -2416
+shiny giratina -2416
+shiny cresselia -2416
+shiny phione -2416
+shiny manaphy -2416
+shiny darkrai -2416
+shiny shaymin -2416
+shiny arceus -2416

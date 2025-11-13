@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name=#name nameDescription=#description race=#race race2=#srace experience=#experience speed=#speed manacost="0">
+	<level min=#lvlmin max=#lvlmax/>
+	<health now=#health max=#health />
+	<look type=#looktype head="113" body="57" legs="95" feet="113" corpse=#corpse />
+	<targetchange interval="5000" chance=#targetchange />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag passive=#agressive />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry=#dexentry />
+		<flag portraitid=#portraitid />
+		<flag hasshiny=#shiny />
+		<flag hasmega=#mega />
+		<flag flyable=#fly />
+		<flag rideable=#ride />
+		<flag surfable=#surf />
+		<flag canteleport=#teleport />
+		<flag catchchance=#catch />
+		<flag moveMagicAttackBase=#magicattack />
+		<flag moveMagicDefenseBase=#magicdefense />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+        	<event name="CorpseLevel"/>
+        	<event name="CorpseLoot"/>
+#msglegendary
+	</script>
+	<moves>
+#msgmove
+	</moves>
+	<evolutions>
+#msgevo
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min=#attack max=#attack />
+#msgattack
+	</attacks>
+	<defenses armor="0" defense=#defense >
+#msgdefense
+	</defenses>
+	<elements>
+	</elements>
+	<immunities>
+#msgimmunities
+	</immunities>
+	<voices interval="5000" chance="10">
+		<voice sentence=#voice />
+	</voices>
+	<loot>
+#msgloot
+	</loot>
+</monster>

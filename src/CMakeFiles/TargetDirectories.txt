@@ -1,0 +1,6 @@
+/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/edit_cache.dir
+/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/tfs.dir
+/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/clean_cotire.dir
+/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/rebuild_cache.dir
+/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/tfs_pch.dir
+/home/rabizao/ot2017/forgottenserver-1.2/src/CMakeFiles/all_pch.dir

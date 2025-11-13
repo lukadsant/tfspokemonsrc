@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Aerodactyl" nameDescription="an aerodactyl" race="rock" race2="flying" experience="51" speed="260" manacost="0">
+	<level min="25" max="50"/>
+	<health now="800" max="800" />
+	<look type="1045" head="113" body="57" legs="95" feet="113" corpse="27003" />
+	<targetchange interval="2000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="142" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="10" />
+		<flag moveMagicAttackBase="60" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-105" max="-105" />
+
+	</attacks>
+	<defenses armor="65" defense="75" />
+	<elements>
+	</elements>
+	<voices interval="5000" chance="10">
+		<voice sentence="AERODACTYL!" />
+	</voices>
+	<loot>
+		<item name="gold coin" countmax="12" chance="30000" />
+	</loot>
+</monster>

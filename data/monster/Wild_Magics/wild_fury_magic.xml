@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<monster name="Wild Fury Magic" nameDescription="a wild fury magic" race="undead" experience="0" speed="210" manacost="0">
+	<health now="1" max="1" />
+	<targetchange interval="4000" chance="10" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="0" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="0" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="90" />
+		<flag runonhealth="1" />
+		<flag dexentry="0" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="15" />
+		<flag moveMagicAttackBase="1" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+	</moves>
+	<evolutions>
+	</evolutions>
+	<defenses>
+		<defense name="effect" interval="100" chance="100" radius="1" target="0">
+			<attribute key="areaeffect" value="redshimmer" />
+		</defense>
+	</defenses>
+</monster>

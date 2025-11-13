@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Blastoise" nameDescription="a blastoise" race="water" race2="none" experience="53" speed="156" manacost="0">
+	<level min="30" max="50"/>
+	<health now="790" max="790" />
+	<look type="912" head="113" body="57" legs="95" feet="113" corpse="26870" />
+	<targetchange interval="2000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="9" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="10" />
+		<flag moveMagicAttackBase="85" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+		<move name="bubbles" interval="5000" isTarget="1"/>
+		<move name="water gun" interval="9000"/>
+		<move name="hydro cannon" interval="15000"/>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-83" max="-83" />
+		<attack name="bubbles" interval="5000" chance="35"/>
+		<attack name="water gun" interval="9000" chance="35"/>
+		<attack name="hydro cannon" interval="15000" chance="35"/>
+
+	</attacks>
+	<defenses armor="100" defense="105" />
+	<elements>
+	</elements>
+	<voices interval="5000" chance="10">
+		<voice sentence="BLASTOISE!" />
+	</voices>
+	<loot>
+		<item name="gold coin" countmax="12" chance="30000" />
+	</loot>
+</monster>

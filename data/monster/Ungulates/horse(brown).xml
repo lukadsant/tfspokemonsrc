@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<monster name="Horse" nameDescription="a horse" race="blood" experience="0" speed="190" manacost="0">
+	<health now="75" max="75" />
+	<look type="436" corpse="0" />
+	<targetchange interval="4000" chance="20" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="0" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="0" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="90" />
+		<flag runonhealth="75" />
+		<flag dexentry="0" />
+		<flag flyable="0" />
+		<flag rideable="436" />
+		<flag surfable="0" />
+		<flag catchchance="15" />
+		<flag moveMagicAttackBase="1" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+	</moves>
+	<evolutions>
+	</evolutions>
+	<voices interval="5000" chance="10">
+		<voice sentence="Weeeeheeeeeee" />
+		<voice sentence="*snort*" />
+		<voice sentence="*Weeeeheeeeaaa*" />
+	</voices>
+</monster>

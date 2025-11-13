@@ -1,0 +1,1066 @@
+	<creature name="Bulbasaur" type="monster" looktype="904" />
+	<creature name="Ivysaur" type="monster" looktype="905" />
+	<creature name="Venusaur" type="monster" looktype="906" />
+	<creature name="Charmander" type="monster" looktype="907" />
+	<creature name="Charmeleon" type="monster" looktype="908" />
+	<creature name="Charizard" type="monster" looktype="909" />
+	<creature name="Squirtle" type="monster" looktype="910" />
+	<creature name="Wartortle" type="monster" looktype="911" />
+	<creature name="Blastoise" type="monster" looktype="912" />
+	<creature name="Caterpie" type="monster" looktype="913" />
+	<creature name="Metapod" type="monster" looktype="914" />
+	<creature name="Butterfree" type="monster" looktype="915" />
+	<creature name="Weedle" type="monster" looktype="916" />
+	<creature name="Kakuna" type="monster" looktype="917" />
+	<creature name="Beedrill" type="monster" looktype="918" />
+	<creature name="Pidgey" type="monster" looktype="919" />
+	<creature name="Pidgeotto" type="monster" looktype="3206" />
+	<creature name="Pidgeot" type="monster" looktype="921" />
+	<creature name="Rattata" type="monster" looktype="3214" />
+	<creature name="Raticate" type="monster" looktype="3213" />
+	<creature name="Spearow" type="monster" looktype="924" />
+	<creature name="Fearow" type="monster" looktype="925" />
+	<creature name="Ekans" type="monster" looktype="926" />
+	<creature name="Arbok" type="monster" looktype="927" />
+	<creature name="Pikachu" type="monster" looktype="928" />
+	<creature name="Raichu" type="monster" looktype="929" />
+	<creature name="Sandshrew" type="monster" looktype="3215" />
+	<creature name="Sandslash" type="monster" looktype="3216" />
+	<creature name="Nidoran Female" type="monster" looktype="932" />
+	<creature name="Nidorina" type="monster" looktype="933" />
+	<creature name="Nidoqueen" type="monster" looktype="934" />
+	<creature name="Nidoran Male" type="monster" looktype="935" />
+	<creature name="Nidorino" type="monster" looktype="936" />
+	<creature name="Nidoking" type="monster" looktype="937" />
+	<creature name="Clefairy" type="monster" looktype="3185" />
+	<creature name="Clefable" type="monster" looktype="3184" />
+	<creature name="Vulpix" type="monster" looktype="940" />
+	<creature name="Ninetales" type="monster" looktype="941" />
+	<creature name="Jigglypuff" type="monster" looktype="3194" />
+	<creature name="Wigglytuff" type="monster" looktype="3242" />
+	<creature name="Zubat" type="monster" looktype="944" />
+	<creature name="Golbat" type="monster" looktype="945" />
+	<creature name="Oddish" type="monster" looktype="946" />
+	<creature name="Gloom" type="monster" looktype="947" />
+	<creature name="Vileplume" type="monster" looktype="948" />
+	<creature name="Paras" type="monster" looktype="949" />
+	<creature name="Parasect" type="monster" looktype="950" />
+	<creature name="Venonat" type="monster" looktype="951" />
+	<creature name="Venomoth" type="monster" looktype="952" />
+	<creature name="Diglett" type="monster" looktype="953" />
+	<creature name="Dugtrio" type="monster" looktype="954" />
+	<creature name="Meowth" type="monster" looktype="3203" />
+	<creature name="Persian" type="monster" looktype="3205" />
+	<creature name="Psyduck" type="monster" looktype="3211" />
+	<creature name="Golduck" type="monster" looktype="3191" />
+	<creature name="Mankey" type="monster" looktype="959" />
+	<creature name="Primeape" type="monster" looktype="960" />
+	<creature name="Growlithe" type="monster" looktype="961" />
+	<creature name="Arcanine" type="monster" looktype="962" />
+	<creature name="Poliwag" type="monster" looktype="963" />
+	<creature name="Poliwhirl" type="monster" looktype="964" />
+	<creature name="Poliwrath" type="monster" looktype="965" />
+	<creature name="Abra" type="monster" looktype="966" />
+	<creature name="Kadabra" type="monster" looktype="3196" />
+	<creature name="Alakazam" type="monster" looktype="968" />
+	<creature name="Machop" type="monster" looktype="3199" />
+	<creature name="Machoke" type="monster" looktype="3198" />
+	<creature name="Machamp" type="monster" looktype="971" />
+	<creature name="Bellsprout" type="monster" looktype="972" />
+	<creature name="Weepinbell" type="monster" looktype="973" />
+	<creature name="Victreebel" type="monster" looktype="974" />
+	<creature name="Tentacool" type="monster" looktype="975" />
+	<creature name="Tentacruel" type="monster" looktype="976" />
+	<creature name="Geodude" type="monster" looktype="977" />
+	<creature name="Graveler" type="monster" looktype="978" />
+	<creature name="Golem" type="monster" looktype="979" />
+	<creature name="Ponyta" type="monster" looktype="980" />
+	<creature name="Rapidash" type="monster" looktype="981" />
+	<creature name="Slowpoke" type="monster" looktype="982" />
+	<creature name="Slowbro" type="monster" looktype="983" />
+	<creature name="Magnemite" type="monster" looktype="3200" />
+	<creature name="Magneton" type="monster" looktype="985" />
+	<creature name="Farfetch'D" type="monster" looktype="986" />
+	<creature name="Doduo" type="monster" looktype="987" />
+	<creature name="Dodrio" type="monster" looktype="988" />
+	<creature name="Seel" type="monster" looktype="989" />
+	<creature name="Dewgong" type="monster" looktype="990" />
+	<creature name="Grimer" type="monster" looktype="991" />
+	<creature name="Muk" type="monster" looktype="992" />
+	<creature name="Shellder" type="monster" looktype="993" />
+	<creature name="Cloyster" type="monster" looktype="994" />
+	<creature name="Gastly" type="monster" looktype="995" />
+	<creature name="Haunter" type="monster" looktype="996" />
+	<creature name="Gengar" type="monster" looktype="997" />
+	<creature name="Onix" type="monster" looktype="998" />
+	<creature name="Drowzee" type="monster" looktype="999" />
+	<creature name="Hypno" type="monster" looktype="1000" />
+	<creature name="Krabby" type="monster" looktype="1001" />
+	<creature name="Kingler" type="monster" looktype="1002" />
+	<creature name="Voltorb" type="monster" looktype="1003" />
+	<creature name="Electrode" type="monster" looktype="1004" />
+	<creature name="Exeggcute" type="monster" looktype="1005" />
+	<creature name="Exeggutor" type="monster" looktype="1006" />
+	<creature name="Cubone" type="monster" looktype="1007" />
+	<creature name="Marowak" type="monster" looktype="1008" />
+	<creature name="Hitmonlee" type="monster" looktype="1009" />
+	<creature name="Hitmonchan" type="monster" looktype="1010" />
+	<creature name="Lickitung" type="monster" looktype="1011" />
+	<creature name="Koffing" type="monster" looktype="1012" />
+	<creature name="Weezing" type="monster" looktype="1013" />
+	<creature name="Rhyhorn" type="monster" looktype="1014" />
+	<creature name="Rhydon" type="monster" looktype="1015" />
+	<creature name="Chansey" type="monster" looktype="1016" />
+	<creature name="Tangela" type="monster" looktype="1017" />
+	<creature name="Kangaskhan" type="monster" looktype="1018" />
+	<creature name="Horsea" type="monster" looktype="1019" />
+	<creature name="Seadra" type="monster" looktype="1020" />
+	<creature name="Goldeen" type="monster" looktype="1021" />
+	<creature name="Seaking" type="monster" looktype="1022" />
+	<creature name="Staryu" type="monster" looktype="1023" />
+	<creature name="Starmie" type="monster" looktype="1024" />
+	<creature name="Mr. Mime" type="monster" looktype="1025" />
+	<creature name="Scyther" type="monster" looktype="1026" />
+	<creature name="Jynx" type="monster" looktype="1027" />
+	<creature name="Electabuzz" type="monster" looktype="1028" />
+	<creature name="Magmar" type="monster" looktype="1029" />
+	<creature name="Pinsir" type="monster" looktype="1030" />
+	<creature name="Tauros" type="monster" looktype="1031" />
+	<creature name="Magikarp" type="monster" looktype="1032" />
+	<creature name="Gyarados" type="monster" looktype="1033" />
+	<creature name="Lapras" type="monster" looktype="1034" />
+	<creature name="Ditto" type="monster" looktype="1035" />
+	<creature name="Eevee" type="monster" looktype="1036" />
+	<creature name="Vaporeon" type="monster" looktype="1037" />
+	<creature name="Jolteon" type="monster" looktype="1038" />
+	<creature name="Flareon" type="monster" looktype="1039" />
+	<creature name="Porygon" type="monster" looktype="1040" />
+	<creature name="Omanyte" type="monster" looktype="1041" />
+	<creature name="Omastar" type="monster" looktype="1042" />
+	<creature name="Kabuto" type="monster" looktype="1043" />
+	<creature name="Kabutops" type="monster" looktype="1044" />
+	<creature name="Aerodactyl" type="monster" looktype="1045" />
+	<creature name="Snorlax" type="monster" looktype="1046" />
+	<creature name="Articuno" type="monster" looktype="1047" />
+	<creature name="Zapdos" type="monster" looktype="1048" />
+	<creature name="Moltres" type="monster" looktype="1049" />
+	<creature name="Dratini" type="monster" looktype="1050" />
+	<creature name="Dragonair" type="monster" looktype="1051" />
+	<creature name="Dragonite" type="monster" looktype="1052" />
+	<creature name="Mewtwo" type="monster" looktype="1053" />
+	<creature name="Mew" type="monster" looktype="1054" />
+	<creature name="Chikorita" type="monster" looktype="1055" />
+	<creature name="Bayleef" type="monster" looktype="1056" />
+	<creature name="Meganium" type="monster" looktype="1057" />
+	<creature name="Cyndaquil" type="monster" looktype="1058" />
+	<creature name="Quilava" type="monster" looktype="1059" />
+	<creature name="Typhlosion" type="monster" looktype="1060" />
+	<creature name="Totodile" type="monster" looktype="1061" />
+	<creature name="Croconaw" type="monster" looktype="1062" />
+	<creature name="Feraligatr" type="monster" looktype="1063" />
+	<creature name="Sentret" type="monster" looktype="1064" />
+	<creature name="Furret" type="monster" looktype="1065" />
+	<creature name="Hoothoot" type="monster" looktype="1066" />
+	<creature name="Noctowl" type="monster" looktype="1067" />
+	<creature name="Ledyba" type="monster" looktype="1068" />
+	<creature name="Ledian" type="monster" looktype="1069" />
+	<creature name="Spinarak" type="monster" looktype="1070" />
+	<creature name="Ariados" type="monster" looktype="3183" />
+	<creature name="Crobat" type="monster" looktype="1072" />
+	<creature name="Chinchou" type="monster" looktype="1073" />
+	<creature name="Lanturn" type="monster" looktype="3197" />
+	<creature name="Pichu" type="monster" looktype="1075" />
+	<creature name="Cleffa" type="monster" looktype="1076" />
+	<creature name="Igglybuff" type="monster" looktype="1077" />
+	<creature name="Togepi" type="monster" looktype="1078" />
+	<creature name="Togetic" type="monster" looktype="3238" />
+	<creature name="Natu" type="monster" looktype="1080" />
+	<creature name="Xatu" type="monster" looktype="3243" />
+	<creature name="Mareep" type="monster" looktype="3202" />
+	<creature name="Flaaffy" type="monster" looktype="3244" />
+	<creature name="Ampharos" type="monster" looktype="1084" />
+	<creature name="Bellossom" type="monster" looktype="1085" />
+	<creature name="Marill" type="monster" looktype="1086" />
+	<creature name="Azumarill" type="monster" looktype="1087" />
+	<creature name="Sudowoodo" type="monster" looktype="1088" />
+	<creature name="Politoed" type="monster" looktype="3209" />
+	<creature name="Hoppip" type="monster" looktype="1090" />
+	<creature name="Skiploom" type="monster" looktype="1091" />
+	<creature name="Jumpluff" type="monster" looktype="1092" />
+	<creature name="Aipom" type="monster" looktype="1093" />
+	<creature name="Sunkern" type="monster" looktype="1094" />
+	<creature name="Sunflora" type="monster" looktype="1095" />
+	<creature name="Yanma" type="monster" looktype="3247" />
+	<creature name="Wooper" type="monster" looktype="1097" />
+	<creature name="Quagsire" type="monster" looktype="1098" />
+	<creature name="Espeon" type="monster" looktype="1099" />
+	<creature name="Umbreon" type="monster" looktype="1100" />
+	<creature name="Murkrow" type="monster" looktype="3246" />
+	<creature name="Slowking" type="monster" looktype="1102" />
+	<creature name="Misdreavus" type="monster" looktype="1103" />
+	<creature name="Unown" type="monster" looktype="1104" />
+	<creature name="Wobbuffet" type="monster" looktype="1105" />
+	<creature name="Girafarig" type="monster" looktype="3245" />
+	<creature name="Pineco" type="monster" looktype="1107" />
+	<creature name="Forretress" type="monster" looktype="3190" />
+	<creature name="Dunsparce" type="monster" looktype="1109" />
+	<creature name="Gligar" type="monster" looktype="1110" />
+	<creature name="Steelix" type="monster" looktype="1111" />
+	<creature name="Snubbull" type="monster" looktype="1112" />
+	<creature name="Granbull" type="monster" looktype="1113" />
+	<creature name="Qwilfish" type="monster" looktype="1114" />
+	<creature name="Scizor" type="monster" looktype="1115" />
+	<creature name="Shuckle" type="monster" looktype="1116" />
+	<creature name="Heracross" type="monster" looktype="3192" />
+	<creature name="Sneasel" type="monster" looktype="1118" />
+	<creature name="Teddiursa" type="monster" looktype="1119" />
+	<creature name="Ursaring" type="monster" looktype="3239" />
+	<creature name="Slugma" type="monster" looktype="1121" />
+	<creature name="Magcargo" type="monster" looktype="3248" />
+	<creature name="Swinub" type="monster" looktype="1123" />
+	<creature name="Piloswine" type="monster" looktype="3207" />
+	<creature name="Corsola" type="monster" looktype="3186" />
+	<creature name="Remoraid" type="monster" looktype="1126" />
+	<creature name="Octillery" type="monster" looktype="1127" />
+	<creature name="Delibird" type="monster" looktype="3249" />
+	<creature name="Mantine" type="monster" looktype="3201" />
+	<creature name="Skarmory" type="monster" looktype="1130" />
+	<creature name="Houndour" type="monster" looktype="1131" />
+	<creature name="Houndoom" type="monster" looktype="1132" />
+	<creature name="Kingdra" type="monster" looktype="1133" />
+	<creature name="Phanpy" type="monster" looktype="1134" />
+	<creature name="Donphan" type="monster" looktype="1135" />
+	<creature name="Porygon2" type="monster" looktype="1136" />
+	<creature name="Stantler" type="monster" looktype="3235" />
+	<creature name="Smeargle" type="monster" looktype="3234" />
+	<creature name="Tyrogue" type="monster" looktype="1139" />
+	<creature name="Hitmontop" type="monster" looktype="1140" />
+	<creature name="Smoochum" type="monster" looktype="1141" />
+	<creature name="Elekid" type="monster" looktype="1142" />
+	<creature name="Magby" type="monster" looktype="1143" />
+	<creature name="Miltank" type="monster" looktype="1144" />
+	<creature name="Blissey" type="monster" looktype="1145" />
+	<creature name="Raikou" type="monster" looktype="1146" />
+	<creature name="Entei" type="monster" looktype="1147" />
+	<creature name="Suicune" type="monster" looktype="1148" />
+	<creature name="Larvitar" type="monster" looktype="1149" />
+	<creature name="Pupitar" type="monster" looktype="3212" />
+	<creature name="Tyranitar" type="monster" looktype="1151" />
+	<creature name="Lugia" type="monster" looktype="1152" />
+	<creature name="Ho-Oh" type="monster" looktype="1153" />
+	<creature name="Celebi" type="monster" looktype="1154" />
+	<creature name="Treecko" type="monster" looktype="1433" />
+	<creature name="Grovyle" type="monster" looktype="1434" />
+	<creature name="Sceptile" type="monster" looktype="1435" />
+	<creature name="Torchic" type="monster" looktype="1436" />
+	<creature name="Combusken" type="monster" looktype="1437" />
+	<creature name="Blaziken" type="monster" looktype="1438" />
+	<creature name="Mudkip" type="monster" looktype="1439" />
+	<creature name="Marshtomp" type="monster" looktype="1440" />
+	<creature name="Swampert" type="monster" looktype="1441" />
+	<creature name="Poochyena" type="monster" looktype="1442" />
+	<creature name="Mightyena" type="monster" looktype="1443" />
+	<creature name="Zigzagoon" type="monster" looktype="1444" />
+	<creature name="Linoone" type="monster" looktype="1445" />
+	<creature name="Wurmple" type="monster" looktype="1446" />
+	<creature name="Silcoon" type="monster" looktype="1447" />
+	<creature name="Beautifly" type="monster" looktype="1448" />
+	<creature name="Cascoon" type="monster" looktype="1449" />
+	<creature name="Dustox" type="monster" looktype="1450" />
+	<creature name="Lotad" type="monster" looktype="1451" />
+	<creature name="Lombre" type="monster" looktype="1452" />
+	<creature name="Ludicolo" type="monster" looktype="1453" />
+	<creature name="Seedot" type="monster" looktype="1454" />
+	<creature name="Nuzleaf" type="monster" looktype="1455" />
+	<creature name="Shiftry" type="monster" looktype="1456" />
+	<creature name="Taillow" type="monster" looktype="1457" />
+	<creature name="Swellow" type="monster" looktype="1458" />
+	<creature name="Wingull" type="monster" looktype="1459" />
+	<creature name="Pelipper" type="monster" looktype="1460" />
+	<creature name="Ralts" type="monster" looktype="1461" />
+	<creature name="Kirlia" type="monster" looktype="1462" />
+	<creature name="Gardevoir" type="monster" looktype="1463" />
+	<creature name="Surskit" type="monster" looktype="1464" />
+	<creature name="Masquerain" type="monster" looktype="1465" />
+	<creature name="Shroomish" type="monster" looktype="1466" />
+	<creature name="Breloom" type="monster" looktype="1467" />
+	<creature name="Slakoth" type="monster" looktype="1468" />
+	<creature name="Vigoroth" type="monster" looktype="1469" />
+	<creature name="Slaking" type="monster" looktype="1470" />
+	<creature name="Nincada" type="monster" looktype="1471" />
+	<creature name="Ninjask" type="monster" looktype="1472" />
+	<creature name="Shedinja" type="monster" looktype="1473" />
+	<creature name="Whismur" type="monster" looktype="1474" />
+	<creature name="Loudred" type="monster" looktype="1475" />
+	<creature name="Exploud" type="monster" looktype="1476" />
+	<creature name="Makuhita" type="monster" looktype="1477" />
+	<creature name="Hariyama" type="monster" looktype="1478" />
+	<creature name="Azurill" type="monster" looktype="1479" />
+	<creature name="Nosepass" type="monster" looktype="1480" />
+	<creature name="Skitty" type="monster" looktype="1481" />
+	<creature name="Delcatty" type="monster" looktype="1482" />
+	<creature name="Sableye" type="monster" looktype="1483" />
+	<creature name="Mawile" type="monster" looktype="1484" />
+	<creature name="Aron" type="monster" looktype="1485" />
+	<creature name="Lairon" type="monster" looktype="1486" />
+	<creature name="Aggron" type="monster" looktype="1487" />
+	<creature name="Meditite" type="monster" looktype="1488" />
+	<creature name="Medicham" type="monster" looktype="1489" />
+	<creature name="Electrike" type="monster" looktype="1490" />
+	<creature name="Manectric" type="monster" looktype="1491" />
+	<creature name="Plusle" type="monster" looktype="1492" />
+	<creature name="Minun" type="monster" looktype="1493" />
+	<creature name="Volbeat" type="monster" looktype="1494" />
+	<creature name="Illumise" type="monster" looktype="1495" />
+	<creature name="Roselia" type="monster" looktype="1496" />
+	<creature name="Gulpin" type="monster" looktype="1497" />
+	<creature name="Swalot" type="monster" looktype="1498" />
+	<creature name="Carvanha" type="monster" looktype="1499" />
+	<creature name="Sharpedo" type="monster" looktype="1500" />
+	<creature name="Wailmer" type="monster" looktype="1501" />
+	<creature name="Wailord" type="monster" looktype="1502" />
+	<creature name="Numel" type="monster" looktype="1503" />
+	<creature name="Camerupt" type="monster" looktype="1504" />
+	<creature name="Torkoal" type="monster" looktype="1505" />
+	<creature name="Spoink" type="monster" looktype="1506" />
+	<creature name="Grumpig" type="monster" looktype="1507" />
+	<creature name="Spinda" type="monster" looktype="1508" />
+	<creature name="Trapinch" type="monster" looktype="1509" />
+	<creature name="Vibrava" type="monster" looktype="1510" />
+	<creature name="Flygon" type="monster" looktype="1511" />
+	<creature name="Cacnea" type="monster" looktype="1512" />
+	<creature name="Cacturne" type="monster" looktype="1513" />
+	<creature name="Swablu" type="monster" looktype="1514" />
+	<creature name="Altaria" type="monster" looktype="1515" />
+	<creature name="Zangoose" type="monster" looktype="1516" />
+	<creature name="Seviper" type="monster" looktype="1517" />
+	<creature name="Lunatone" type="monster" looktype="1518" />
+	<creature name="Solrock" type="monster" looktype="1519" />
+	<creature name="Barboach" type="monster" looktype="1520" />
+	<creature name="Whiscash" type="monster" looktype="1521" />
+	<creature name="Corphish" type="monster" looktype="1522" />
+	<creature name="Crawdaunt" type="monster" looktype="1523" />
+	<creature name="Baltoy" type="monster" looktype="1524" />
+	<creature name="Claydol" type="monster" looktype="1525" />
+	<creature name="Lileep" type="monster" looktype="1526" />
+	<creature name="Cradily" type="monster" looktype="1527" />
+	<creature name="Anorith" type="monster" looktype="1528" />
+	<creature name="Armaldo" type="monster" looktype="1529" />
+	<creature name="Feebas" type="monster" looktype="1530" />
+	<creature name="Milotic" type="monster" looktype="1531" />
+	<creature name="Castform" type="monster" looktype="1532" />
+	<creature name="Kecleon" type="monster" looktype="1533" />
+	<creature name="Shuppet" type="monster" looktype="1534" />
+	<creature name="Banette" type="monster" looktype="1535" />
+	<creature name="Duskull" type="monster" looktype="1536" />
+	<creature name="Dusclops" type="monster" looktype="1537" />
+	<creature name="Tropius" type="monster" looktype="1538" />
+	<creature name="Chimecho" type="monster" looktype="1539" />
+	<creature name="Absol" type="monster" looktype="1540" />
+	<creature name="Wynaut" type="monster" looktype="1541" />
+	<creature name="Snorunt" type="monster" looktype="1542" />
+	<creature name="Glalie" type="monster" looktype="1543" />
+	<creature name="Spheal" type="monster" looktype="1544" />
+	<creature name="Sealeo" type="monster" looktype="1545" />
+	<creature name="Walrein" type="monster" looktype="1546" />
+	<creature name="Clamperl" type="monster" looktype="1547" />
+	<creature name="Huntail" type="monster" looktype="1548" />
+	<creature name="Gorebyss" type="monster" looktype="1549" />
+	<creature name="Relicanth" type="monster" looktype="1550" />
+	<creature name="Luvdisc" type="monster" looktype="1551" />
+	<creature name="Bagon" type="monster" looktype="1552" />
+	<creature name="Shelgon" type="monster" looktype="1553" />
+	<creature name="Salamence" type="monster" looktype="1554" />
+	<creature name="Beldum" type="monster" looktype="1555" />
+	<creature name="Metang" type="monster" looktype="1556" />
+	<creature name="Metagross" type="monster" looktype="1557" />
+	<creature name="Regirock" type="monster" looktype="1558" />
+	<creature name="Regice" type="monster" looktype="1559" />
+	<creature name="Registeel" type="monster" looktype="1560" />
+	<creature name="Latias" type="monster" looktype="1561" />
+	<creature name="Latios" type="monster" looktype="1562" />
+	<creature name="Kyogre" type="monster" looktype="1563" />
+	<creature name="Groudon" type="monster" looktype="1564" />
+	<creature name="Rayquaza" type="monster" looktype="1565" />
+	<creature name="Jirachi" type="monster" looktype="1566" />
+	<creature name="Deoxys" type="monster" looktype="1567" />
+	<creature name="Shiny Bulbasaur" type="monster" looktype="1172" />
+	<creature name="Shiny Ivysaur" type="monster" looktype="1173" />
+	<creature name="Shiny Venusaur" type="monster" looktype="1174" />
+	<creature name="Shiny Charmander" type="monster" looktype="1175" />
+	<creature name="Shiny Charmeleon" type="monster" looktype="1176" />
+	<creature name="Shiny Charizard" type="monster" looktype="1177" />
+	<creature name="Shiny Squirtle" type="monster" looktype="1178" />
+	<creature name="Shiny Wartortle" type="monster" looktype="1179" />
+	<creature name="Shiny Blastoise" type="monster" looktype="1180" />
+	<creature name="Shiny Caterpie" type="monster" looktype="1181" />
+	<creature name="Shiny Metapod" type="monster" looktype="1182" />
+	<creature name="Shiny Butterfree" type="monster" looktype="1183" />
+	<creature name="Shiny Weedle" type="monster" looktype="1184" />
+	<creature name="Shiny Kakuna" type="monster" looktype="1185" />
+	<creature name="Shiny Beedrill" type="monster" looktype="1186" />
+	<creature name="Shiny Pidgey" type="monster" looktype="1187" />
+	<creature name="Shiny Pidgeotto" type="monster" looktype="1188" />
+	<creature name="Shiny Pidgeot" type="monster" looktype="1189" />
+	<creature name="Shiny Rattata" type="monster" looktype="1190" />
+	<creature name="Shiny Raticate" type="monster" looktype="1191" />
+	<creature name="Shiny Spearow" type="monster" looktype="1192" />
+	<creature name="Shiny Fearow" type="monster" looktype="1193" />
+	<creature name="Shiny Ekans" type="monster" looktype="1194" />
+	<creature name="Shiny Arbok" type="monster" looktype="1195" />
+	<creature name="Shiny Pikachu" type="monster" looktype="1196" />
+	<creature name="Shiny Raichu" type="monster" looktype="1197" />
+	<creature name="Shiny Sandshrew" type="monster" looktype="1198" />
+	<creature name="Shiny Sandslash" type="monster" looktype="1199" />
+	<creature name="Shiny Nidoran Female" type="monster" looktype="1200" />
+	<creature name="Shiny Nidorina" type="monster" looktype="1201" />
+	<creature name="Shiny Nidoqueen" type="monster" looktype="1202" />
+	<creature name="Shiny Nidoran Male" type="monster" looktype="1203" />
+	<creature name="Shiny Nidorino" type="monster" looktype="1204" />
+	<creature name="Shiny Nidoking" type="monster" looktype="1205" />
+	<creature name="Shiny Clefairy" type="monster" looktype="1604" />
+	<creature name="Shiny Clefable" type="monster" looktype="1603" />
+	<creature name="Shiny Vulpix" type="monster" looktype="1206" />
+	<creature name="Shiny Ninetales" type="monster" looktype="1911" />
+	<creature name="Shiny Jigglypuff" type="monster" looktype="1608" />
+	<creature name="Shiny Wigglytuff" type="monster" looktype="1622" />
+	<creature name="Shiny Zubat" type="monster" looktype="1208" />
+	<creature name="Shiny Golbat" type="monster" looktype="1209" />
+	<creature name="Shiny Oddish" type="monster" looktype="1210" />
+	<creature name="Shiny Gloom" type="monster" looktype="1211" />
+	<creature name="Shiny Vileplume" type="monster" looktype="1621" />
+	<creature name="Shiny Paras" type="monster" looktype="1213" />
+	<creature name="Shiny Parasect" type="monster" looktype="1214" />
+	<creature name="Shiny Venonat" type="monster" looktype="1215" />
+	<creature name="Shiny Venomoth" type="monster" looktype="1216" />
+	<creature name="Shiny Diglett" type="monster" looktype="1217" />
+	<creature name="Shiny Dugtrio" type="monster" looktype="1218" />
+	<creature name="Shiny Meowth" type="monster" looktype="1612" />
+	<creature name="Shiny Persian" type="monster" looktype="1614" />
+	<creature name="Shiny Psyduck" type="monster" looktype="1616" />
+	<creature name="Shiny Golduck" type="monster" looktype="1606" />
+	<creature name="Shiny Mankey" type="monster" looktype="1611" />
+	<creature name="Shiny Primeape" type="monster" looktype="1615" />
+	<creature name="Shiny Growlithe" type="monster" looktype="1219" />
+	<creature name="Shiny Arcanine" type="monster" looktype="1220" />
+	<creature name="Shiny Poliwag" type="monster" looktype="1221" />
+	<creature name="Shiny Poliwhirl" type="monster" looktype="1222" />
+	<creature name="Shiny Poliwrath" type="monster" looktype="1223" />
+	<creature name="Shiny Abra" type="monster" looktype="1224" />
+	<creature name="Shiny Kadabra" type="monster" looktype="1225" />
+	<creature name="Shiny Alakazam" type="monster" looktype="1226" />
+	<creature name="Shiny Machop" type="monster" looktype="1227" />
+	<creature name="Shiny Machoke" type="monster" looktype="1228" />
+	<creature name="Shiny Machamp" type="monster" looktype="1229" />
+	<creature name="Shiny Bellsprout" type="monster" looktype="1230" />
+	<creature name="Shiny Weepinbell" type="monster" looktype="1231" />
+	<creature name="Shiny Victreebel" type="monster" looktype="1232" />
+	<creature name="Shiny Tentacool" type="monster" looktype="1233" />
+	<creature name="Shiny Tentacruel" type="monster" looktype="1234" />
+	<creature name="Shiny Geodude" type="monster" looktype="1235" />
+	<creature name="Shiny Graveler" type="monster" looktype="1236" />
+	<creature name="Shiny Golem" type="monster" looktype="1237" />
+	<creature name="Shiny Ponyta" type="monster" looktype="1238" />
+	<creature name="Shiny Rapidash" type="monster" looktype="1239" />
+	<creature name="Shiny Slowpoke" type="monster" looktype="1618" />
+	<creature name="Shiny Slowbro" type="monster" looktype="1617" />
+	<creature name="Shiny Magnemite" type="monster" looktype="1240" />
+	<creature name="Shiny Magneton" type="monster" looktype="1241" />
+	<creature name="Shiny Farfetch'D" type="monster" looktype="1242" />
+	<creature name="Shiny Doduo" type="monster" looktype="1243" />
+	<creature name="Shiny Dodrio" type="monster" looktype="1244" />
+	<creature name="Shiny Seel" type="monster" looktype="1245" />
+	<creature name="Shiny Dewgong" type="monster" looktype="1246" />
+	<creature name="Shiny Grimer" type="monster" looktype="1607" />
+	<creature name="Shiny Muk" type="monster" looktype="1613" />
+	<creature name="Shiny Shellder" type="monster" looktype="1249" />
+	<creature name="Shiny Cloyster" type="monster" looktype="1250" />
+	<creature name="Shiny Gastly" type="monster" looktype="1251" />
+	<creature name="Shiny Haunter" type="monster" looktype="1252" />
+	<creature name="Shiny Gengar" type="monster" looktype="1253" />
+	<creature name="Shiny Onix" type="monster" looktype="1254" />
+	<creature name="Shiny Drowzee" type="monster" looktype="1255" />
+	<creature name="Shiny Hypno" type="monster" looktype="1256" />
+	<creature name="Shiny Krabby" type="monster" looktype="1257" />
+	<creature name="Shiny Kingler" type="monster" looktype="1258" />
+	<creature name="Shiny Voltorb" type="monster" looktype="1259" />
+	<creature name="Shiny Electrode" type="monster" looktype="1260" />
+	<creature name="Shiny Exeggcute" type="monster" looktype="1261" />
+	<creature name="Shiny Exeggutor" type="monster" looktype="1262" />
+	<creature name="Shiny Cubone" type="monster" looktype="1263" />
+	<creature name="Shiny Marowak" type="monster" looktype="1264" />
+	<creature name="Shiny Hitmonlee" type="monster" looktype="1265" />
+	<creature name="Shiny Hitmonchan" type="monster" looktype="1266" />
+	<creature name="Shiny Lickitung" type="monster" looktype="1610" />
+	<creature name="Shiny Koffing" type="monster" looktype="1267" />
+	<creature name="Shiny Weezing" type="monster" looktype="1268" />
+	<creature name="Shiny Rhyhorn" type="monster" looktype="1269" />
+	<creature name="Shiny Rhydon" type="monster" looktype="1270" />
+	<creature name="Shiny Chansey" type="monster" looktype="1602" />
+	<creature name="Shiny Tangela" type="monster" looktype="1271" />
+	<creature name="Shiny Kangaskhan" type="monster" looktype="1018" />
+	<creature name="Shiny Horsea" type="monster" looktype="1272" />
+	<creature name="Shiny Seadra" type="monster" looktype="1273" />
+	<creature name="Shiny Goldeen" type="monster" looktype="1274" />
+	<creature name="Shiny Seaking" type="monster" looktype="1275" />
+	<creature name="Shiny Staryu" type="monster" looktype="1276" />
+	<creature name="Shiny Starmie" type="monster" looktype="1277" />
+	<creature name="Shiny Mr. Mime" type="monster" looktype="1278" />
+	<creature name="Shiny Scyther" type="monster" looktype="1279" />
+	<creature name="Shiny Jynx" type="monster" looktype="1280" />
+	<creature name="Shiny Electabuzz" type="monster" looktype="1281" />
+	<creature name="Shiny Magmar" type="monster" looktype="1282" />
+	<creature name="Shiny Pinsir" type="monster" looktype="1283" />
+	<creature name="Shiny Tauros" type="monster" looktype="1284" />
+	<creature name="Shiny Magikarp" type="monster" looktype="1285" />
+	<creature name="Shiny Gyarados" type="monster" looktype="1286" />
+	<creature name="Shiny Lapras" type="monster" looktype="1287" />
+	<creature name="Shiny Ditto" type="monster" looktype="1288" />
+	<creature name="Shiny Eevee" type="monster" looktype="1289" />
+	<creature name="Shiny Vaporeon" type="monster" looktype="3232" />
+	<creature name="Shiny Jolteon" type="monster" looktype="3221" />
+	<creature name="Shiny Flareon" type="monster" looktype="3220" />
+	<creature name="Shiny Porygon" type="monster" looktype="1290" />
+	<creature name="Shiny Omanyte" type="monster" looktype="1291" />
+	<creature name="Shiny Omastar" type="monster" looktype="1292" />
+	<creature name="Shiny Kabuto" type="monster" looktype="1293" />
+	<creature name="Shiny Kabutops" type="monster" looktype="1294" />
+	<creature name="Shiny Aerodactyl" type="monster" looktype="1295" />
+	<creature name="Shiny Snorlax" type="monster" looktype="1619" />
+	<creature name="Shiny Articuno" type="monster" looktype="1296" />
+	<creature name="Shiny Zapdos" type="monster" looktype="1048" />
+	<creature name="Shiny Moltres" type="monster" looktype="1297" />
+	<creature name="Shiny Dratini" type="monster" looktype="1298" />
+	<creature name="Shiny Dragonair" type="monster" looktype="1299" />
+	<creature name="Shiny Dragonite" type="monster" looktype="1300" />
+	<creature name="Shiny Mewtwo" type="monster" looktype="1301" />
+	<creature name="Shiny Mew" type="monster" looktype="1302" />
+	<creature name="Shiny Chikorita" type="monster" looktype="1625" />
+	<creature name="Shiny Bayleef" type="monster" looktype="1626" />
+	<creature name="Shiny Meganium" type="monster" looktype="1627" />
+	<creature name="Shiny Cyndaquil" type="monster" looktype="1628" />
+	<creature name="Shiny Quilava" type="monster" looktype="1629" />
+	<creature name="Shiny Typhlosion" type="monster" looktype="1630" />
+	<creature name="Shiny Totodile" type="monster" looktype="1631" />
+	<creature name="Shiny Croconaw" type="monster" looktype="1632" />
+	<creature name="Shiny Feraligatr" type="monster" looktype="1633" />
+	<creature name="Shiny Sentret" type="monster" looktype="1634" />
+	<creature name="Shiny Furret" type="monster" looktype="1635" />
+	<creature name="Shiny Hoothoot" type="monster" looktype="1636" />
+	<creature name="Shiny Noctowl" type="monster" looktype="1637" />
+	<creature name="Shiny Ledyba" type="monster" looktype="1638" />
+	<creature name="Shiny Ledian" type="monster" looktype="1639" />
+	<creature name="Shiny Spinarak" type="monster" looktype="1640" />
+	<creature name="Shiny Ariados" type="monster" looktype="3218" />
+	<creature name="Shiny Crobat" type="monster" looktype="1642" />
+	<creature name="Shiny Chinchou" type="monster" looktype="1643" />
+	<creature name="Shiny Lanturn" type="monster" looktype="3222" />
+	<creature name="Shiny Pichu" type="monster" looktype="1645" />
+	<creature name="Shiny Cleffa" type="monster" looktype="1646" />
+	<creature name="Shiny Igglybuff" type="monster" looktype="1647" />
+	<creature name="Shiny Togepi" type="monster" looktype="1648" />
+	<creature name="Shiny Togetic" type="monster" looktype="1649" />
+	<creature name="Shiny Natu" type="monster" looktype="1650" />
+	<creature name="Shiny Xatu" type="monster" looktype="3233" />
+	<creature name="Shiny Mareep" type="monster" looktype="1652" />
+	<creature name="Shiny Flaaffy" type="monster" looktype="1653" />
+	<creature name="Shiny Ampharos" type="monster" looktype="1654" />
+	<creature name="Shiny Bellossom" type="monster" looktype="1655" />
+	<creature name="Shiny Marill" type="monster" looktype="1656" />
+	<creature name="Shiny Azumarill" type="monster" looktype="1657" />
+	<creature name="Shiny Sudowoodo" type="monster" looktype="1658" />
+	<creature name="Shiny Politoed" type="monster" looktype="3224" />
+	<creature name="Shiny Hoppip" type="monster" looktype="1660" />
+	<creature name="Shiny Skiploom" type="monster" looktype="1661" />
+	<creature name="Shiny Jumpluff" type="monster" looktype="1662" />
+	<creature name="Shiny Aipom" type="monster" looktype="1663" />
+	<creature name="Shiny Sunkern" type="monster" looktype="1664" />
+	<creature name="Shiny Sunflora" type="monster" looktype="1665" />
+	<creature name="Shiny Yanma" type="monster" looktype="1666" />
+	<creature name="Shiny Wooper" type="monster" looktype="1667" />
+	<creature name="Shiny Quagsire" type="monster" looktype="1668" />
+	<creature name="Shiny Espeon" type="monster" looktype="1669" />
+	<creature name="Shiny Umbreon" type="monster" looktype="1670" />
+	<creature name="Shiny Murkrow" type="monster" looktype="1671" />
+	<creature name="Shiny Slowking" type="monster" looktype="1624" />
+	<creature name="Shiny Misdreavus" type="monster" looktype="1673" />
+	<creature name="Shiny Unown" type="monster" looktype="1674" />
+	<creature name="Shiny Wobbuffet" type="monster" looktype="1675" />
+	<creature name="Shiny Girafarig" type="monster" looktype="1676" />
+	<creature name="Shiny Pineco" type="monster" looktype="1677" />
+	<creature name="Shiny Forretress" type="monster" looktype="1678" />
+	<creature name="Shiny Dunsparce" type="monster" looktype="1679" />
+	<creature name="Shiny Gligar" type="monster" looktype="1680" />
+	<creature name="Shiny Steelix" type="monster" looktype="3231" />
+	<creature name="Shiny Snubbull" type="monster" looktype="1682" />
+	<creature name="Shiny Granbull" type="monster" looktype="1683" />
+	<creature name="Shiny Qwilfish" type="monster" looktype="1684" />
+	<creature name="Shiny Scizor" type="monster" looktype="1685" />
+	<creature name="Shiny Shuckle" type="monster" looktype="1686" />
+	<creature name="Shiny Heracross" type="monster" looktype="1687" />
+	<creature name="Shiny Sneasel" type="monster" looktype="1688" />
+	<creature name="Shiny Teddiursa" type="monster" looktype="1689" />
+	<creature name="Shiny Ursaring" type="monster" looktype="1690" />
+	<creature name="Shiny Slugma" type="monster" looktype="1691" />
+	<creature name="Shiny Magcargo" type="monster" looktype="1692" />
+	<creature name="Shiny Swinub" type="monster" looktype="1693" />
+	<creature name="Shiny Piloswine" type="monster" looktype="1694" />
+	<creature name="Shiny Corsola" type="monster" looktype="1695" />
+	<creature name="Shiny Remoraid" type="monster" looktype="1696" />
+	<creature name="Shiny Octillery" type="monster" looktype="1697" />
+	<creature name="Shiny Delibird" type="monster" looktype="1698" />
+	<creature name="Shiny Mantine" type="monster" looktype="1699" />
+	<creature name="Shiny Skarmory" type="monster" looktype="1700" />
+	<creature name="Shiny Houndour" type="monster" looktype="1701" />
+	<creature name="Shiny Houndoom" type="monster" looktype="1702" />
+	<creature name="Shiny Kingdra" type="monster" looktype="1703" />
+	<creature name="Shiny Phanpy" type="monster" looktype="1704" />
+	<creature name="Shiny Donphan" type="monster" looktype="1705" />
+	<creature name="Shiny Porygon2" type="monster" looktype="1706" />
+	<creature name="Shiny Stantler" type="monster" looktype="3230" />
+	<creature name="Shiny Smeargle" type="monster" looktype="1708" />
+	<creature name="Shiny Tyrogue" type="monster" looktype="1709" />
+	<creature name="Shiny Hitmontop" type="monster" looktype="1710" />
+	<creature name="Shiny Smoochum" type="monster" looktype="1711" />
+	<creature name="Shiny Elekid" type="monster" looktype="1712" />
+	<creature name="Shiny Magby" type="monster" looktype="1713" />
+	<creature name="Shiny Miltank" type="monster" looktype="1714" />
+	<creature name="Shiny Blissey" type="monster" looktype="1715" />
+	<creature name="Shiny Raikou" type="monster" looktype="1146" />
+	<creature name="Shiny Entei" type="monster" looktype="1147" />
+	<creature name="Shiny Suicune" type="monster" looktype="1148" />
+	<creature name="Shiny Larvitar" type="monster" looktype="1719" />
+	<creature name="Shiny Pupitar" type="monster" looktype="3225" />
+	<creature name="Shiny Tyranitar" type="monster" looktype="1721" />
+	<creature name="Shiny Lugia" type="monster" looktype="1152" />
+	<creature name="Shiny Ho-Oh" type="monster" looktype="1153" />
+	<creature name="Shiny Celebi" type="monster" looktype="1154" />
+	<creature name="Shiny Treecko" type="monster" looktype="1743" />
+	<creature name="Shiny Grovyle" type="monster" looktype="1744" />
+	<creature name="Shiny Sceptile" type="monster" looktype="1745" />
+	<creature name="Shiny Torchic" type="monster" looktype="1746" />
+	<creature name="Shiny Combusken" type="monster" looktype="1747" />
+	<creature name="Shiny Blaziken" type="monster" looktype="1748" />
+	<creature name="Shiny Mudkip" type="monster" looktype="1749" />
+	<creature name="Shiny Marshtomp" type="monster" looktype="1750" />
+	<creature name="Shiny Swampert" type="monster" looktype="3373" />
+	<creature name="Shiny Poochyena" type="monster" looktype="1752" />
+	<creature name="Shiny Mightyena" type="monster" looktype="1753" />
+	<creature name="Shiny Zigzagoon" type="monster" looktype="1754" />
+	<creature name="Shiny Linoone" type="monster" looktype="1755" />
+	<creature name="Shiny Wurmple" type="monster" looktype="1756" />
+	<creature name="Shiny Silcoon" type="monster" looktype="1757" />
+	<creature name="Shiny Beautifly" type="monster" looktype="1758" />
+	<creature name="Shiny Cascoon" type="monster" looktype="1759" />
+	<creature name="Shiny Dustox" type="monster" looktype="1760" />
+	<creature name="Shiny Lotad" type="monster" looktype="1761" />
+	<creature name="Shiny Lombre" type="monster" looktype="1762" />
+	<creature name="Shiny Ludicolo" type="monster" looktype="3374" />
+	<creature name="Shiny Seedot" type="monster" looktype="1764" />
+	<creature name="Shiny Nuzleaf" type="monster" looktype="1765" />
+	<creature name="Shiny Shiftry" type="monster" looktype="1766" />
+	<creature name="Shiny Taillow" type="monster" looktype="1767" />
+	<creature name="Shiny Swellow" type="monster" looktype="1768" />
+	<creature name="Shiny Wingull" type="monster" looktype="1769" />
+	<creature name="Shiny Pelipper" type="monster" looktype="1770" />
+	<creature name="Shiny Ralts" type="monster" looktype="1771" />
+	<creature name="Shiny Kirlia" type="monster" looktype="1462" />
+	<creature name="Shiny Gardevoir" type="monster" looktype="1772" />
+	<creature name="Shiny Surskit" type="monster" looktype="1773" />
+	<creature name="Shiny Masquerain" type="monster" looktype="1774" />
+	<creature name="Shiny Shroomish" type="monster" looktype="1775" />
+	<creature name="Shiny Breloom" type="monster" looktype="1776" />
+	<creature name="Shiny Slakoth" type="monster" looktype="1777" />
+	<creature name="Shiny Vigoroth" type="monster" looktype="1778" />
+	<creature name="Shiny Slaking" type="monster" looktype="1779" />
+	<creature name="Shiny Nincada" type="monster" looktype="1780" />
+	<creature name="Shiny Ninjask" type="monster" looktype="1781" />
+	<creature name="Shiny Shedinja" type="monster" looktype="1782" />
+	<creature name="Shiny Whismur" type="monster" looktype="1783" />
+	<creature name="Shiny Loudred" type="monster" looktype="1784" />
+	<creature name="Shiny Exploud" type="monster" looktype="1785" />
+	<creature name="Shiny Makuhita" type="monster" looktype="1786" />
+	<creature name="Shiny Hariyama" type="monster" looktype="1787" />
+	<creature name="Shiny Azurill" type="monster" looktype="1656" />
+	<creature name="Shiny Nosepass" type="monster" looktype="1788" />
+	<creature name="Shiny Skitty" type="monster" looktype="1789" />
+	<creature name="Shiny Delcatty" type="monster" looktype="1790" />
+	<creature name="Shiny Sableye" type="monster" looktype="1791" />
+	<creature name="Shiny Mawile" type="monster" looktype="1792" />
+	<creature name="Shiny Aron" type="monster" looktype="1793" />
+	<creature name="Shiny Lairon" type="monster" looktype="1794" />
+	<creature name="Shiny Aggron" type="monster" looktype="1795" />
+	<creature name="Shiny Meditite" type="monster" looktype="1796" />
+	<creature name="Shiny Medicham" type="monster" looktype="1797" />
+	<creature name="Shiny Electrike" type="monster" looktype="1798" />
+	<creature name="Shiny Manectric" type="monster" looktype="1799" />
+	<creature name="Shiny Plusle" type="monster" looktype="1800" />
+	<creature name="Shiny Minun" type="monster" looktype="1801" />
+	<creature name="Shiny Volbeat" type="monster" looktype="1802" />
+	<creature name="Shiny Illumise" type="monster" looktype="1803" />
+	<creature name="Shiny Roselia" type="monster" looktype="1804" />
+	<creature name="Shiny Gulpin" type="monster" looktype="1805" />
+	<creature name="Shiny Swalot" type="monster" looktype="1806" />
+	<creature name="Shiny Carvanha" type="monster" looktype="1807" />
+	<creature name="Shiny Sharpedo" type="monster" looktype="1808" />
+	<creature name="Shiny Wailmer" type="monster" looktype="1809" />
+	<creature name="Shiny Wailord" type="monster" looktype="1810" />
+	<creature name="Shiny Numel" type="monster" looktype="1811" />
+	<creature name="Shiny Camerupt" type="monster" looktype="1812" />
+	<creature name="Shiny Torkoal" type="monster" looktype="1813" />
+	<creature name="Shiny Spoink" type="monster" looktype="1814" />
+	<creature name="Shiny Grumpig" type="monster" looktype="1815" />
+	<creature name="Shiny Spinda" type="monster" looktype="1816" />
+	<creature name="Shiny Trapinch" type="monster" looktype="1817" />
+	<creature name="Shiny Vibrava" type="monster" looktype="1818" />
+	<creature name="Shiny Flygon" type="monster" looktype="1819" />
+	<creature name="Shiny Cacnea" type="monster" looktype="1820" />
+	<creature name="Shiny Cacturne" type="monster" looktype="1821" />
+	<creature name="Shiny Swablu" type="monster" looktype="1822" />
+	<creature name="Shiny Altaria" type="monster" looktype="1823" />
+	<creature name="Shiny Zangoose" type="monster" looktype="1824" />
+	<creature name="Shiny Seviper" type="monster" looktype="1825" />
+	<creature name="Shiny Lunatone" type="monster" looktype="1826" />
+	<creature name="Shiny Solrock" type="monster" looktype="1827" />
+	<creature name="Shiny Barboach" type="monster" looktype="1828" />
+	<creature name="Shiny Whiscash" type="monster" looktype="1829" />
+	<creature name="Shiny Corphish" type="monster" looktype="1830" />
+	<creature name="Shiny Crawdaunt" type="monster" looktype="1831" />
+	<creature name="Shiny Baltoy" type="monster" looktype="1832" />
+	<creature name="Shiny Claydol" type="monster" looktype="1833" />
+	<creature name="Shiny Lileep" type="monster" looktype="1834" />
+	<creature name="Shiny Cradily" type="monster" looktype="1835" />
+	<creature name="Shiny Anorith" type="monster" looktype="1836" />
+	<creature name="Shiny Armaldo" type="monster" looktype="1837" />
+	<creature name="Shiny Feebas" type="monster" looktype="1838" />
+	<creature name="Shiny Milotic" type="monster" looktype="1839" />
+	<creature name="Shiny Castform" type="monster" looktype="1532" />
+	<creature name="Shiny Kecleon" type="monster" looktype="1840" />
+	<creature name="Shiny Shuppet" type="monster" looktype="1841" />
+	<creature name="Shiny Banette" type="monster" looktype="1842" />
+	<creature name="Shiny Duskull" type="monster" looktype="1843" />
+	<creature name="Shiny Dusclops" type="monster" looktype="1844" />
+	<creature name="Shiny Tropius" type="monster" looktype="1845" />
+	<creature name="Shiny Chimecho" type="monster" looktype="1846" />
+	<creature name="Shiny Absol" type="monster" looktype="3217" />
+	<creature name="Shiny Wynaut" type="monster" looktype="1541" />
+	<creature name="Shiny Snorunt" type="monster" looktype="1848" />
+	<creature name="Shiny Glalie" type="monster" looktype="1849" />
+	<creature name="Shiny Spheal" type="monster" looktype="1850" />
+	<creature name="Shiny Sealeo" type="monster" looktype="1851" />
+	<creature name="Shiny Walrein" type="monster" looktype="1852" />
+	<creature name="Shiny Clamperl" type="monster" looktype="1853" />
+	<creature name="Shiny Huntail" type="monster" looktype="1854" />
+	<creature name="Shiny Gorebyss" type="monster" looktype="1855" />
+	<creature name="Shiny Relicanth" type="monster" looktype="1856" />
+	<creature name="Shiny Luvdisc" type="monster" looktype="1857" />
+	<creature name="Shiny Bagon" type="monster" looktype="1858" />
+	<creature name="Shiny Shelgon" type="monster" looktype="1859" />
+	<creature name="Shiny Salamence" type="monster" looktype="1860" />
+	<creature name="Shiny Beldum" type="monster" looktype="1861" />
+	<creature name="Shiny Metang" type="monster" looktype="1862" />
+	<creature name="Shiny Metagross" type="monster" looktype="1863" />
+	<creature name="Shiny Regirock" type="monster" looktype="1864" />
+	<creature name="Shiny Regice" type="monster" looktype="1865" />
+	<creature name="Shiny Registeel" type="monster" looktype="1866" />
+	<creature name="Shiny Latias" type="monster" looktype="1561" />
+	<creature name="Shiny Latios" type="monster" looktype="1562" />
+	<creature name="Shiny Kyogre" type="monster" looktype="1867" />
+	<creature name="Shiny Groudon" type="monster" looktype="1868" />
+	<creature name="Shiny Rayquaza" type="monster" looktype="1869" />
+	<creature name="Shiny Jirachi" type="monster" looktype="1870" />
+	<creature name="Shiny Deoxys" type="monster" looktype="1567" />
+	<creature name="Ancient Venusaur" type="monster" looktype="1912" />
+	<creature name="Elder Charizard" type="monster" looktype="1914" />
+	<creature name="Ancient Blastoise" type="monster" looktype="1905" />
+	<creature name="Super Raichu" type="monster" looktype="1197" />
+	<creature name="Ancient Ninetales" type="monster" looktype="1207" />
+	<creature name="Ancient Vileplume" type="monster" looktype="1913" />
+	<creature name="Ancient Arcanine" type="monster" looktype="1904" />
+	<creature name="Dark Abra" type="monster" looktype="1304" />
+	<creature name="Ancient Muk" type="monster" looktype="1248" />
+	<creature name="Crystal Onix" type="monster" looktype="1303" />
+	<creature name="Elite Hitmonlee" type="monster" looktype="1916" />
+	<creature name="Elite Hitmonchan" type="monster" looktype="1915" />
+	<creature name="Ancient Mr. Mime" type="monster" looktype="1909" />
+	<creature name="Ancient Lapras" type="monster" looktype="1908" />
+	<creature name="Ancient Aerodactyl" type="monster" looktype="1902" />
+	<creature name="Ancient Dragonite" type="monster" looktype="1906" />
+	<creature name="Ancient Slowking" type="monster" looktype="1672" />
+	<creature name="Mega Venusaur" type="monster" looktype="1954" />
+	<creature name="Mega Charizard X" type="monster" looktype="1926" />
+	<creature name="Mummy Charmander" type="monster" looktype="2928" />
+	<creature name="Ghost Pikachu" type="monster" looktype="2923" />
+	<creature name="Pirate Raichu" type="monster" looktype="2929" />
+	<creature name="Raven Fearow" type="monster" looktype="2920" />
+	<creature name="Werewolf Nidoking" type="monster" looktype="2939" />
+	<creature name="Frankstein Vileplume" type="monster" looktype="2938" />
+	<creature name="Skull Golem" type="monster" looktype="2927" />
+	<creature name="Hauting Haunter" type="monster" looktype="2937" />
+	<creature name="Panic Hypno" type="monster" looktype="2916" />
+	<creature name="Pumpkin Cubone" type="monster" looktype="2930" />
+	<creature name="Pumpkin Marowak" type="monster" looktype="2921" />
+	<creature name="Executioner Marowak" type="monster" looktype="3250" />
+	<creature name="Corsair Weezing" type="monster" looktype="3252" />
+	<creature name="Witch Chansey" type="monster" looktype="3251" />
+	<creature name="Hag Jynx" type="monster" looktype="3253" />
+	<creature name="Wicked Vaporeon" type="monster" looktype="2919" />
+	<creature name="Vampire Jolteon" type="monster" looktype="2922" />
+	<creature name="Cultist Flareon" type="monster" looktype="2918" />
+	<creature name="Undead Omanyte" type="monster" looktype="2934" />
+	<creature name="Undead Omastar" type="monster" looktype="2935" />
+	<creature name="Undead Kabuto" type="monster" looktype="2932" />
+	<creature name="Undead Kabutops" type="monster" looktype="2933" />
+	<creature name="Undead Aerodactyl" type="monster" looktype="2931" />
+	<creature name="Devil Scizor" type="monster" looktype="2915" />
+	<creature name="Santa Snorlax" type="monster" looktype="3130" />
+	<creature name="Xmas Diglett" type="monster" looktype="3131" />
+	<creature name="Xmas Caterpie" type="monster" looktype="3132" />
+	<creature name="Xmas Psyduck" type="monster" looktype="3133" />
+	<creature name="Xmas Seel" type="monster" looktype="3134" />
+	<creature name="Xmas Pikachu" type="monster" looktype="3135" />
+	<creature name="Xmas Jynx" type="monster" looktype="3136" />
+	<creature name="Xmas Bulbasaur" type="monster" looktype="3138" />
+	<creature name="Xmas Ditto" type="monster" looktype="3139" />
+	<creature name="Xmas Elekid" type="monster" looktype="3140" />
+	<creature name="Xmas Eevee" type="monster" looktype="3141" />
+	<creature name="Xmas Charmander" type="monster" looktype="3142" />
+	<creature name="Xmas Squirtle" type="monster" looktype="3143" />
+	<creature name="Xmas Rattata" type="monster" looktype="3144" />
+	<creature name="Xmas Golbat" type="monster" looktype="3146" />
+	<creature name="Xmas Aipom" type="monster" looktype="3147" />
+	<creature name="Xmas Ledyba" type="monster" looktype="3148" />
+	<creature name="Xmas Totodile" type="monster" looktype="3149" />
+	<creature name="Xmas Abra" type="monster" looktype="3150" />
+	<creature name="Xmas Chikorita" type="monster" looktype="3151" />
+	<creature name="Xmas Meowth" type="monster" looktype="3152" />
+	<creature name="Xmas Gastly" type="monster" looktype="3153" />
+	<creature name="Xmas Jigglypuff" type="monster" looktype="3154" />
+	<creature name="Xmas Clefairy" type="monster" looktype="3155" />
+	<creature name="Xmas Wooper" type="monster" looktype="3156" />
+	<creature name="Xmas Togepi" type="monster" looktype="3157" />
+	<creature name="Xmas Teddiursa" type="monster" looktype="3158" />
+	<creature name="Xmas Machop" type="monster" looktype="3159" />
+	<creature name="Xmas Cubone" type="monster" looktype="3160" />
+	<creature name="Xmas Hitmontop" type="monster" looktype="3174" />
+	<creature name="Xmas Mantine" type="monster" looktype="3181" />
+	<creature name="Santa Blissey" type="monster" looktype="3180" />
+	<creature name="Reindeer Miltank" type="monster" looktype="3259" />
+	<creature name="Grinch Armaldo" type="monster" looktype="3260" />
+	<creature name="Snowman Aggron" type="monster" looktype="3261" />
+	<creature name="Decorated Sudowoodo" type="monster" looktype="3263" />
+	<creature name="Grinch Banette" type="monster" looktype="3264" />
+	<creature name="Turtwig" type="monster" looktype="2995" />
+	<creature name="Grotle" type="monster" looktype="2996" />
+	<creature name="Torterra" type="monster" looktype="2997" />
+	<creature name="Chimchar" type="monster" looktype="2998" />
+	<creature name="Monferno" type="monster" looktype="2999" />
+	<creature name="Infernape" type="monster" looktype="3000" />
+	<creature name="Piplup" type="monster" looktype="3001" />
+	<creature name="Prinplup" type="monster" looktype="3002" />
+	<creature name="Empoleon" type="monster" looktype="3003" />
+	<creature name="Starly" type="monster" looktype="3004" />
+	<creature name="Staravia" type="monster" looktype="3005" />
+	<creature name="Staraptor" type="monster" looktype="3006" />
+	<creature name="Bidoof" type="monster" looktype="3007" />
+	<creature name="Bibarel" type="monster" looktype="3008" />
+	<creature name="Kricketot" type="monster" looktype="3009" />
+	<creature name="Kricketune" type="monster" looktype="3010" />
+	<creature name="Shinx" type="monster" looktype="3011" />
+	<creature name="Luxio" type="monster" looktype="3012" />
+	<creature name="Luxray" type="monster" looktype="3013" />
+	<creature name="Budew" type="monster" looktype="3014" />
+	<creature name="Roserade" type="monster" looktype="3015" />
+	<creature name="Cranidos" type="monster" looktype="3016" />
+	<creature name="Rampardos" type="monster" looktype="3017" />
+	<creature name="Shieldon" type="monster" looktype="3018" />
+	<creature name="Bastiodon" type="monster" looktype="3019" />
+	<creature name="Burmy" type="monster" looktype="3020" />
+	<creature name="Wormadam" type="monster" looktype="3021" />
+	<creature name="Mothim" type="monster" looktype="3022" />
+	<creature name="Combee" type="monster" looktype="3023" />
+	<creature name="Vespiquen" type="monster" looktype="3024" />
+	<creature name="Pachirisu" type="monster" looktype="3025" />
+	<creature name="Buizel" type="monster" looktype="3026" />
+	<creature name="Floatzel" type="monster" looktype="3027" />
+	<creature name="Cherubi" type="monster" looktype="3028" />
+	<creature name="Cherrim" type="monster" looktype="3029" />
+	<creature name="Shellos" type="monster" looktype="3030" />
+	<creature name="Gastrodon" type="monster" looktype="3031" />
+	<creature name="Ambipom" type="monster" looktype="3032" />
+	<creature name="Drifloon" type="monster" looktype="3033" />
+	<creature name="Drifblim" type="monster" looktype="3034" />
+	<creature name="Buneary" type="monster" looktype="3035" />
+	<creature name="Lopunny" type="monster" looktype="3036" />
+	<creature name="Mismagius" type="monster" looktype="3037" />
+	<creature name="Honchkrow" type="monster" looktype="3038" />
+	<creature name="Glameow" type="monster" looktype="3039" />
+	<creature name="Purugly" type="monster" looktype="3040" />
+	<creature name="Chingling" type="monster" looktype="3041" />
+	<creature name="Stunky" type="monster" looktype="3042" />
+	<creature name="Skuntank" type="monster" looktype="3043" />
+	<creature name="Bronzor" type="monster" looktype="3044" />
+	<creature name="Bronzong" type="monster" looktype="3045" />
+	<creature name="Bonsly" type="monster" looktype="3046" />
+	<creature name="Mime Jr" type="monster" looktype="3047" />
+	<creature name="Happiny" type="monster" looktype="3048" />
+	<creature name="Chatot" type="monster" looktype="3049" />
+	<creature name="Spiritomb" type="monster" looktype="3050" />
+	<creature name="Gible" type="monster" looktype="3051" />
+	<creature name="Gabite" type="monster" looktype="3052" />
+	<creature name="Garchomp" type="monster" looktype="3053" />
+	<creature name="Munchlax" type="monster" looktype="3054" />
+	<creature name="Riolu" type="monster" looktype="3055" />
+	<creature name="Lucario" type="monster" looktype="3056" />
+	<creature name="Hippopotas" type="monster" looktype="3057" />
+	<creature name="Hippowdon" type="monster" looktype="3058" />
+	<creature name="Skorupi" type="monster" looktype="3059" />
+	<creature name="Drapion" type="monster" looktype="3060" />
+	<creature name="Croagunk" type="monster" looktype="3061" />
+	<creature name="Toxicroak" type="monster" looktype="3062" />
+	<creature name="Carnivine" type="monster" looktype="3063" />
+	<creature name="Finneon" type="monster" looktype="3064" />
+	<creature name="Lumineon" type="monster" looktype="3065" />
+	<creature name="Mantyke" type="monster" looktype="3066" />
+	<creature name="Snover" type="monster" looktype="3067" />
+	<creature name="Abomasnow" type="monster" looktype="3068" />
+	<creature name="Weavile" type="monster" looktype="3069" />
+	<creature name="Magnezone" type="monster" looktype="3070" />
+	<creature name="Lickilicky" type="monster" looktype="3071" />
+	<creature name="Rhyperior" type="monster" looktype="3072" />
+	<creature name="Tangrowth" type="monster" looktype="3073" />
+	<creature name="Electivire" type="monster" looktype="3074" />
+	<creature name="Magmortar" type="monster" looktype="3075" />
+	<creature name="Togekiss" type="monster" looktype="3076" />
+	<creature name="Yanmega" type="monster" looktype="3077" />
+	<creature name="Leafeon" type="monster" looktype="3078" />
+	<creature name="Glaceon" type="monster" looktype="3079" />
+	<creature name="Gliscor" type="monster" looktype="3080" />
+	<creature name="Mamoswine" type="monster" looktype="3081" />
+	<creature name="Porygon-Z" type="monster" looktype="3082" />
+	<creature name="Gallade" type="monster" looktype="3083" />
+	<creature name="Probopass" type="monster" looktype="3084" />
+	<creature name="Dusknoir" type="monster" looktype="3085" />
+	<creature name="Froslass" type="monster" looktype="3086" />
+	<creature name="Rotom" type="monster" looktype="3087" />
+	<creature name="Uxie" type="monster" looktype="3088" />
+	<creature name="Mesprit" type="monster" looktype="3089" />
+	<creature name="Azelf" type="monster" looktype="3090" />
+	<creature name="Dialga" type="monster" looktype="3091" />
+	<creature name="Palkia" type="monster" looktype="3092" />
+	<creature name="Heatran" type="monster" looktype="3093" />
+	<creature name="Regigigas" type="monster" looktype="3094" />
+	<creature name="Giratina" type="monster" looktype="3095" />
+	<creature name="Cresselia" type="monster" looktype="3096" />
+	<creature name="Phione" type="monster" looktype="3097" />
+	<creature name="Manaphy" type="monster" looktype="3098" />
+	<creature name="Darkrai" type="monster" looktype="3099" />
+	<creature name="Shaymin" type="monster" looktype="3100" />
+	<creature name="Arceus" type="monster" looktype="3101" />
+	<creature name="Shiny Turtwig" type="monster" looktype="3267" />
+	<creature name="Shiny Grotle" type="monster" looktype="3268" />
+	<creature name="Shiny Torterra" type="monster" looktype="3269" />
+	<creature name="Shiny Chimchar" type="monster" looktype="3270" />
+	<creature name="Shiny Monferno" type="monster" looktype="3271" />
+	<creature name="Shiny Infernape" type="monster" looktype="3272" />
+	<creature name="Shiny Piplup" type="monster" looktype="3273" />
+	<creature name="Shiny Prinplup" type="monster" looktype="3274" />
+	<creature name="Shiny Empoleon" type="monster" looktype="3275" />
+	<creature name="Shiny Starly" type="monster" looktype="3276" />
+	<creature name="Shiny Staravia" type="monster" looktype="3277" />
+	<creature name="Shiny Staraptor" type="monster" looktype="3278" />
+	<creature name="Shiny Bidoof" type="monster" looktype="3279" />
+	<creature name="Shiny Bibarel" type="monster" looktype="3280" />
+	<creature name="Shiny Kricketot" type="monster" looktype="3281" />
+	<creature name="Shiny Kricketune" type="monster" looktype="3282" />
+	<creature name="Shiny Shinx" type="monster" looktype="3283" />
+	<creature name="Shiny Luxio" type="monster" looktype="3284" />
+	<creature name="Shiny Luxray" type="monster" looktype="3284" />
+	<creature name="Shiny Budew" type="monster" looktype="3285" />
+	<creature name="Shiny Roserade" type="monster" looktype="3286" />
+	<creature name="Shiny Cranidos" type="monster" looktype="3287" />
+	<creature name="Shiny Rampardos" type="monster" looktype="3288" />
+	<creature name="Shiny Shieldon" type="monster" looktype="3289" />
+	<creature name="Shiny Bastiodon" type="monster" looktype="3290" />
+	<creature name="Shiny Burmy" type="monster" looktype="3291" />
+	<creature name="Shiny Wormadam" type="monster" looktype="3292" />
+	<creature name="Shiny Mothim" type="monster" looktype="3293" />
+	<creature name="Shiny Combee" type="monster" looktype="3294" />
+	<creature name="Shiny Vespiquen" type="monster" looktype="3295" />
+	<creature name="Shiny Pachirisu" type="monster" looktype="3296" />
+	<creature name="Shiny Buizel" type="monster" looktype="3297" />
+	<creature name="Shiny Floatzel" type="monster" looktype="3298" />
+	<creature name="Shiny Cherubi" type="monster" looktype="3299" />
+	<creature name="Shiny Cherrim" type="monster" looktype="3300" />
+	<creature name="Shiny Shellos" type="monster" looktype="3301" />
+	<creature name="Shiny Gastrodon" type="monster" looktype="3302" />
+	<creature name="Shiny Ambipom" type="monster" looktype="3303" />
+	<creature name="Shiny Drifloon" type="monster" looktype="3304" />
+	<creature name="Shiny Drifblim" type="monster" looktype="3305" />
+	<creature name="Shiny Buneary" type="monster" looktype="3306" />
+	<creature name="Shiny Lopunny" type="monster" looktype="3307" />
+	<creature name="Shiny Mismagius" type="monster" looktype="3308" />
+	<creature name="Shiny Honchkrow" type="monster" looktype="3309" />
+	<creature name="Shiny Glameow" type="monster" looktype="3310" />
+	<creature name="Shiny Purugly" type="monster" looktype="3311" />
+	<creature name="Shiny Chingling" type="monster" looktype="3312" />
+	<creature name="Shiny Stunky" type="monster" looktype="3313" />
+	<creature name="Shiny Skuntank" type="monster" looktype="3314" />
+	<creature name="Shiny Bronzor" type="monster" looktype="3315" />
+	<creature name="Shiny Bronzong" type="monster" looktype="3316" />
+	<creature name="Shiny Bonsly" type="monster" looktype="3317" />
+	<creature name="Shiny Mime Jr" type="monster" looktype="3318" />
+	<creature name="Shiny Happiny" type="monster" looktype="3319" />
+	<creature name="Shiny Chatot" type="monster" looktype="3320" />
+	<creature name="Shiny Spiritomb" type="monster" looktype="3321" />
+	<creature name="Shiny Gible" type="monster" looktype="3322" />
+	<creature name="Shiny Gabite" type="monster" looktype="3323" />
+	<creature name="Shiny Garchomp" type="monster" looktype="3324" />
+	<creature name="Shiny Munchlax" type="monster" looktype="3325" />
+	<creature name="Shiny Riolu" type="monster" looktype="3326" />
+	<creature name="Shiny Lucario" type="monster" looktype="3327" />
+	<creature name="Shiny Hippopotas" type="monster" looktype="3328" />
+	<creature name="Shiny Hippowdon" type="monster" looktype="3329" />
+	<creature name="Shiny Skorupi" type="monster" looktype="3330" />
+	<creature name="Shiny Drapion" type="monster" looktype="3331" />
+	<creature name="Shiny Croagunk" type="monster" looktype="3332" />
+	<creature name="Shiny Toxicroak" type="monster" looktype="3333" />
+	<creature name="Shiny Carnivine" type="monster" looktype="3334" />
+	<creature name="Shiny Finneon" type="monster" looktype="3335" />
+	<creature name="Shiny Lumineon" type="monster" looktype="3335" />
+	<creature name="Shiny Mantyke" type="monster" looktype="3336" />
+	<creature name="Shiny Snover" type="monster" looktype="3337" />
+	<creature name="Shiny Abomasnow" type="monster" looktype="3338" />
+	<creature name="Shiny Weavile" type="monster" looktype="3339" />
+	<creature name="Shiny Magnezone" type="monster" looktype="3340" />
+	<creature name="Shiny Lickilicky" type="monster" looktype="3341" />
+	<creature name="Shiny Rhyperior" type="monster" looktype="3342" />
+	<creature name="Shiny Tangrowth" type="monster" looktype="3343" />
+	<creature name="Shiny Electivire" type="monster" looktype="3344" />
+	<creature name="Shiny Magmortar" type="monster" looktype="3345" />
+	<creature name="Shiny Togekiss" type="monster" looktype="3346" />
+	<creature name="Shiny Yanmega" type="monster" looktype="3347" />
+	<creature name="Shiny Leafeon" type="monster" looktype="3348" />
+	<creature name="Shiny Glaceon" type="monster" looktype="3349" />
+	<creature name="Shiny Gliscor" type="monster" looktype="3350" />
+	<creature name="Shiny Mamoswine" type="monster" looktype="3351" />
+	<creature name="Shiny Porygon-Z" type="monster" looktype="3352" />
+	<creature name="Shiny Gallade" type="monster" looktype="3353" />
+	<creature name="Shiny Probopass" type="monster" looktype="3354" />
+	<creature name="Shiny Dusknoir" type="monster" looktype="3355" />
+	<creature name="Shiny Froslass" type="monster" looktype="3356" />
+	<creature name="Shiny Rotom" type="monster" looktype="3357" />
+	<creature name="Shiny Uxie" type="monster" looktype="3358" />
+	<creature name="Shiny Mesprit" type="monster" looktype="3359" />
+	<creature name="Shiny Azelf" type="monster" looktype="3360" />
+	<creature name="Shiny Dialga" type="monster" looktype="3361" />
+	<creature name="Shiny Palkia" type="monster" looktype="3362" />
+	<creature name="Shiny Heatran" type="monster" looktype="3363" />
+	<creature name="Shiny Regigigas" type="monster" looktype="3364" />
+	<creature name="Shiny Giratina" type="monster" looktype="3365" />
+	<creature name="Shiny Cresselia" type="monster" looktype="3366" />
+	<creature name="Shiny Phione" type="monster" looktype="3367" />
+	<creature name="Shiny Manaphy" type="monster" looktype="3368" />
+	<creature name="Shiny Darkrai" type="monster" looktype="3369" />
+	<creature name="Shiny Shaymin" type="monster" looktype="3370" />
+	<creature name="Shiny Arceus" type="monster" looktype="0" />

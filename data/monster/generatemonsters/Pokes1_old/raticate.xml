@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Raticate" nameDescription="a raticate" race="normal" race2="none" experience="41" speed="194" manacost="0">
+	<level min="5" max="10"/>
+	<health now="550" max="550" />
+	<look type="923" head="113" body="57" legs="95" feet="113" corpse="26881" />
+	<targetchange interval="2000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="20" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="10" />
+		<flag moveMagicAttackBase="50" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+		<move name="bite" interval="5000" isTarget="1"/>
+		<move name="quick attack" interval="9000" isTarget="1"/>
+		<move name="scratch" interval="15000" isTarget="1"/>
+		<move name="super fang" interval="14000" isTarget="1"/>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-81" max="-81" />
+		<attack name="bite" interval="5000" chance="35"/>
+		<attack name="quick attack" interval="9000" chance="35"/>
+		<attack name="scratch" interval="15000" chance="35"/>
+		<attack name="super fang" interval="14000" chance="35"/>
+
+	</attacks>
+	<defenses armor="60" defense="70" />
+	<elements>
+	</elements>
+	<voices interval="5000" chance="10">
+		<voice sentence="RATICATE!" />
+	</voices>
+	<loot>
+		<item name="gold coin" countmax="12" chance="30000" />
+	</loot>
+</monster>

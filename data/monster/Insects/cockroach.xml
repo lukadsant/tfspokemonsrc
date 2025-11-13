@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Cockroach" nameDescription="a cockroach" race="venom" experience="0" speed="180" manacost="0">
+	<health now="1" max="1" />
+	<look type="284" corpse="8593" />
+	<targetchange interval="60000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="0" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="0" />
+		<flag staticattack="50" />
+		<flag lightlevel="0" />
+		<flag lightcolor="0" />
+		<flag targetdistance="5" />
+		<flag runonhealth="1" />
+		<flag dexentry="0" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="15" />
+		<flag moveMagicAttackBase="1" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+	</moves>
+	<evolutions>
+	</evolutions>
+	<loot>
+		<item name="cockroach leg" chance="100000" />
+	</loot>
+</monster>

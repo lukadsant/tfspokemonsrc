@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Mutated Santa" nameDescription="a mutated santa" race="normal" race2="none" experience="5000" speed="200" manacost="0">
+	<level min="50" max="80"/>
+	<health now="330000" max="330000" />
+	<look type="3137" corpse="0" />
+	<targetchange interval="4000" chance="10" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag passive="0" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="1" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="0" />
+		<flag portraitid="0" />
+		<flag hasshiny="0" />
+		<flag hasmega="0" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag canteleport="0" />
+		<flag catchchance="0" />
+		<flag moveMagicAttackBase="150" />
+		<flag moveMagicDefenseBase="200" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+        	<event name="CorpseLevel"/>
+        	<event name="CorpseLoot"/>
+        	<event name="LegendariesDeath"/>
+	</script>
+	<moves>
+	</moves>
+	<evolutions>
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-400" max="-700" />
+		<attack name="doom desire" interval="7000" chance="40"/>
+		<attack name="cosmic power" interval="5000" chance="35"/>
+		<attack name="quick attack" interval="3000" chance="35"/>
+	</attacks>
+	<defenses armor="15" defense="15">
+		<defense name="speed" interval="2000" chance="15" speedchange="220" duration="5000">
+			<attribute key="areaEffect" value="greenbubble" />
+		</defense>
+	</defenses>
+	<elements>
+	</elements>
+	<immunities>
+	</immunities>
+	<summons maxSummons="10">
+		<summon name="snowman" interval="2000" chance="10" />
+	</summons>
+	<voices interval="5000" chance="10">
+		<voice sentence="MERRY MUAHAHA!" />
+	</voices>
+	<loot>
+	</loot>
+</monster>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Ancient Dragonite" nameDescription="an ancient dragonite" race="dragon" race2="flying" experience="120" speed="320" manacost="0">
+	<level min="60" max="100"/>
+	<health now="2280" max="2280" />
+	<look type="1906" head="113" body="57" legs="95" feet="113" corpse="0" />
+	<targetchange interval="5000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag passive="0" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="3016" />
+		<flag portraitid="30132" />
+		<flag hasshiny="0" />
+		<flag hasmega="0" />
+		<flag flyable="1334" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag canteleport="0" />
+		<flag catchchance="0" />
+		<flag moveMagicAttackBase="200" />
+		<flag moveMagicDefenseBase="200" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+        	<event name="CorpseLevel"/>
+        	<event name="CorpseLoot"/>
+	</script>
+	<moves>
+		<move name="tackle" interval="3000" isTarget="1" range="1"/>
+		<move name="sand attack" interval="10000"/>
+		<move name="gust" interval="8000"/>
+		<move name="quick attack" interval="3000" isTarget="1"/>
+		<move name="wing attack" interval="9000"/>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-268" max="-268" />
+		<attack name="tackle" interval="3000" chance="35"/>
+		<attack name="sand attack" interval="10000" chance="35"/>
+		<attack name="gust" interval="8000" chance="35"/>
+		<attack name="quick attack" interval="3000" chance="35"/>
+		<attack name="wing attack" interval="9000" chance="35"/>
+
+	</attacks>
+	<defenses armor="0" defense="190" >
+
+	</defenses>
+	<elements>
+	</elements>
+	<immunities>
+
+	</immunities>
+	<voices interval="5000" chance="10">
+		<voice sentence="ANCIENT DRAGONITE!" />
+	</voices>
+	<loot>
+		<item name="dragon stone" countmax="1" chance="400"/>
+		<item name="gold coin" countmax="160" chance="40000"/>
+		<item name="dragon tooth" countmax="1" chance="5000"/>
+		<item name="straw" countmax="2" chance="40000"/>
+		<item name="dragon tail" countmax="1" chance="5000"/>
+
+	</loot>
+</monster>

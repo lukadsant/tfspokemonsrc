@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Raichu" nameDescription="a raichu" race="electric" race2="none" experience="48" speed="220" manacost="0">
+	<level min="25" max="50"/>
+	<health now="600" max="600" />
+	<look type="929" head="113" body="57" legs="95" feet="113" corpse="26887" />
+	<targetchange interval="2000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="26" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag catchchance="10" />
+		<flag moveMagicAttackBase="90" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+	</script>
+	<moves>
+		<move name="quick attack" interval="5000" isTarget="1"/>
+		<move name="thunder shock" interval="9000"/>
+		<move name="thunder bolt" interval="15000"/>
+		<move name="thunder" interval="14000"/>
+		<move name="electric storm" interval="20000"/>
+		<move name="thunder wave" interval="25000"/>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-90" max="-90" />
+		<attack name="quick attack" interval="5000" chance="35"/>
+		<attack name="thunder shock" interval="9000" chance="35"/>
+		<attack name="thunder bolt" interval="15000" chance="35"/>
+		<attack name="thunder" interval="14000" chance="35"/>
+		<attack name="electric storm" interval="20000" chance="35"/>
+		<attack name="thunder wave" interval="25000" chance="35"/>
+
+	</attacks>
+	<defenses armor="55" defense="80" />
+	<elements>
+	</elements>
+	<voices interval="5000" chance="10">
+		<voice sentence="RAICHU!" />
+	</voices>
+	<loot>
+		<item name="gold coin" countmax="12" chance="30000" />
+	</loot>
+</monster>

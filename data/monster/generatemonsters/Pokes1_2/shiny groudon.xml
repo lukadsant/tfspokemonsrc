@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Shiny Groudon" nameDescription="a shiny groudon" race="ground" race2="none" experience="101" speed="270" manacost="0">
+	<level min="90" max="99"/>
+	<health now="1880" max="1880" />
+	<look type="1868" head="113" body="57" legs="95" feet="113" corpse="28433" />
+	<targetchange interval="5000" chance="0" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag passive="0" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="1" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag staticattack="97" />
+		<flag runonhealth="0" />
+		<flag dexentry="2383" />
+		<flag portraitid="28561" />
+		<flag hasshiny="0" />
+		<flag hasmega="0" />
+		<flag flyable="0" />
+		<flag rideable="0" />
+		<flag surfable="0" />
+		<flag canteleport="0" />
+		<flag catchchance="0" />
+		<flag moveMagicAttackBase="150" />
+		<flag moveMagicDefenseBase="135" />
+	</flags>
+	<script>
+        	<event name="MonsterHealthChange"/>
+        	<event name="CorpseLevel"/>
+        	<event name="CorpseLoot"/>
+	</script>
+	<moves>
+		<move name="slash" interval="5000" isTarget="1" range="1"/>
+		<move name="rest" interval="12000"/>
+		<move name="fire blast" interval="17000"/>
+		<move name="solar beam" interval="17000"/>
+		<move name="earth power" interval="14000"/>
+		<move name="mud shot" interval="3000" isTarget="1"/>
+		<move name="hammer arm" interval="7000"/>
+		<move name="earthquake" interval="20000"/>
+		<move name="ancient power" interval="20000"/>
+		<move name="rock slide" interval="20000" isTarget="1"/>
+		<move name="overheat" interval="20000"/>
+		<move name="recover" interval="15000"/>
+
+	</moves>
+	<evolutions>
+
+	</evolutions>
+	<attacks>
+		<attack name="melee" interval="2000" min="-225" max="-225" />
+		<attack name="slash" interval="5000" chance="35"/>
+		<attack name="rest" interval="12000" chance="35"/>
+		<attack name="fire blast" interval="17000" chance="35"/>
+		<attack name="solar beam" interval="17000" chance="35"/>
+		<attack name="earth power" interval="14000" chance="35"/>
+		<attack name="mud shot" interval="3000" chance="35"/>
+		<attack name="hammer arm" interval="7000" chance="35"/>
+		<attack name="earthquake" interval="20000" chance="35"/>
+		<attack name="ancient power" interval="20000" chance="35"/>
+		<attack name="rock slide" interval="20000" chance="35"/>
+		<attack name="overheat" interval="20000" chance="35"/>
+		<attack name="recover" interval="15000" chance="35"/>
+		<attack name="passive ground" interval="60000" chance="35"/>
+
+	</attacks>
+	<defenses armor="0" defense="210" >
+		<defense name="passive ground" interval="60000" chance="100"/>
+
+	</defenses>
+	<elements>
+	</elements>
+	<immunities>
+
+	</immunities>
+	<voices interval="5000" chance="10">
+		<voice sentence="SHINY GROUDON!" />
+	</voices>
+	<loot>
+		<item name="rock stone" countmax="1" chance="473"/>
+		<item name="gold coin" countmax="189" chance="40000"/>
+
+	</loot>
+</monster>
