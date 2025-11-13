@@ -24,6 +24,8 @@
 #include "monster.h"
 #include "configmanager.h"
 #include "scheduler.h"
+// backtrace for debugging callers of setSkull
+#include <execinfo.h>
 
 double Creature::speedA = 857.36;
 double Creature::speedB = 261.29;
@@ -37,6 +39,7 @@ Creature::Creature()
 {
 	onIdleStatus();
 }
+
 
 Creature::~Creature()
 {
@@ -88,7 +91,39 @@ bool Creature::canSeeCreature(const Creature* creature) const
 
 void Creature::setSkull(Skulls_t newSkull)
 {
+	if (skullLocked && newSkull != skull) {
+		// Instrumentation: log attempted overwrite when skull is locked
+		std::cout << "[Creature::setSkull] prevented overwrite for creature id=" << id
+		          << " old=" << static_cast<int>(skull) << " new=" << static_cast<int>(newSkull) << "\n";
+		// Print backtrace to locate caller that attempted to overwrite a locked skull
+		void* bt[32];
+		int bt_size = backtrace(bt, 32);
+		char** bt_sym = backtrace_symbols(bt, bt_size);
+		if (bt_sym) {
+			std::cout << "[Creature::setSkull] backtrace (overwrite prevented):\n";
+			for (int i = 0; i < bt_size; ++i) {
+				std::cout << "  " << bt_sym[i] << "\n";
+			}
+			free(bt_sym);
+		}
+		return;
+	}
+
+	if (skull != newSkull) {
+		// change applied; debug logging removed to avoid excessive log noise in production
+	}
 	skull = newSkull;
+	g_game.updateCreatureSkull(this);
+}
+
+void Creature::setSkullAndLock(Skulls_t newSkull)
+{
+	if (skull != newSkull) {
+		std::cout << "[Creature::setSkullAndLock] creature id=" << id << " skull " << static_cast<int>(skull)
+				  << " -> " << static_cast<int>(newSkull) << "\n";
+	}
+	skull = newSkull;
+	skullLocked = true;
 	g_game.updateCreatureSkull(this);
 }
 

@@ -132,6 +132,13 @@ class MonsterType
 		LightInfo light = {};
 		uint16_t lookcorpse = 0;
 
+		struct SkullOption {
+			Skulls_t skull = SKULL_NONE;
+			uint32_t chance = 0; // weight (0-100 or any non-negative weight)
+		};
+
+		std::vector<SkullOption> skullOptions; // optional weighted random skull selection
+
 		uint64_t experience = 0;
 		uint64_t monsterExperience = 0; //pota
 
