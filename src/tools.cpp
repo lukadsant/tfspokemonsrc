@@ -527,6 +527,11 @@ struct SkullNames {
 	Skulls_t skull;
 };
 
+struct NatureNames {
+    const char* name;
+    Natures_t nature;
+};
+
 MagicEffectNames magicEffectNames[] = {
 	{"redspark",		CONST_ME_DRAWBLOOD},
 	{"bluebubble",		CONST_ME_LOSEENERGY},
@@ -737,6 +742,15 @@ SkullNames skullNames[] = {
 	{"orange",	SKULL_ORANGE},
 };
 
+NatureNames natureNames[] = {
+    {"none", NATURE_NONE},
+    {"hardy", NATURE_HARDY},
+    {"lonely", NATURE_LONELY},
+    {"brave", NATURE_BRAVE},
+    {"adamant", NATURE_ADAMANT},
+    {"naughty", NATURE_NAUGHTY},
+};
+
 MagicEffectClasses getMagicEffect(const std::string& strValue)
 {
 	for (auto& magicEffectName : magicEffectNames) {
@@ -805,6 +819,16 @@ Skulls_t getSkullType(const std::string& strValue)
 		}
 	}
 	return SKULL_NONE;
+}
+
+Natures_t getNatureType(const std::string& strValue)
+{
+	for (size_t i = 0, size = sizeof(natureNames) / sizeof(NatureNames); i < size; ++i) {
+		if (strcasecmp(strValue.c_str(), natureNames[i].name) == 0) {
+			return natureNames[i].nature;
+		}
+	}
+	return NATURE_NONE;
 }
 
 std::string getSkillName(uint8_t skillid)

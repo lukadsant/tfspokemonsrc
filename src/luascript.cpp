@@ -1554,6 +1554,33 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKULL_BLACK)
 	registerEnum(SKULL_ORANGE)
 
+	registerEnum(NATURE_NONE)
+	registerEnum(NATURE_ADAMANT)
+	registerEnum(NATURE_BASHFUL)
+	registerEnum(NATURE_BOLD)
+	registerEnum(NATURE_BRAVE)
+	registerEnum(NATURE_CALM)
+	registerEnum(NATURE_CAREFUL)
+	registerEnum(NATURE_DOCILE)
+	registerEnum(NATURE_GENTLE)
+	registerEnum(NATURE_HARDY)
+	registerEnum(NATURE_HASTY)
+	registerEnum(NATURE_IMPISH)
+	registerEnum(NATURE_JOLLY)
+	registerEnum(NATURE_LAX)
+	registerEnum(NATURE_LONELY)
+	registerEnum(NATURE_MILD)
+	registerEnum(NATURE_MODEST)
+	registerEnum(NATURE_NAIVE)
+	registerEnum(NATURE_NAUGHTY)
+	registerEnum(NATURE_QUIET)
+	registerEnum(NATURE_QUIRKY)
+	registerEnum(NATURE_RASH)
+	registerEnum(NATURE_RELAXED)
+	registerEnum(NATURE_SASSY)
+	registerEnum(NATURE_SERIOUS)
+	registerEnum(NATURE_TIMID)
+
 	registerEnum(TALKTYPE_SAY)
 	registerEnum(TALKTYPE_WHISPER)
 	registerEnum(TALKTYPE_YELL)
@@ -2116,6 +2143,8 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Creature", "getSkull", LuaScriptInterface::luaCreatureGetSkull);
 	registerMethod("Creature", "setSkull", LuaScriptInterface::luaCreatureSetSkull);
+    registerMethod("Creature", "getNature", LuaScriptInterface::luaCreatureGetNature);
+    registerMethod("Creature", "setNature", LuaScriptInterface::luaCreatureSetNature);
 
 	registerMethod("Creature", "getOutfit", LuaScriptInterface::luaCreatureGetOutfit);
 	registerMethod("Creature", "setOutfit", LuaScriptInterface::luaCreatureSetOutfit);
@@ -4456,7 +4485,8 @@ int LuaScriptInterface::luaGameCreateMonster(lua_State* L) //pota
 		bst = 0;
 	}
 	Skulls_t skull = getNumber<Skulls_t>(L, 7, SKULL_NONE);
-	Monster* monster = Monster::createMonster(getString(L, 1), lvl, bst, skull);
+	Natures_t nature = getNumber<Natures_t>(L, 8, NATURE_NONE);
+	Monster* monster = Monster::createMonster(getString(L, 1), lvl, bst, skull, nature);
 	if (!monster) {
 		lua_pushnil(L);
 		return 1;
@@ -7380,6 +7410,33 @@ int LuaScriptInterface::luaCreatureSetSkull(lua_State* L)
 		// Atomically set skull and lock it to avoid a short two-call window where C++
 		// code could overwrite the value between setSkull(...) and setSkullLocked(true).
 		creature->setSkullAndLock(getNumber<Skulls_t>(L, 2));
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaCreatureGetNature(lua_State* L)
+{
+	// creature:getNature()
+	Creature* creature = getUserdata<Creature>(L, 1);
+	if (creature) {
+		lua_pushnumber(L, creature->getNature());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaCreatureSetNature(lua_State* L)
+{
+	// creature:setNature(nature)
+	Creature* creature = getUserdata<Creature>(L, 1);
+	if (creature) {
+		// Atomically set nature and lock it to avoid a short two-call window where C++
+		// code could overwrite the value between setNature(...) and setNatureLocked(true).
+		creature->setNatureAndLock(getNumber<Natures_t>(L, 2));
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);

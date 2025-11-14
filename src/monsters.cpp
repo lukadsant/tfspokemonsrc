@@ -875,6 +875,34 @@ bool Monsters::loadMonster(const std::string& file, const std::string& monsterNa
 		}
 	}
 
+	// optional nature attribute
+	if ((attr = monsterNode.attribute("nature"))) {
+		mType->info.nature = getNatureType(attr.as_string());
+	}
+
+	// optional weighted random nature options
+	{
+		pugi::xml_node natureNode = monsterNode.child("naturerandom");
+		if (natureNode) {
+			for (auto optionNode : natureNode.children()) {
+				pugi::xml_attribute optionAttr;
+				if ((optionAttr = optionNode.attribute("nature"))) {
+					Natures_t nature = getNatureType(optionAttr.as_string());
+					uint32_t chance = 0;
+					if ((optionAttr = optionNode.attribute("chance"))) {
+						chance = pugi::cast<uint32_t>(optionAttr.value());
+					}
+					mType->info.natureOptions.emplace_back();
+					auto& no = mType->info.natureOptions.back();
+					no.nature = nature;
+					no.chance = chance;
+				} else {
+					std::cout << "[Warning - Monsters::loadMonster] Missing nature attribute in naturerandom option. " << file << std::endl;
+				}
+			}
+		}
+	}
+
 	if ((attr = monsterNode.attribute("script"))) {
 		monsterScriptList.emplace_back(mType, attr.as_string());
 	}

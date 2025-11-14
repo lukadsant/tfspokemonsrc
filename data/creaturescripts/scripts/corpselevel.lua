@@ -11,7 +11,15 @@ function onDeath(creature, corpse, killer, mostDamage, unjustified, mostDamage_u
 			if skull ~= nil then
 				corpse:setSpecialAttribute("corpseSkull", skull)
 				-- debug print: show monster name and skull value when it dies
-				print("[CorpseLevel] " .. creature:getName() .. " died with skull=" .. tostring(skull))
+				-- also persist nature and print it for debugging
+				local nature = nil
+				if creature.getNature then
+					nature = creature:getNature()
+					if nature ~= nil then
+						corpse:setSpecialAttribute("corpseNature", nature)
+					end
+				end
+				print("[CorpseLevel] " .. creature:getName() .. " died with skull=" .. tostring(skull) .. (nature ~= nil and (", nature=" .. tostring(nature)) or ""))
 			end
 		else
 			print("WARNING! Creature " .. creature:getName() .. " not possible to set corpse level!")
