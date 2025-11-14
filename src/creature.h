@@ -168,6 +168,16 @@ class Creature : virtual public Thing
 		// Atomically set the skull and lock it to prevent subsequent C++ overwrites.
 		void setSkullAndLock(Skulls_t newSkull);
 
+		virtual Natures_t getNature() const {
+			return nature;
+		}
+		virtual Natures_t getNatureClient(const Creature* creature) const {
+			return creature->getNature();
+		}
+		void setNature(Natures_t newNature);
+		// Atomically set the nature and lock it to prevent subsequent C++ overwrites.
+		void setNatureAndLock(Natures_t newNature);
+
 		// Locking: when locked, C++ code will avoid changing the skull to prevent
 		// overwrites of values explicitly set by scripts. Scripts call
 		// creature:setSkull(...) which will also lock the skull by default.
@@ -541,6 +551,9 @@ class Creature : virtual public Thing
 		Direction direction = DIRECTION_SOUTH;
 		Skulls_t skull = SKULL_NONE;
 		bool skullLocked = false;
+
+		Natures_t nature = NATURE_NONE;
+		bool natureLocked = false;
 
 		bool localMapCache[mapWalkHeight][mapWalkWidth] = {{ false }};
 		bool isInternalRemoved = false;

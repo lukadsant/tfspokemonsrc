@@ -4,37 +4,125 @@ end
 
 function Player:onLook(thing, position, distance)
 	local description = "You see " .. thing:getDescription(distance)
+
+	-- helper: map nature constant to human-readable string for many natures
+	local function getNatureName(nature)
+		if not nature then return nil end
+		if nature == NATURE_ADAMANT then return "Adamant" end
+		if nature == NATURE_BASHFUL then return "Bashful" end
+		if nature == NATURE_BOLD then return "Bold" end
+		if nature == NATURE_BRAVE then return "Brave" end
+		if nature == NATURE_CALM then return "Calm" end
+		if nature == NATURE_CAREFUL then return "Careful" end
+		if nature == NATURE_DOCILE then return "Docile" end
+		if nature == NATURE_GENTLE then return "Gentle" end
+		if nature == NATURE_HARDY then return "Hardy" end
+		if nature == NATURE_HASTY then return "Hasty" end
+		if nature == NATURE_IMPISH then return "Impish" end
+		if nature == NATURE_JOLLY then return "Jolly" end
+		if nature == NATURE_LAX then return "Lax" end
+		if nature == NATURE_LONELY then return "Lonely" end
+		if nature == NATURE_MILD then return "Mild" end
+		if nature == NATURE_MODEST then return "Modest" end
+		if nature == NATURE_NAIVE then return "Naive" end
+		if nature == NATURE_NAUGHTY then return "Naughty" end
+		if nature == NATURE_QUIET then return "Quiet" end
+		if nature == NATURE_QUIRKY then return "Quirky" end
+		if nature == NATURE_RASH then return "Rash" end
+		if nature == NATURE_RELAXED then return "Relaxed" end
+		if nature == NATURE_SASSY then return "Sassy" end
+		if nature == NATURE_SERIOUS then return "Serious" end
+		if nature == NATURE_TIMID then return "Timid" end
+		return "Other"
+	end
+
+	-- Summon look (shows owner's pokeball info when looking at a summon)
 	if not thing:isItem() and isSummon(thing) then
 		local master = thing:getMaster()
-		if master:isPlayer() then
+		if master and master:isPlayer() then
 			local item = master:getUsingBall()
-			local pokeName = item:getSpecialAttribute("pokeName")
-			local pokeLevel = item:getSpecialAttribute("pokeLevel")
-			local pokeBoost = item:getSpecialAttribute("pokeBoost") or 0
-			local pokeLove = item:getSpecialAttribute("pokeLove") or 0
-			-- read stored skull (sex) and map to human-readable string
-			local pokeSkull = item:getSpecialAttribute("pokeSkull")
-			local sexStr = nil
-			if pokeSkull ~= nil then
-				if pokeSkull == SKULL_GREEN then
-					sexStr = "Female"
-				elseif pokeSkull == SKULL_WHITE then
-					sexStr = "Male"
-				elseif pokeSkull == SKULL_NONE then
-					sexStr = "None"
-				else
-					sexStr = "Other"
+			if item then
+				local pokeName = item:getSpecialAttribute("pokeName")
+				local pokeLevel = item:getSpecialAttribute("pokeLevel")
+				local pokeBoost = item:getSpecialAttribute("pokeBoost") or 0
+				local pokeLove = item:getSpecialAttribute("pokeLove") or 0
+
+				-- read stored skull (sex) and map to human-readable string
+				local pokeSkull = item:getSpecialAttribute("pokeSkull")
+				local sexStr = nil
+				if pokeSkull ~= nil then
+					if pokeSkull == SKULL_GREEN then
+						sexStr = "Female"
+					elseif pokeSkull == SKULL_WHITE then
+						sexStr = "Male"
+					elseif pokeSkull == SKULL_NONE then
+						sexStr = "None"
+					else
+						sexStr = "Other"
+					end
 				end
-			end
-			if pokeName ~= nil and pokeLevel ~= nil then			
-				if sexStr then
-					description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Sex: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, sexStr, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
-				else
-					description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
+
+				-- read stored nature and map to human-readable string
+				local pokeNature = item:getSpecialAttribute("pokeNature")
+				local natureStr = getNatureName(pokeNature)
+
+				if pokeName ~= nil and pokeLevel ~= nil then
+					-- compute stats
+					local th = thing:getTotalHealth()
+					local ta = thing:getTotalMeleeAttack()
+					local tma = thing:getTotalMagicAttack()
+					local tmd = thing:getTotalMagicDefense()
+					local td = thing:getTotalDefense()
+					local ts = thing:getTotalSpeed()
+
+					-- prepare strings and append (+10%) to boosted stat
+					local taStr = tostring(ta)
+					local tmaStr = tostring(tma)
+					local tmdStr = tostring(tmd)
+					local tdStr = tostring(td)
+					local tsStr = tostring(ts)
+
+					-- annotate boosted and reduced stats based on nature mapping
+					local boost = nil
+					local reduce = nil
+					if pokeNature then
+						boost = natureBoost[pokeNature]
+						reduce = natureReduce[pokeNature]
+					end
+
+					-- helper to append annotation to a stat string
+					local function annotate(statName, statStr)
+						if not statStr then return statStr end
+						if boost and boost == statName and (not reduce or reduce ~= statName) then
+							return statStr .. " (+10%)"
+						end
+						if reduce and reduce == statName and (not boost or boost ~= statName) then
+							return statStr .. " (-10%)"
+						end
+						-- if boost == reduce (neutral) or neither matches, leave unchanged
+						return statStr
+					end
+
+					taStr = annotate("attack", taStr)
+					tmaStr = annotate("magicAttack", tmaStr)
+					tmdStr = annotate("magicDefense", tmdStr)
+					tdStr = annotate("defense", tdStr)
+					tsStr = annotate("speed", tsStr)
+
+					if sexStr and natureStr then
+						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Sex: %s. Nature: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, sexStr, natureStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
+					elseif sexStr then
+						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Sex: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, sexStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
+					elseif natureStr then
+						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Nature: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, natureStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
+					else
+						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
+					end
 				end
 			end
 		end
 	end
+    
 	if thing:isItem() and thing:isPokeball() then
 		local pokeName = thing:getSpecialAttribute("pokeName")
 		local pokeLevel = thing:getSpecialAttribute("pokeLevel")
@@ -64,10 +152,21 @@ function Player:onLook(thing, position, distance)
 					sexStr = "Other"
 				end
 			end
+			-- read stored nature and map to human-readable string
+			local pokeNature = thing:getSpecialAttribute("pokeNature")
+			local natureStr = getNatureName(pokeNature)
 			if sexStr then
-				description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s Sex: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, sexStr)
+				if natureStr then
+					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s Sex: %s. Nature: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, sexStr, natureStr)
+				else
+					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s Sex: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, sexStr)
+				end
 			else
-				description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s", description, pokeName, pokeLevel, pokeBoost, healthStr)
+				if natureStr then
+					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s Nature: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, natureStr)
+				else
+					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s", description, pokeName, pokeLevel, pokeBoost, healthStr)
+				end
 			end
 		end
 	end

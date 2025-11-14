@@ -127,6 +127,43 @@ void Creature::setSkullAndLock(Skulls_t newSkull)
 	g_game.updateCreatureSkull(this);
 }
 
+void Creature::setNature(Natures_t newNature)
+{
+	if (natureLocked && newNature != nature) {
+		std::cout << "[Creature::setNature] prevented overwrite for creature id=" << id
+				  << " old=" << static_cast<int>(nature) << " new=" << static_cast<int>(newNature) << "\n";
+		void* bt[32];
+		int bt_size = backtrace(bt, 32);
+		char** bt_sym = backtrace_symbols(bt, bt_size);
+		if (bt_sym) {
+			std::cout << "[Creature::setNature] backtrace (overwrite prevented):\n";
+			for (int i = 0; i < bt_size; ++i) {
+				std::cout << "  " << bt_sym[i] << "\n";
+			}
+			free(bt_sym);
+		}
+		return;
+	}
+
+	if (nature != newNature) {
+		// change applied; avoid verbose logging in normal operation
+	}
+	nature = newNature;
+	// notify clients that creature type/appearance may have changed
+	g_game.updateCreatureType(this);
+}
+
+void Creature::setNatureAndLock(Natures_t newNature)
+{
+	if (nature != newNature) {
+		std::cout << "[Creature::setNatureAndLock] creature id=" << id << " nature " << static_cast<int>(nature)
+				  << " -> " << static_cast<int>(newNature) << "\n";
+	}
+	nature = newNature;
+	natureLocked = true;
+	g_game.updateCreatureType(this);
+}
+
 int64_t Creature::getTimeSinceLastMove() const
 {
 	if (lastStep) {

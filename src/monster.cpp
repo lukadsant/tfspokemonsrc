@@ -23,6 +23,7 @@
 #include "game.h"
 #include "spells.h"
 #include "configmanager.h" //pota
+#include "tools.h"
 
 extern Game g_game;
 extern Monsters g_monsters;
@@ -33,16 +34,16 @@ int32_t Monster::despawnRadius;
 
 uint32_t Monster::monsterAutoID = 0x40000000;
 
-Monster* Monster::createMonster(const std::string& name, uint16_t lvl, uint16_t bst, Skulls_t skull) //pota
+Monster* Monster::createMonster(const std::string& name, uint16_t lvl, uint16_t bst, Skulls_t skull, Natures_t nature) //pota
 {
 	MonsterType* mType = g_monsters.getMonsterType(name);
 	if (!mType) {
 		return nullptr;
 	}
-	return new Monster(mType, lvl, bst, skull);
+	return new Monster(mType, lvl, bst, skull, nature);
 }
 
-Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst, Skulls_t initSkull) : //pota
+Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst, Skulls_t initSkull, Natures_t initNature) : //pota
 	Creature(),
 	strDescription(asLowerCaseString(mtype->nameDescription)),
 	mType(mtype)
@@ -99,6 +100,41 @@ Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst, Skulls_t initSk
 	} else {
 		// summons without predefined skull keep SKULL_NONE
 		setSkull(SKULL_NONE);
+	}
+	// Set nature for monsters and summons with the following precedence (mirrors skull):
+	// 1) If the monster type defines a nature, use it.
+	// 2) Else if an explicit initNature was provided by the creator (scripts), use it and lock.
+	// 3) Else if not a summon, pick randomized nature using weighted options or uniform fallback.
+	// 4) Else (summons without predefined nature) keep NATURE_NONE.
+	if (mType->info.nature != NATURE_NONE) {
+		setNature(mType->info.nature);
+	} else if (initNature != NATURE_NONE) {
+		setNatureAndLock(initNature);
+	} else if (!isSummon()) {
+		if (!mType->info.natureOptions.empty()) {
+			uint32_t total = 0;
+			for (const auto& o : mType->info.natureOptions) {
+				total += o.chance;
+			}
+			if (total == 0) {
+				// fallback to uniform selection among defined natures
+				setNature((Natures_t)uniform_random(1, 5));
+			} else {
+				uint32_t r = uniform_random(1, total);
+				uint32_t acc = 0;
+				for (const auto& o : mType->info.natureOptions) {
+					acc += o.chance;
+					if (r <= acc) {
+						setNature(o.nature);
+						break;
+					}
+				}
+			}
+		} else {
+			setNature((Natures_t)uniform_random(1, 5));
+		}
+	} else {
+		setNature(NATURE_NONE);
 	}
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;

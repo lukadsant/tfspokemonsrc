@@ -794,6 +794,9 @@ class LuaScriptInterface
 
 		static int luaCreatureGetSkull(lua_State* L);
 		static int luaCreatureSetSkull(lua_State* L);
+		// Nature
+		static int luaCreatureGetNature(lua_State* L);
+		static int luaCreatureSetNature(lua_State* L);
 
 		static int luaCreatureGetOutfit(lua_State* L);
 		static int luaCreatureSetOutfit(lua_State* L);

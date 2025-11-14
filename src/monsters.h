@@ -139,6 +139,14 @@ class MonsterType
 
 		std::vector<SkullOption> skullOptions; // optional weighted random skull selection
 
+		Natures_t nature = NATURE_NONE;
+		struct NatureOption {
+			Natures_t nature = NATURE_NONE;
+			uint32_t chance = 0;
+		};
+
+		std::vector<NatureOption> natureOptions; // optional weighted random nature selection
+
 		uint64_t experience = 0;
 		uint64_t monsterExperience = 0; //pota
 

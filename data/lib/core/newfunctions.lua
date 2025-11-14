@@ -1480,6 +1480,63 @@ function getBallKey(uid)
 	return "pokeball"
 end
 
+-- Nature mappings: which stat is boosted and which is reduced for each nature
+natureBoost = {}
+natureReduce = {}
+
+-- Mapping based on docs (Increase, Decrease)
+natureBoost[NATURE_ADAMANT] = "attack";    natureReduce[NATURE_ADAMANT] = "magicAttack"
+natureBoost[NATURE_BASHFUL] = "magicAttack"; natureReduce[NATURE_BASHFUL] = "magicAttack" -- neutral
+natureBoost[NATURE_BOLD] = "defense";     natureReduce[NATURE_BOLD] = "attack"
+natureBoost[NATURE_BRAVE] = "attack";     natureReduce[NATURE_BRAVE] = "speed"
+natureBoost[NATURE_CALM] = "magicDefense"; natureReduce[NATURE_CALM] = "attack"
+natureBoost[NATURE_CAREFUL] = "magicDefense"; natureReduce[NATURE_CAREFUL] = "magicAttack"
+natureBoost[NATURE_DOCILE] = "defense";    natureReduce[NATURE_DOCILE] = "defense" -- neutral
+natureBoost[NATURE_GENTLE] = "magicDefense"; natureReduce[NATURE_GENTLE] = "defense"
+natureBoost[NATURE_HARDY] = "attack";     natureReduce[NATURE_HARDY] = "attack" -- neutral
+natureBoost[NATURE_HASTY] = "speed";      natureReduce[NATURE_HASTY] = "defense"
+natureBoost[NATURE_IMPISH] = "defense";   natureReduce[NATURE_IMPISH] = "magicAttack"
+natureBoost[NATURE_JOLLY] = "speed";      natureReduce[NATURE_JOLLY] = "magicAttack"
+natureBoost[NATURE_LAX] = "defense";      natureReduce[NATURE_LAX] = "magicDefense"
+natureBoost[NATURE_LONELY] = "attack";    natureReduce[NATURE_LONELY] = "defense"
+natureBoost[NATURE_MILD] = "magicAttack"; natureReduce[NATURE_MILD] = "defense"
+natureBoost[NATURE_MODEST] = "magicAttack"; natureReduce[NATURE_MODEST] = "attack"
+natureBoost[NATURE_NAIVE] = "speed";      natureReduce[NATURE_NAIVE] = "magicDefense"
+natureBoost[NATURE_NAUGHTY] = "attack";  natureReduce[NATURE_NAUGHTY] = "magicDefense"
+natureBoost[NATURE_QUIET] = "magicAttack"; natureReduce[NATURE_QUIET] = "speed"
+natureBoost[NATURE_QUIRKY] = "magicDefense"; natureReduce[NATURE_QUIRKY] = "magicDefense" -- neutral
+natureBoost[NATURE_RASH] = "magicAttack"; natureReduce[NATURE_RASH] = "magicDefense"
+natureBoost[NATURE_RELAXED] = "defense";  natureReduce[NATURE_RELAXED] = "speed"
+natureBoost[NATURE_SASSY] = "magicDefense"; natureReduce[NATURE_SASSY] = "speed"
+natureBoost[NATURE_SERIOUS] = "speed";    natureReduce[NATURE_SERIOUS] = "speed" -- neutral
+natureBoost[NATURE_TIMID] = "speed";      natureReduce[NATURE_TIMID] = "attack"
+
+local function getCreatureNature(creature)
+	if type(creature.getNature) == "function" then
+		return creature:getNature()
+	end
+	return nil
+end
+
+local function applyNatureModifier(total, statName, creature)
+	local nature = getCreatureNature(creature)
+	if not nature then return total end
+	local boost = natureBoost[nature]
+	local reduce = natureReduce[nature]
+	if not boost and not reduce then return total end
+	-- neutral: boost == reduce == statName -> no change
+	if boost == reduce and boost == statName then
+		return total
+	end
+	if boost == statName then
+		return math.floor(total * 1.10)
+	end
+	if reduce == statName then
+		return math.floor(total * 0.90)
+	end
+	return total
+end
+
 function Monster.getTotalHealth(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then
@@ -1569,8 +1626,9 @@ function Monster.getTotalMeleeAttack(self)
 		end
 	end
 	local aveMelee = (minMelee + maxMelee) / 2
+	local total = 0
 	if self:isPokemon() then 
-		local total = math.floor(aveMelee * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		total = math.floor(aveMelee * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
 		if self:getMaster():getVocation():getName() == "Hunter" then
 			total = total * hunterDamageBuff
 		end
@@ -1578,12 +1636,21 @@ function Monster.getTotalMeleeAttack(self)
 		if vitamins > 0 then
 			total = total + math.floor(aveMelee * vitamins / maxVitamins * vitaminStatusBuff)
 		end
-		return total
 	elseif self:isMonster() then
-		return math.floor(aveMelee * statusGainFormula(0, self:getLevel(), 0, 0))	
+		total = math.floor(aveMelee * statusGainFormula(0, self:getLevel(), 0, 0))
 	end
-	return 0
+	-- apply nature multipliers (boost/reduce)
+	total = applyNatureModifier(total, "attack", self)
+	return total
 end
+
+-- Apply nature stat modifiers: one stat gets +10% depending on nature.
+-- Mapping (modifiable):
+-- NATURE_HARDY   -> +10% Armor (defense)
+-- NATURE_LONELY  -> +10% Attack (melee)
+-- NATURE_BRAVE   -> +10% Magic Attack
+-- NATURE_ADAMANT -> +10% Magic Defense
+-- NATURE_NAUGHTY -> +10% Speed
 
 function Monster.getTotalMeleeAttackPlayerContribution(self)
 	local monsterType = MonsterType(self:getName())
@@ -1679,8 +1746,9 @@ end
 
 function Monster.getTotalMagicAttack(self)
 	local monsterType = MonsterType(self:getName())
+	local total = 0
 	if self:isPokemon() then
-		local total = math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		total = math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
 		if self:getMaster():getVocation():getName() == "Hunter" then
 			total = total * hunterDamageBuff
 		end
@@ -1688,11 +1756,12 @@ function Monster.getTotalMagicAttack(self)
 		if vitamins > 0 then
 			total = total + math.floor(monsterType:getMoveMagicAttackBase() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
-		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(0, self:getLevel(), 0, 0))
+		total = math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(0, self:getLevel(), 0, 0))
 	end
-	return 0
+	-- apply nature multipliers (boost/reduce)
+	total = applyNatureModifier(total, "magicAttack", self)
+	return total
 end
 
 function Monster.getTotalMagicAttackVocationContribution(self)
@@ -1744,17 +1813,19 @@ end
 
 function Monster.getTotalDefense(self)
 	local monsterType = MonsterType(self:getName())
+	local total = 0
 	if self:isPokemon() then
-		local total = math.floor(monsterType:getDefense() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		total = math.floor(monsterType:getDefense() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
 		local vitamins = self:getUsedVitaminsNumber("defense")
 		if vitamins > 0 then
 			total = total + math.floor(monsterType:getDefense() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
-		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getDefense() * statusGainFormula(0, self:getLevel(), 0, 0))
+		total = math.floor(monsterType:getDefense() * statusGainFormula(0, self:getLevel(), 0, 0))
 	end
-	return 0
+	-- apply nature multipliers (boost/reduce)
+	total = applyNatureModifier(total, "defense", self)
+	return total
 end
 
 function Monster.getTotalDefensePlayerContribution(self)
@@ -1797,17 +1868,19 @@ end
 
 function Monster.getTotalMagicDefense(self)
 	local monsterType = MonsterType(self:getName())
+	local total = 0
 	if self:isPokemon() then 
-		local total = math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		total = math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
 		local vitamins = self:getUsedVitaminsNumber("magicDefense")
 		if vitamins > 0 then
 			total = total + math.floor(monsterType:getMoveMagicDefenseBase() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
-		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(0, self:getLevel(), 0, 0))
+		total = math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(0, self:getLevel(), 0, 0))
 	end
-	return 0
+	-- apply nature multipliers (boost/reduce)
+	total = applyNatureModifier(total, "magicDefense", self)
+	return total
 end
 
 function Monster.getTotalMagicDefensePlayerContribution(self)
@@ -1861,17 +1934,19 @@ end
 
 function Monster.getTotalSpeed(self)
 	local monsterType = MonsterType(self:getName())
+	local total = 0
 	if self:isPokemon() then 
-		local total = math.floor(monsterType:getBaseSpeed() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		total = math.floor(monsterType:getBaseSpeed() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
 		local vitamins = self:getUsedVitaminsNumber("speed")
 		if vitamins > 0 then
 			total = total + math.floor(monsterType:getBaseSpeed() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
-		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getBaseSpeed() * statusGainFormula(0, self:getLevel(), 0, 0))
+		total = math.floor(monsterType:getBaseSpeed() * statusGainFormula(0, self:getLevel(), 0, 0))
 	end
-	return 0
+	-- apply nature multipliers (boost/reduce)
+	total = applyNatureModifier(total, "speed", self)
+	return total
 end
 
 function Monster.getTotalSpeedPlayerContribution(self)
@@ -2388,9 +2463,15 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 		newPos = pos
 	end
 	local storedSkull = ball:getSpecialAttribute("pokeSkull")
+	local storedNature = ball:getSpecialAttribute("pokeNature")
 	local monster
-	if storedSkull ~= nil then
+	if storedSkull ~= nil and storedNature ~= nil then
+		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, storedSkull, storedNature)
+	elseif storedSkull ~= nil then
 		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, storedSkull)
+	elseif storedNature ~= nil then
+		-- pass nil for skull so createMonster will use default/skull-none, but pass nature
+		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, nil, storedNature)
 	else
 		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost)
 	end
@@ -2406,6 +2487,10 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 		if storedSkull ~= nil then
 			-- also re-apply after a short delay using the master's summons list to be extra safe
 			addEvent(doSetMonsterSkullByMaster, 50, player:getId(), storedSkull)
+		end
+		if storedNature ~= nil then
+			-- re-apply nature after a short delay as safety
+			addEvent(doSetMonsterNatureByMaster, 50, player:getId(), storedNature)
 		end
 		monster:setDirection(ball:getSpecialAttribute("pokeLookDir") or DIRECTION_SOUTH)
 		if summonBoost >= maxBoost then
@@ -2523,8 +2608,9 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 	if ball and ball:isPokeball() then
 		ball:setSpecialAttribute("pokeHealth", summon:getHealth())
 		ball:setSpecialAttribute("pokeLookDir", summon:getDirection())
-		-- persist current summon skull back to the pokeball so sex is preserved across recalls
+		-- persist current summon skull and nature back to the pokeball so sex and nature are preserved across recalls
 		ball:setSpecialAttribute("pokeSkull", summon:getSkull())
+		ball:setSpecialAttribute("pokeNature", summon:getNature())
 	end
 	if not (player:isOnFly() or player:isOnRide() or player:isOnSurf() or summon:isEvolving()) then
 		if ball then
@@ -2635,7 +2721,7 @@ function Item.isPokeball(self)
 	return false
 end
 
-function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull)
+function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, corpseNature)
 	local player = Player(cid)
 	if player then
 		name = firstToUpper(name)
@@ -2675,11 +2761,14 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull)
 			addBall:setSpecialAttribute("pokeMaxHealth", maxHealth)
 			addBall:setSpecialAttribute("pokeHealth", maxHealth)
 			addBall:setSpecialAttribute("pokeLove", 0)
-			-- persist skull (sex) into the pokeball so summoned monster keeps the same skull
+			-- persist skull (sex) and nature into the pokeball so summoned monster keeps the same skull and nature
 			if corpseSkull ~= nil then
 				addBall:setSpecialAttribute("pokeSkull", corpseSkull)
 			end
-			-- add human-readable sex info into the item description for easier inspection
+			if corpseNature ~= nil then
+				addBall:setSpecialAttribute("pokeNature", corpseNature)
+			end
+			-- add human-readable sex and nature info into the item description for easier inspection
 			local sexStr = "unknown"
 			if corpseSkull ~= nil then
 				if corpseSkull == SKULL_GREEN then
@@ -2692,7 +2781,27 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull)
 					sexStr = "Other"
 				end
 			end
-			local desc = "It contains a " .. name .. ". Level: " .. level .. ". Boost: +" .. boost .. ". Sex: " .. sexStr .. "."
+			local natureStr = nil
+			if corpseNature ~= nil then
+				if corpseNature == NATURE_HARDY then
+					natureStr = "Hardy"
+				elseif corpseNature == NATURE_LONELY then
+					natureStr = "Lonely"
+				elseif corpseNature == NATURE_BRAVE then
+					natureStr = "Brave"
+				elseif corpseNature == NATURE_ADAMANT then
+					natureStr = "Adamant"
+				elseif corpseNature == NATURE_NAUGHTY then
+					natureStr = "Naughty"
+				else
+					natureStr = "Other"
+				end
+			end
+			local desc = "It contains a " .. name .. ". Level: " .. level .. ". Boost: +" .. boost .. ". Sex: " .. sexStr
+			if natureStr then
+				desc = desc .. ". Nature: " .. natureStr
+			end
+			desc = desc .. "."
 			addBall:setSpecialAttribute("description", desc)
 			if dp == false then
 				player:refreshPokemonBar({}, {})
@@ -2724,6 +2833,27 @@ function doSetMonsterSkullByMaster(cid, skull)
 	local summon = Creature(summons[1])
 	if summon then
 		summon:setSkull(skull)
+	end
+	return true
+end
+
+-- helpers for nature
+function doSetMonsterNature(uid, nature)
+	local m = Creature(uid)
+	if m then
+		m:setNature(nature)
+	end
+	return true
+end
+
+function doSetMonsterNatureByMaster(cid, nature)
+	local player = Player(cid)
+	if not player then return true end
+	local summons = player:getSummons()
+	if not summons or #summons == 0 then return true end
+	local summon = Creature(summons[1])
+	if summon then
+		summon:setNature(nature)
 	end
 	return true
 end
@@ -3110,7 +3240,7 @@ function Player:giveQuestPrize(uid, ignore)
 								if self:getFreeCapacity() >= 1 and container and container:getEmptySlots() > 0 then
 									dp = 0
 								end
-								doAddPokeball(self:getId(), value.prizes[j].pokes[i].name, value.prizes[j].pokes[i].level, value.prizes[j].pokes[i].boost, getBallKey(balls.ultraball.usedOn), dp, 0)
+								doAddPokeball(self:getId(), value.prizes[j].pokes[i].name, value.prizes[j].pokes[i].level, value.prizes[j].pokes[i].boost, getBallKey(balls.ultraball.usedOn), dp, 0, nil)
 								local msg = 'You have found: ' .. value.prizes[j].pokes[i].name .. ', level ' .. value.prizes[j].pokes[i].level ..', boost ' .. value.prizes[j].pokes[i].boost .. '.'
 								if dp == 1 then
 									msg = msg .. " It was sent do CP because you do not have enough capacity."
