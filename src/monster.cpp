@@ -19,6 +19,10 @@
 
 #include "otpch.h"
 
+#if defined(__linux__)
+#include <execinfo.h>
+#endif
+
 #include "monster.h"
 #include "game.h"
 #include "spells.h"
@@ -34,16 +38,16 @@ int32_t Monster::despawnRadius;
 
 uint32_t Monster::monsterAutoID = 0x40000000;
 
-Monster* Monster::createMonster(const std::string& name, uint16_t lvl, uint16_t bst, Skulls_t skull, Natures_t nature) //pota
+Monster* Monster::createMonster(const std::string& name, uint16_t lvl, uint16_t bst, Skulls_t skull, Natures_t nature, const std::string& initName) //pota
 {
 	MonsterType* mType = g_monsters.getMonsterType(name);
 	if (!mType) {
 		return nullptr;
 	}
-	return new Monster(mType, lvl, bst, skull, nature);
+	return new Monster(mType, lvl, bst, skull, nature, initName);
 }
 
-Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst, Skulls_t initSkull, Natures_t initNature) : //pota
+Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst, Skulls_t initSkull, Natures_t initNature, const std::string& initName) : //pota
 	Creature(),
 	strDescription(asLowerCaseString(mtype->nameDescription)),
 	mType(mtype)
@@ -136,6 +140,60 @@ Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst, Skulls_t initSk
 	} else {
 		setNature(NATURE_NONE);
 	}
+
+	// If an explicit per-instance name was provided at creation time, apply it and lock
+	// it to prevent subsequent C++ overwrites (mirrors skull/nature behavior).
+	if (!initName.empty()) {
+		setNameAndLock(initName);
+	}
+
+	// Apply C++ nature -> behavior overrides (minimal, per-instance)
+	// convert Lua prototype values (percent runonhealth) into absolute HP thresholds
+	{
+		Natures_t curNature = getNature();
+		int32_t runonPercent = 0;
+		switch (curNature) {
+			case NATURE_HARDY:    natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 20; natureTargetDistance = 1; natureStaticAttackCooldownMs = 3000; break;
+			case NATURE_LONELY:   natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 40; natureTargetDistance = 1; natureStaticAttackCooldownMs = 2000; break;
+			case NATURE_BRAVE:    natureHostileOverride = true; naturePassiveOverride = false; runonPercent = 0; natureTargetDistance = 1; natureStaticAttackCooldownMs = 50000; break;
+			case NATURE_ADAMANT:  natureHostileOverride = true; naturePassiveOverride = false; runonPercent = 0; natureTargetDistance = 1; natureStaticAttackCooldownMs = 1500; break;
+			case NATURE_NAUGHTY:  natureHostileOverride = true; naturePassiveOverride = false; runonPercent = 0; natureTargetDistance = 2; natureStaticAttackCooldownMs = 800; break;
+			case NATURE_BOLD:     natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 30; natureTargetDistance = 1; natureStaticAttackCooldownMs = 7000; break;
+			case NATURE_DOCILE:   natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 25; natureTargetDistance = 1; natureStaticAttackCooldownMs = 4000; break;
+			case NATURE_RELAXED:  natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 15; natureTargetDistance = 1; natureStaticAttackCooldownMs = 25000; break;
+			case NATURE_IMPISH:   natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 35; natureTargetDistance = 1; natureStaticAttackCooldownMs = 3000; break;
+			case NATURE_LAX:      natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 50; natureTargetDistance = 1; natureStaticAttackCooldownMs = 3500; break;
+			case NATURE_MODEST:   natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 30; natureTargetDistance = 5; natureStaticAttackCooldownMs = 2500; break;
+			case NATURE_MILD:     natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 60; natureTargetDistance = 4; natureStaticAttackCooldownMs = 2500; break;
+			case NATURE_QUIET:    natureHostileOverride = true; naturePassiveOverride = false; runonPercent = 0; natureTargetDistance = 5; natureStaticAttackCooldownMs = 45000; break;
+			case NATURE_RASH:     natureHostileOverride = true; naturePassiveOverride = false; runonPercent = 5; natureTargetDistance = 1; natureStaticAttackCooldownMs = 1200; break;
+			case NATURE_CALM:     natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 40; natureTargetDistance = 1; natureStaticAttackCooldownMs = 6000; break;
+			case NATURE_GENTLE:   natureHostileOverride = false; naturePassiveOverride = true; runonPercent = 80; natureTargetDistance = 1; natureStaticAttackCooldownMs = 9000; break;
+			case NATURE_SASSY:    natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 20; natureTargetDistance = 1; natureStaticAttackCooldownMs = 8000; break;
+			case NATURE_CAREFUL:  natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 50; natureTargetDistance = 1; natureStaticAttackCooldownMs = 12000; break;
+			case NATURE_JOLLY:    natureHostileOverride = false; naturePassiveOverride = false; runonPercent = 0; natureTargetDistance = 2; natureStaticAttackCooldownMs = 500; break;
+			case NATURE_HASTY:    natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 50; natureTargetDistance = 1; natureStaticAttackCooldownMs = 200; break;
+			case NATURE_TIMID:    natureHostileOverride = false; naturePassiveOverride = true; runonPercent = 100; natureTargetDistance = 1; natureStaticAttackCooldownMs = 1000; break;
+			case NATURE_NAIVE:    natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 35; natureTargetDistance = 1; natureStaticAttackCooldownMs = 900; break;
+			case NATURE_SERIOUS:  natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 20; natureTargetDistance = 1; natureStaticAttackCooldownMs = 3000; break;
+			case NATURE_BASHFUL:  natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 40; natureTargetDistance = 1; natureStaticAttackCooldownMs = 4000; break;
+			case NATURE_QUIRKY:   natureHostileOverride = true; naturePassiveOverride = true; runonPercent = 30; natureTargetDistance = 1; natureStaticAttackCooldownMs = 3000; break;
+			default: /* NATURE_NONE or unknown */ break;
+		}
+
+		if (curNature != NATURE_NONE) {
+			hasNatureOverride = true;
+			// compute absolute HP threshold from percent when specified (>0)
+			if (runonPercent > 0) {
+				natureRunAwayHealth = static_cast<int32_t>((static_cast<int64_t>(healthMax) * runonPercent) / 100);
+			} else {
+				natureRunAwayHealth = mType->info.runAwayHealth;
+			}
+		}
+		// initialize lastStaticAttackTick to now so cooldown applies from spawn
+		lastStaticAttackTick = OTSYS_TIME();
+	}
+
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
 
@@ -868,6 +926,32 @@ void Monster::onThink(uint32_t interval)
 	}
 }
 
+void Monster::setName(const std::string& name_, const std::string& description)
+{
+	// Prevent C++ overwrites if the name was locked by setNameAndLock
+	if (nameLocked && name_ != name) {
+		std::cout << "[Monster::setName] prevented overwrite for creature id=" << id
+				  << " old='" << name << "' new='" << name_ << "'\n";
+		void* bt[32];
+		int bt_size = backtrace(bt, 32);
+		char** bt_sym = backtrace_symbols(bt, bt_size);
+		if (bt_sym) {
+			std::cout << "[Monster::setName] backtrace (overwrite prevented):\n";
+			for (int i = 0; i < bt_size; ++i) {
+				std::cout << "  " << bt_sym[i] << "\n";
+			}
+			free(bt_sym);
+		}
+		return;
+	}
+	// store per-instance name and optional description, then notify clients
+	this->name = name_;
+	if (!description.empty()) {
+		this->strDescription = description;
+	}
+	g_game.updateCreatureType(this);
+}
+
 void Monster::doAttacking(uint32_t interval)
 {
 	if (!attackedCreature || (isSummon() && attackedCreature == this)) {
@@ -1003,7 +1087,7 @@ void Monster::onThinkTarget(uint32_t interval)
 					targetChangeCooldown = mType->info.changeTargetSpeed;
 
 					if (mType->info.changeTargetChance >= uniform_random(1, 100)) {
-						if (mType->info.targetDistance <= 1) {
+						if (getTargetDistance() <= 1) {
 							searchTarget(TARGETSEARCH_RANDOM);
 						} else {
 							searchTarget(TARGETSEARCH_NEAREST);
@@ -1239,15 +1323,21 @@ bool Monster::getNextStep(Direction& direction, uint32_t& flags)
 		result = Creature::getNextStep(direction, flags);
 		if (result) {
 			flags |= FLAG_PATHFINDING;
-		} else {
-			//target dancing
-			if (attackedCreature && attackedCreature == followCreature) {
-				if (isFleeing()) {
-					result = getDanceStep(getPosition(), direction, false, false);
-				} else if (mType->info.staticAttackChance < static_cast<uint32_t>(uniform_random(1, 100))) {
-					result = getDanceStep(getPosition(), direction);
-				}
-			}
+				} else {
+					//target dancing
+					if (attackedCreature && attackedCreature == followCreature) {
+						if (isFleeing()) {
+							result = getDanceStep(getPosition(), direction, false, false);
+						} else {
+							// check both probability (existing %) and an optional per-nature cooldown (ms)
+							uint32_t now = OTSYS_TIME();
+							bool cooldownOk = (natureStaticAttackCooldownMs == 0) || ((now - lastStaticAttackTick) >= natureStaticAttackCooldownMs);
+							if (cooldownOk && (mType->info.staticAttackChance < static_cast<uint32_t>(uniform_random(1, 100)))) {
+								lastStaticAttackTick = now;
+								result = getDanceStep(getPosition(), direction);
+							}
+						}
+					}
 		}
 	}
 
@@ -1381,9 +1471,9 @@ bool Monster::getDistanceStep(const Position& targetPos, Direction& direction, b
 
 	int32_t distance = std::max<int32_t>(dx, dy);
 
-	if (!flee && (distance > mType->info.targetDistance || !g_game.isSightClear(creaturePos, targetPos, true))) {
+	if (!flee && (distance > getTargetDistance() || !g_game.isSightClear(creaturePos, targetPos, true))) {
 		return false; // let the A* calculate it
-	} else if (!flee && distance == mType->info.targetDistance) {
+	} else if (!flee && distance == getTargetDistance()) {
 		return true; // we don't really care here, since it's what we wanted to reach (a dancestep will take of dancing in that position)
 	}
 
@@ -2119,7 +2209,7 @@ void Monster::getPathSearchParams(const Creature* creature, FindPathParams& fpp)
 	Creature::getPathSearchParams(creature, fpp);
 
 	fpp.minTargetDist = 1;
-	fpp.maxTargetDist = mType->info.targetDistance;
+	fpp.maxTargetDist = getTargetDistance();
 
 	if (isSummon()) {
 		if (getMaster() == creature) {

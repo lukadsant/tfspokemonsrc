@@ -2408,6 +2408,8 @@ function doTransformPokeball(item)
 	return false
 end
 
+
+
 function doReleaseSummon(cid, pos, effect, message, missile)
 	local player = Player(cid)
 	if not player then return false end
@@ -2417,6 +2419,14 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 	if effect == nil then effect = CONST_ME_TELEPORT end
 	if message == nil then message = true end
 	local name = ball:getSpecialAttribute("pokeName")
+	-- debug: log which ball is being read and which nickname is stored (temporary)
+	if ball and ball.uid then
+		print("doReleaseSummon: using ball uid=", tostring(ball.uid), " pokeName=", tostring(ball:getSpecialAttribute("pokeName")), " pokeNickname=", tostring(ball:getSpecialAttribute("pokeNickname")))
+	end
+	-- mark this ball as last used for a short period so talkactions can find the exact instance
+	pcall(function() ball:setSpecialAttribute("lastSummonAt", os.time()) end)
+	-- also store the last used ball UID on the player storage for exact matching by talkactions
+	pcall(function() player:setStorageValue(95000, ball.uid) end)
 	-- to fix ball bug
 	if not name then
 		ball:remove()
@@ -2464,16 +2474,17 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 	end
 	local storedSkull = ball:getSpecialAttribute("pokeSkull")
 	local storedNature = ball:getSpecialAttribute("pokeNature")
+	local storedNickname = sanitizeNickname(ball:getSpecialAttribute("pokeNickname"))
 	local monster
 	if storedSkull ~= nil and storedNature ~= nil then
-		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, storedSkull, storedNature)
+		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, storedSkull, storedNature, storedNickname)
 	elseif storedSkull ~= nil then
-		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, storedSkull)
+		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, storedSkull, nil, storedNickname)
 	elseif storedNature ~= nil then
 		-- pass nil for skull so createMonster will use default/skull-none, but pass nature
-		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, nil, storedNature)
+		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, nil, storedNature, storedNickname)
 	else
-		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost)
+		monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost, nil, nil, storedNickname)
 	end
 
 	if monster ~= nil then
@@ -2481,6 +2492,10 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			player:say(monster:getName() .. ", I need your help!", TALKTYPE_MONSTER_SAY)
 		end
 		player:addSummon(monster)
+		-- persist the originating ball UID on the monster so we can reliably
+		-- find the exact pokeball on recall (avoids mismatches when multiple
+		-- identical balls exist and selection heuristics pick the wrong one)
+		pcall(function() monster:setStorageValue(95001, ball.uid) end)
 		-- if the pokeball stored a skull value, apply it to the summoned monster after adding as a summon
 		-- this increases the chance we target the correct instance and avoid races with constructor randomization
 		-- we already passed storedSkull to createMonster when available, but keep a deferred re-apply as safety
@@ -2492,6 +2507,12 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			-- re-apply nature after a short delay as safety
 			addEvent(doSetMonsterNatureByMaster, 50, player:getId(), storedNature)
 		end
+			if storedNickname ~= nil and storedNickname ~= "" then
+				-- We already pass the stored nickname into the C++ constructor so the name
+				-- should be applied atomically there; only schedule a deferred check
+				-- which will set the name if it differs (avoids noisy prevented-overwrite logs)
+				addEvent(doSetMonsterNicknameByMaster, 50, player:getId(), storedNickname)
+			end
 		monster:setDirection(ball:getSpecialAttribute("pokeLookDir") or DIRECTION_SOUTH)
 		if summonBoost >= maxBoost then
 			doStartAurea(monster)
@@ -2576,6 +2597,17 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 	if not summon then
 		return false
 	end
+	-- Prefer the originating ball if the monster stored its UID when summoned
+	local ball = nil
+	pcall(function()
+		local originUid = tonumber(summon:getStorageValue(95001)) or 0
+		if originUid and originUid > 0 then
+			local originItem = Item(originUid)
+			if originItem and originItem:isPokeball() then
+				ball = originItem
+			end
+		end
+	end)
 	local summonPos = summon:getPosition()
 	local attackers = Game.getSpectators(summonPos, true, false) 
 	for i = 1, #attackers do
@@ -2600,17 +2632,83 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 	summon:unregisterEvent("MonsterGetExperience")
 	summon:unregisterEvent("MonsterHealthChange")
 	player:unregisterEvent("RemoveSummon")
---	local ball = player:getSlotItem(CONST_SLOT_AMMO)
-	local ball = player:getUsingBall()
+	-- try to get the using ball first if we didn't find the origin ball
+	if not ball then
+		ball = player:getUsingBall()
+	end
+	-- if caller provided a uid fallback and we don't have a using ball, try that uid
 	if uid and not ball then
 		ball = Item(uid)
 	end
+	-- if still not a valid pokeball, try the exact uid stored on the player (set at release)
+	if (not ball or not ball:isPokeball()) then
+		local lastUid = player:getStorageValue(95000)
+		if lastUid and lastUid > 0 then
+			local it = Item(lastUid)
+			if it and it:isPokeball() then
+				local owner = it:getSpecialAttribute("owner")
+				if not owner or owner == player:getName() then
+					ball = it
+				end
+			end
+		end
+	end
+	-- if still not found, scan player's pokeballs and pick best candidate by lastSummonAt/isBeingUsed/matching attributes
+	if (not ball or not ball:isPokeball()) then
+		local sName, sLevel, sBoost
+		pcall(function() sName = summon:getSummonName() or summon:getName() end)
+		pcall(function() sLevel = summon:getSummonLevel() end)
+		pcall(function() sBoost = summon:getSummonBoost() end)
+		local candidates = player:getPokeballs() or {}
+		local bestLast = 0
+		local bestBall = nil
+		local isBeingBall = nil
+		for i = 1, #candidates do
+			local b = candidates[i]
+			if b and b:isPokeball() then
+				local lastUsed = tonumber(b:getSpecialAttribute("lastSummonAt")) or 0
+				local isBeing = b:getSpecialAttribute("isBeingUsed")
+				local bName = b:getSpecialAttribute("pokeName")
+				local bLevel = b:getSpecialAttribute("pokeLevel")
+				local bBoost = b:getSpecialAttribute("pokeBoost")
+				if lastUsed > bestLast then
+					bestLast = lastUsed
+					bestBall = b
+				end
+				if isBeing and isBeing == 1 then
+					isBeingBall = b
+				end
+				if bName and sName and bName == sName and (not sLevel or bLevel == sLevel) and (not sBoost or bBoost == sBoost) then
+					ball = b
+					break
+				end
+			end
+		end
+		if not ball then
+			if bestBall then
+				ball = bestBall
+			elseif isBeingBall then
+				ball = isBeingBall
+			end
+		end
+	end
+	-- if we found a pokeball, persist recall data including nickname
 	if ball and ball:isPokeball() then
 		ball:setSpecialAttribute("pokeHealth", summon:getHealth())
 		ball:setSpecialAttribute("pokeLookDir", summon:getDirection())
 		-- persist current summon skull and nature back to the pokeball so sex and nature are preserved across recalls
 		ball:setSpecialAttribute("pokeSkull", summon:getSkull())
 		ball:setSpecialAttribute("pokeNature", summon:getNature())
+		-- persist the current summon nickname so recalls / re-summons keep the display name
+		if summon:isMonster() then
+			local sname = sanitizeNickname(summon:getName())
+			local defaultName = summon:getType():getName()
+			if sname and sname ~= "" and sname ~= defaultName then
+				ball:setSpecialAttribute("pokeNickname", sname)
+			end
+		end
+		-- update human-readable description so onLook immediately reflects nickname changes
+		pcall(function() updatePokeballDescription(ball) end)
 	end
 	if not (player:isOnFly() or player:isOnRide() or player:isOnSurf() or summon:isEvolving()) then
 		if ball then
@@ -2721,7 +2819,7 @@ function Item.isPokeball(self)
 	return false
 end
 
-function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, corpseNature)
+function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, corpseNature, corpseNickname)
 	local player = Player(cid)
 	if player then
 		name = firstToUpper(name)
@@ -2768,6 +2866,13 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, c
 			if corpseNature ~= nil then
 				addBall:setSpecialAttribute("pokeNature", corpseNature)
 			end
+			-- persist nickname into the pokeball so summoned monster keeps the same display name
+			if corpseNickname ~= nil and corpseNickname ~= "" then
+				local safeNick = sanitizeNickname(corpseNickname)
+				if safeNick then
+					addBall:setSpecialAttribute("pokeNickname", safeNick)
+				end
+			end
 			-- add human-readable sex and nature info into the item description for easier inspection
 			local sexStr = "unknown"
 			if corpseSkull ~= nil then
@@ -2800,6 +2905,12 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, c
 			local desc = "It contains a " .. name .. ". Level: " .. level .. ". Boost: +" .. boost .. ". Sex: " .. sexStr
 			if natureStr then
 				desc = desc .. ". Nature: " .. natureStr
+			end
+			local nickStr = nil
+			local pokeNick = sanitizeNickname(corpseNickname or addBall:getSpecialAttribute("pokeNickname"))
+			if pokeNick ~= nil and pokeNick ~= "" then
+				nickStr = pokeNick
+				desc = desc .. ". Nickname: " .. nickStr
 			end
 			desc = desc .. "."
 			addBall:setSpecialAttribute("description", desc)
@@ -2854,6 +2965,39 @@ function doSetMonsterNatureByMaster(cid, nature)
 	local summon = Creature(summons[1])
 	if summon then
 		summon:setNature(nature)
+	end
+	return true
+end
+
+-- helpers for nickname
+function doSetMonsterNickname(uid, nickname)
+	local m = Creature(uid)
+	if m and nickname then
+		local locked = false
+		pcall(function() locked = m:isNameLocked() end)
+		if not locked then
+			pcall(function() m:setName(nickname) end)
+		end
+	end
+	return true
+end
+
+function doSetMonsterNicknameByMaster(cid, nickname)
+	local player = Player(cid)
+	if not player then return true end
+	local summons = player:getSummons()
+	if not summons or #summons == 0 then return true end
+	local summon = Creature(summons[1])
+	if summon and nickname then
+		-- Only set the name if it actually differs AND the server has not locked it.
+		-- This avoids attempting to overwrite a C++-locked name and producing noisy backtrace logs.
+		pcall(function()
+			local locked = false
+			pcall(function() locked = summon:isNameLocked() end)
+			if not locked and summon:getName() ~= nickname then
+				summon:setName(nickname)
+			end
+		end)
 	end
 	return true
 end
@@ -2955,6 +3099,89 @@ end
 
 function firstToUpper(str)
     return (str:gsub("^%l", string.upper))
+end
+
+-- sanitize nickname before persisting or applying to monsters
+function sanitizeNickname(nick)
+	if not nick then return nil end
+	nick = tostring(nick)
+	-- remove control chars and backslashes/quotes which can corrupt serialization
+	nick = nick:gsub('[%c\\"]', '')
+	-- collapse whitespace and trim
+	nick = nick:gsub('%s+', ' '):gsub('^%s*(.-)%s*$', '%1')
+	if nick == '' then return nil end
+	-- enforce a sensible max length to avoid abuse
+	if #nick > 40 then
+		nick = nick:sub(1,40)
+	end
+	return nick
+end
+
+-- rebuild the human-readable description for a pokeball item based on its stored attributes
+function updatePokeballDescription(ball)
+	if not ball or not ball:isPokeball() then return false end
+	local name = ball:getSpecialAttribute("pokeName")
+	local level = ball:getSpecialAttribute("pokeLevel")
+	local boost = ball:getSpecialAttribute("pokeBoost") or 0
+	local ownerName = ball:getSpecialAttribute("owner")
+	local pokeHealth = tonumber(ball:getSpecialAttribute("pokeHealth")) or 0
+	local healthStr = ""
+	if ownerName then
+		healthStr = "It belongs to " .. ownerName .. "."
+	end
+	if pokeHealth <= 0 then
+		healthStr = "It is fainted."
+	end
+	if name ~= nil and level ~= nil and healthStr ~= nil then
+		-- try to read stored skull (sex) and show it in look
+		local pokeSkull = ball:getSpecialAttribute("pokeSkull")
+		local sexStr = nil
+		if pokeSkull ~= nil then
+			if pokeSkull == SKULL_GREEN then
+				sexStr = "Female"
+			elseif pokeSkull == SKULL_WHITE then
+				sexStr = "Male"
+			elseif pokeSkull == SKULL_NONE then
+				sexStr = "None"
+			else
+				sexStr = "Other"
+			end
+		end
+		-- read stored nature and map to human-readable string
+		local pokeNature = ball:getSpecialAttribute("pokeNature")
+		local natureStr = nil
+		if pokeNature ~= nil then
+			-- lightweight mapping for description (keep consistent with doAddPokeball)
+			if pokeNature == NATURE_HARDY then
+				natureStr = "Hardy"
+			elseif pokeNature == NATURE_LONELY then
+				natureStr = "Lonely"
+			elseif pokeNature == NATURE_BRAVE then
+				natureStr = "Brave"
+			elseif pokeNature == NATURE_ADAMANT then
+				natureStr = "Adamant"
+			elseif pokeNature == NATURE_NAUGHTY then
+				natureStr = "Naughty"
+			else
+				natureStr = "Other"
+			end
+		end
+		local desc = "It contains a " .. name .. ". Level: " .. level .. ". Boost: +" .. boost .. ". " .. healthStr
+		if sexStr then
+			desc = desc .. " Sex: " .. sexStr
+		end
+		if natureStr then
+			desc = desc .. ". Nature: " .. natureStr
+		end
+		local pokeNick = sanitizeNickname(ball:getSpecialAttribute("pokeNickname"))
+		if pokeNick ~= nil and pokeNick ~= "" then
+			desc = desc .. ". Nickname: " .. pokeNick
+		end
+		desc = desc .. "."
+		ball:setSpecialAttribute("description", desc)
+		return true
+	end
+	return false
 end
 
 function Position:createFlyFloor()
