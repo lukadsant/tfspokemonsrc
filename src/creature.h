@@ -177,6 +177,15 @@ class Creature : virtual public Thing
 		void setNature(Natures_t newNature);
 		// Atomically set the nature and lock it to prevent subsequent C++ overwrites.
 		void setNatureAndLock(Natures_t newNature);
+		// Atomically set a per-instance visible name/description and lock it to prevent
+		// subsequent C++ overwrites (mirrors skull/nature locking semantics).
+		void setNameAndLock(const std::string& name, const std::string& description = "");
+
+		// Allow scripts to set a per-instance visible name/description for a creature.
+		virtual void setName(const std::string& name, const std::string& description = "") {}
+
+		// Query whether the visible name was locked by the server (setNameAndLock).
+		bool isNameLocked() const;
 
 		// Locking: when locked, C++ code will avoid changing the skull to prevent
 		// overwrites of values explicitly set by scripts. Scripts call
@@ -554,6 +563,10 @@ class Creature : virtual public Thing
 
 		Natures_t nature = NATURE_NONE;
 		bool natureLocked = false;
+
+		// When true, C++ code will avoid changing the visible name as it was
+		// explicitly set by scripts/constructors and locked for this instance.
+		bool nameLocked = false;
 
 		bool localMapCache[mapWalkHeight][mapWalkWidth] = {{ false }};
 		bool isInternalRemoved = false;

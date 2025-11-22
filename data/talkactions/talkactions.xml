@@ -26,6 +26,8 @@
 	<talkaction words="/s" separator=" " script="place_npc.lua" />
 	<talkaction words="/addtutor" separator=" " script="add_tutor.lua" />
 	<talkaction words="/removetutor" separator=" " script="remove_tutor.lua" />
+	<talkaction words="/givenickname" separator=" " script="give_nickname.lua" />
+	<talkaction words="/ss" separator=" " script="spawn_with_nick.lua" />
 	<talkaction words="/looktype" separator=" " script="looktype.lua" />
 	<talkaction words="/summon" separator=" " script="place_summon.lua" />
 	<talkaction words="/chameleon" separator=" " script="chameleon.lua" />
@@ -35,6 +37,7 @@
 	<talkaction words="/save" script="save.lua" />
 	<talkaction words="/clean" script="clean.lua" />
 	<talkaction words="/hide" script="hide.lua" />
+	<talkaction words="/ts" script="testnatures.lua" />
 	<talkaction words="/setactionid" separator=" " script="set_actionid.lua" />
 	<talkaction words="/removeoutfit" separator=" " script="remove_outfit.lua" />
 	<talkaction words="/addpremium" separator=" " script="add_premium.lua" />

@@ -19,6 +19,20 @@ function onDeath(creature, corpse, killer, mostDamage, unjustified, mostDamage_u
 						corpse:setSpecialAttribute("corpseNature", nature)
 					end
 				end
+	                -- persist per-instance display name (nickname) if present
+					if creature.getNickname then
+						local nick = creature:getNickname()
+						if nick ~= nil and nick ~= "" then
+							-- sanitize nickname to avoid serialization issues
+							nick = tostring(nick)
+							-- remove control chars and quotes/backslashes
+							nick = nick:gsub('[%c\\\"]', '')
+							nick = nick:gsub('%s+', ' '):gsub('^%s*(.-)%s*$', '%1')
+							if nick ~= nil and nick ~= '' then
+								corpse:setSpecialAttribute("corpseNickname", nick)
+							end
+						end
+					end
 				print("[CorpseLevel] " .. creature:getName() .. " died with skull=" .. tostring(skull) .. (nature ~= nil and (", nature=" .. tostring(nature)) or ""))
 			end
 		else

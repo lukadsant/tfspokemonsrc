@@ -118,6 +118,13 @@ function Player:onLook(thing, position, distance)
 					else
 						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
 					end
+
+					-- show nickname if summon has a display name different from base pokeName
+					local summonDisplay = thing:getName()
+					local baseName = item and item:getSpecialAttribute("pokeName") or nil
+					if summonDisplay and baseName and summonDisplay ~= baseName then
+						description = string.format("%s\nNickname: %s.", description, summonDisplay)
+					end
 				end
 			end
 		end
@@ -167,6 +174,11 @@ function Player:onLook(thing, position, distance)
 				else
 					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s", description, pokeName, pokeLevel, pokeBoost, healthStr)
 				end
+			end
+			-- append stored nickname if any (pokeball description may already include this via description special attribute)
+			local storedNick = thing:getSpecialAttribute("pokeNickname")
+			if storedNick and storedNick ~= "" then
+				description = string.format("%s\nNickname: %s.", description, storedNick)
 			end
 		end
 	end

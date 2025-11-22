@@ -40,11 +40,11 @@ enum TargetSearchType_t {
 class Monster final : public Creature
 {
 	public:
-	static Monster* createMonster(const std::string& name, uint16_t lvl = 0, uint16_t bst = 0, Skulls_t skull = SKULL_NONE, Natures_t nature = NATURE_NONE);
+	static Monster* createMonster(const std::string& name, uint16_t lvl = 0, uint16_t bst = 0, Skulls_t skull = SKULL_NONE, Natures_t nature = NATURE_NONE, const std::string& initName = std::string());
 		static int32_t despawnRange;
 		static int32_t despawnRadius;
 
-	explicit Monster(MonsterType* mtype, uint16_t lvl = 0, uint16_t bst = 0, Skulls_t initSkull = SKULL_NONE, Natures_t initNature = NATURE_NONE);
+	explicit Monster(MonsterType* mtype, uint16_t lvl = 0, uint16_t bst = 0, Skulls_t initSkull = SKULL_NONE, Natures_t initNature = NATURE_NONE, const std::string& initName = std::string());
 		~Monster();
 
 		// non-copyable
@@ -68,11 +68,21 @@ class Monster final : public Creature
 		void addList() final;
 
 		const std::string& getName() const final {
+			// If a per-instance name was set (by scripts/tests), return it; otherwise return the type name
+			return name.empty() ? mType->name : name;
+		}
+
+		// Returns the monster type's canonical name (not affected by per-instance display name).
+		const std::string& getTypeName() const {
 			return mType->name;
 		}
 		const std::string& getNameDescription() const final {
-			return mType->nameDescription;
+			// If a per-instance description was set, return it; otherwise return the type description
+			return strDescription.empty() ? mType->nameDescription : strDescription;
 		}
+
+		// Allow scripts to set a per-instance visible name/description for this monster.
+		void setName(const std::string& name, const std::string& description = "");
 		std::string getDescription(int32_t) const final {
 			return strDescription + '.';
 		}
@@ -132,10 +142,12 @@ class Monster final : public Creature
 			return mType->info.canPushCreatures;
 		}
 		bool isHostile() const {
+			if (hasNatureOverride) return natureHostileOverride;
 			return mType->info.isHostile;
 		}
 
 		bool isPassive() const { //pota
+			if (hasNatureOverride) return naturePassiveOverride;
 			return mType->info.isPassive;
 		}
 
@@ -237,10 +249,18 @@ class Monster final : public Creature
 
 		bool isTarget(const Creature* creature) const;
 		bool isFleeing() const {
-			return !isSummon() && getHealth() <= mType->info.runAwayHealth;
+			int32_t runHp = mType->info.runAwayHealth;
+			if (hasNatureOverride && natureRunAwayHealth >= 0) runHp = natureRunAwayHealth;
+			return !isSummon() && getHealth() <= runHp;
+		}
+
+		int32_t getTargetDistance() const {
+			if (hasNatureOverride && natureTargetDistance > 0) return natureTargetDistance;
+			return mType->info.targetDistance;
 		}
 
 		bool getDistanceStep(const Position& targetPos, Direction& direction, bool flee = false);
+
 		bool isTargetNearby() const {
 			return stepDuration >= 1;
 		}
@@ -281,6 +301,18 @@ class Monster final : public Creature
 		bool isIdle = true;
 		bool extraMeleeAttack = false;
 		bool isMasterInRange = false;
+
+		// Nature behavior overrides (set at construction from Creature::getNature())
+		bool hasNatureOverride = false;
+		bool natureHostileOverride = false;
+		bool naturePassiveOverride = false;
+		int32_t natureTargetDistance = -1; // if >0 overrides mType->info.targetDistance
+		int32_t natureRunAwayHealth = -1; // absolute HP threshold (converted from percent)
+		uint32_t natureStaticAttackChance = 0; // reserved for future mapping
+		// static attack cooldown in milliseconds (from prototipo 'staticattack' values)
+		uint32_t natureStaticAttackCooldownMs = 0;
+		// last timestamp (ms) when a static-attack/dance was allowed
+		uint32_t lastStaticAttackTick = 0;
 
 		void onCreatureEnter(Creature* creature);
 		void onCreatureLeave(Creature* creature);

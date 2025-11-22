@@ -83,6 +83,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	-- persist corpse skull (sex) and nature before removing corpse so they can be saved into the pokeball
 	local corpseSkull = targetCorpse:getSpecialAttribute("corpseSkull")
 	local corpseNature = targetCorpse:getSpecialAttribute("corpseNature")
+    local corpseNickname = targetCorpse:getSpecialAttribute("corpseNickname")
 	item:remove(1)
 	targetCorpse:remove()
 	if player:getStorageValue(storageTry) < 0 then
@@ -93,9 +94,9 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if math.random(1, 300) <= chance then -- caught
 		-- check how many pokeballs the player has
 		if player:getSlotItem(CONST_SLOT_BACKPACK) and player:getSlotItem(CONST_SLOT_BACKPACK):getEmptySlots() >= 1 and player:getFreeCapacity() >= 1 then -- add to backpack
-			addEvent(doAddPokeball, delayMessage, player:getId(), name, level, initialBoost, ballKey, false, delayMessage, corpseSkull, corpseNature)
+			addEvent(doAddPokeball, delayMessage, player:getId(), name, level, initialBoost, ballKey, false, delayMessage, corpseSkull, corpseNature, corpseNickname)
 		else -- send to cp
-			local addPokeball = doAddPokeball(player:getId(), name, level, initialBoost, ballKey, true, delayMessage + 4000, corpseSkull, corpseNature)
+			local addPokeball = doAddPokeball(player:getId(), name, level, initialBoost, ballKey, true, delayMessage + 4000, corpseSkull, corpseNature, corpseNickname)
 			if not addPokeball then
 				print("ERROR! Player " .. player:getName() .. " lost pokemon " .. name .. "! addPokeball false")
 			end

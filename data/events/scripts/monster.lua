@@ -2,6 +2,10 @@ local halloweenChance = 4
 local christmasChance = 4
 local megaChance = 1
 
+local nature_behaviors = nil
+-- require lazily; wrap in pcall to avoid startup-time errors on missing files
+pcall(function() nature_behaviors = require("lib/core/nature_behaviors") end)
+
 local halloweenPokes = 
 {
 	[1] = 
@@ -340,5 +344,133 @@ function Monster:onSpawn(position, startup, artificial)
 --			end
 --		end
 	end
+
+	-- apply prototype nature behavior profile (safely)
+	if nature_behaviors and type(nature_behaviors.applyNatureBehavior) == "function" then
+		pcall(nature_behaviors.applyNatureBehavior, self)
+	end
+
+	-- Debug: compare XML (MonsterType) defaults vs applied storage
+	pcall(function()
+		local mt = MonsterType(self:getName())
+		if mt then
+			local mthostile = nil
+			local mtpassive = nil
+			local mttd = nil
+			pcall(function() mthostile = mt:isHostile() end)
+			pcall(function() mtpassive = mt:isPassive() end)
+			pcall(function() mttd = mt:getTargetDistance() end)
+			local name = self:getName()
+			local id = self:getId()
+			print(string.format("[nature_debug] MonsterType defaults for %s id=%s -> isHostile=%s isPassive=%s targetDistance=%s", tostring(name), tostring(id), tostring(mthostile), tostring(mtpassive), tostring(mttd)))
+			-- also print storage values if present
+			if type(self.getStorageValue) == "function" and nature_behaviors and nature_behaviors.STORAGE_KEYS then
+				local keys = nature_behaviors.STORAGE_KEYS
+				local sh = self:getStorageValue(keys.HOSTILE)
+				local sp = self:getStorageValue(keys.PASSIVE)
+				local sr = self:getStorageValue(keys.RUNONHEALTH)
+				print(string.format("[nature_debug] storage for %s id=%s -> hostile=%s passive=%s runon=%s", tostring(name), tostring(id), tostring(sh), tostring(sp), tostring(sr)))
+			end
+		end
+	end)
+
+	return true
+end
+
+
+function Monster:onThink(interval)
+	-- Prototype AI hook: enforce nature behavior stored in creature storage
+	if not nature_behaviors then return true end
+	local keys = nature_behaviors.STORAGE_KEYS
+	if not keys then return true end
+
+	-- read storage values (default to -1 if not present)
+	local hostile = -1
+	local passive = -1
+	local runon = -1
+	local targdist = -1
+	pcall(function()
+		hostile = self:getStorageValue(keys.HOSTILE)
+		passive = self:getStorageValue(keys.PASSIVE)
+		runon = self:getStorageValue(keys.RUNONHEALTH)
+		targdist = self:getStorageValue(keys.TARGETDIST)
+	end)
+
+	-- debug log: show read values
+	do
+		local name, cid = "<unknown>", "?"
+		pcall(function() name = self:getName() end)
+		pcall(function() cid = self:getId() end)
+		print(string.format("[nature_ai] onThink for %s id=%s -> hostile=%s passive=%s runon=%s targdist=%s", tostring(name), tostring(cid), tostring(hostile), tostring(passive), tostring(runon), tostring(targdist)))
+	end
+
+	-- normalize nil/-1 values to sensible defaults if missing
+	if hostile < 0 then hostile = 1 end
+	if passive < 0 then passive = 1 end
+	if runon < 0 then runon = 0 end
+	if targdist < 0 then targdist = 1 end
+
+	-- If passive (not hostile but passive flag set), drop targets
+	if hostile == 0 and passive == 1 then
+		pcall(function()
+			local tlist = self:getTargetList()
+			if tlist then
+				for i = 1, #tlist do
+					local t = tlist[i]
+					if t then
+						print(string.format("[nature_ai] passive: removing target %s from %s", tostring(t:getName() or "?"), tostring(self:getName() or "?")))
+						self:removeTarget(t)
+					end
+				end
+			end
+		end)
+		return true
+	end
+
+	-- If low health below runon threshold, drop targets (flee)
+	if runon > 0 then
+		local ok, hp = pcall(function() return self:getHealth() end)
+		local ok2, maxhp = pcall(function() return self:getMaxHealth() end)
+			if ok and ok2 and maxhp and maxhp > 0 then
+			local pct = (hp / maxhp) * 100
+			if pct <= runon then
+				pcall(function()
+					local tlist = self:getTargetList()
+					if tlist then
+						for i = 1, #tlist do
+							local t = tlist[i]
+							if t then
+								print(string.format("[nature_ai] runon triggered: %s (%.1f%% <= %d%%) removing target %s", tostring(self:getName() or "?"), (pct or 0), runon, tostring(t:getName() or "?")))
+								self:removeTarget(t)
+							end
+						end
+					end
+				end)
+				return true
+			end
+		end
+	end
+
+	-- If hostile (and not passive), ensure there is a target: find nearest player within spectator list
+	if hostile == 1 and passive == 0 then
+		local ok, currentTarget = pcall(function() return self:getTarget() end)
+		if not currentTarget then
+			pcall(function()
+				local pos = self:getPosition()
+				local specs = Game.getSpectators(pos, true, true)
+				if specs then
+					for _, sp in ipairs(specs) do
+						if sp and sp:isPlayer() then
+							-- set first player as target
+							print(string.format("[nature_ai] hostile: %s id=%s setting target -> %s", tostring(self:getName() or "?"), tostring(self:getId() or "?"), tostring(sp:getName() or "?")))
+							self:setTarget(sp)
+							break
+						end
+					end
+				end
+			end)
+		end
+	end
+
 	return true
 end

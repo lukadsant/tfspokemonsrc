@@ -164,6 +164,21 @@ void Creature::setNatureAndLock(Natures_t newNature)
 	g_game.updateCreatureType(this);
 }
 
+void Creature::setNameAndLock(const std::string& name, const std::string& description)
+{
+	// Use the virtual setName implementation to apply the per-instance visible
+	// name/description, then mark the name as locked so C++ won't overwrite it.
+	setName(name, description);
+	nameLocked = true;
+	// Notify clients about the possible type/name change
+	g_game.updateCreatureType(this);
+}
+
+bool Creature::isNameLocked() const
+{
+	return nameLocked;
+}
+
 int64_t Creature::getTimeSinceLastMove() const
 {
 	if (lastStep) {

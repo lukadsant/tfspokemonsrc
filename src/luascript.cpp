@@ -2105,6 +2105,9 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Creature", "getId", LuaScriptInterface::luaCreatureGetId);
 	registerMethod("Creature", "getName", LuaScriptInterface::luaCreatureGetName);
+	registerMethod("Creature", "getNickname", LuaScriptInterface::luaCreatureGetNickname);
+	registerMethod("Creature", "setName", LuaScriptInterface::luaCreatureSetName);
+	registerMethod("Creature", "isNameLocked", LuaScriptInterface::luaCreatureIsNameLocked);
 
 	registerMethod("Creature", "getTarget", LuaScriptInterface::luaCreatureGetTarget);
 	registerMethod("Creature", "setTarget", LuaScriptInterface::luaCreatureSetTarget);
@@ -2805,6 +2808,19 @@ int LuaScriptInterface::luaDoCreatureCastSpell(lua_State* L) //pota
 		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
 		lua_pushboolean(L, false);
 	}
+	return 1;
+}
+
+int LuaScriptInterface::luaCreatureIsNameLocked(lua_State* L)
+{
+	Creature* creature = getCreature(L, 1);
+	if (!creature) {
+		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
+		pushBoolean(L, false);
+		return 1;
+	}
+
+	pushBoolean(L, creature->isNameLocked());
 	return 1;
 }
 
@@ -4486,7 +4502,11 @@ int LuaScriptInterface::luaGameCreateMonster(lua_State* L) //pota
 	}
 	Skulls_t skull = getNumber<Skulls_t>(L, 7, SKULL_NONE);
 	Natures_t nature = getNumber<Natures_t>(L, 8, NATURE_NONE);
-	Monster* monster = Monster::createMonster(getString(L, 1), lvl, bst, skull, nature);
+	std::string initName;
+	if (isString(L, 9)) {
+		initName = getString(L, 9);
+	}
+	Monster* monster = Monster::createMonster(getString(L, 1), lvl, bst, skull, nature, initName);
 	if (!monster) {
 		lua_pushnil(L);
 		return 1;
@@ -6939,7 +6959,13 @@ int LuaScriptInterface::luaCreatureGetName(lua_State* L)
 	// creature:getName()
 	const Creature* creature = getUserdata<const Creature>(L, 1);
 	if (creature) {
-		pushString(L, creature->getName());
+		// For monsters, return the canonical monster type name so scripts keep working
+		const Monster* monster = creature->getMonster();
+		if (monster) {
+			pushString(L, monster->getTypeName());
+		} else {
+			pushString(L, creature->getName());
+		}
 	} else {
 		lua_pushnil(L);
 	}
@@ -6959,6 +6985,23 @@ int LuaScriptInterface::luaCreatureGetTarget(lua_State* L)
 	if (target) {
 		pushUserdata<Creature>(L, target);
 		setCreatureMetatable(L, -1, target);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaCreatureGetNickname(lua_State* L)
+{
+	// creature:getNickname() -> returns per-instance display name / nickname
+	const Creature* creature = getUserdata<const Creature>(L, 1);
+	if (creature) {
+		const Monster* monster = creature->getMonster();
+		if (monster) {
+			pushString(L, monster->getName());
+		} else {
+			pushString(L, creature->getName());
+		}
 	} else {
 		lua_pushnil(L);
 	}
@@ -7437,6 +7480,21 @@ int LuaScriptInterface::luaCreatureSetNature(lua_State* L)
 		// Atomically set nature and lock it to avoid a short two-call window where C++
 		// code could overwrite the value between setNature(...) and setNatureLocked(true).
 		creature->setNatureAndLock(getNumber<Natures_t>(L, 2));
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaCreatureSetName(lua_State* L)
+{
+	// creature:setName(name, description)
+	Creature* creature = getUserdata<Creature>(L, 1);
+	if (creature) {
+		const std::string& name = getString(L, 2);
+		const std::string& description = getString(L, 3);
+		creature->setName(name, description);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
