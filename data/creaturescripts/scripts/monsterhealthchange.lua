@@ -80,6 +80,22 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	local formulaDamage = damageFormula(masterLevel, summonLevel, summonBoost, summonLove)
 	localDamageMultiplier = localDamageMultiplier * formulaDamage
 
+	-- Held Item Damage Boost
+	if attacker:getMaster() and attacker:getMaster():isPlayer() then
+		local ball = attacker:getMaster():getUsingBall()
+		if ball then
+			local heldItemId = ball:getSpecialAttribute("heldItemId")
+			if heldItemId then
+				local heldItem = getHeldItem(heldItemId)
+				if heldItem and heldItem.effect == "damage_boost" and heldItem.combatType == primaryTypeName then
+					localDamageMultiplier = localDamageMultiplier * (1 + (heldItem.percent / 100))
+					Game.sendAnimatedText(creature:getPosition(), "(+" .. heldItem.percent .. "%)", TEXTCOLOR_YELLOW)
+				end
+			end
+		end
+	end
+
+
 	if secondaryTypeName == "physical" then
 		local defenseDamping = (1-creature:getTotalDefense()/600)
 		if defenseDamping <= 0.5 then 
@@ -135,5 +151,42 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	if primaryDamage then primaryDamage = math.floor(primaryDamage * localDamageMultiplier) end
 	if secundaryDamage then secondaryDamage = math.floor(secondaryDamage * localDamageMultiplier) end
 
+	-- Held Item: Sitrus Berry (Heal when HP < 50%)
+	-- We check this AFTER damage calculation but BEFORE applying it fully (or we simulate it)
+	-- Since this script returns damage, we can't easily "heal" here without side effects.
+	-- Better approach: Check current HP - estimated damage.
+	
+	if creature:isPokemon() and creature:getMaster() and creature:getMaster():isPlayer() then
+		local ball = creature:getMaster():getUsingBall()
+		if ball then
+			local heldItemId = ball:getSpecialAttribute("heldItemId")
+			if heldItemId then
+				local heldItem = getHeldItem(heldItemId)
+				if heldItem and heldItem.effect == "conditional_heal" and heldItem.trigger == "low_hp" then
+					local currentHealth = creature:getHealth()
+					local maxHealth = creature:getMaxHealth()
+					local totalDamage = (primaryDamage or 0) + (secondaryDamage or 0)
+					local projectedHealth = currentHealth - totalDamage
+					
+					if projectedHealth <= (maxHealth * (heldItem.threshold / 100)) then
+						-- Trigger Heal
+						local healAmount = maxHealth * (heldItem.healPercent / 100)
+						creature:addHealth(healAmount)
+						Game.sendAnimatedText(creature:getPosition(), "HEAL!", TEXTCOLOR_GREEN)
+						creature:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+						
+						-- Consume Item
+						if heldItem.consumable then
+							ball:removeSpecialAttribute("heldItemId")
+							creature:getMaster():sendTextMessage(MESSAGE_INFO_DESCR, "Your pokemon used " .. heldItem.name .. ".")
+						end
+					end
+				end
+			end
+		end
+	end
+
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
+
+

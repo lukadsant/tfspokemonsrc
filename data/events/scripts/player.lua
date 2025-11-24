@@ -180,7 +180,48 @@ function Player:onLook(thing, position, distance)
 			if storedNick and storedNick ~= "" then
 				description = string.format("%s\nNickname: %s.", description, storedNick)
 			end
+			
+			-- Append Held Item
+			local heldItemId = thing:getSpecialAttribute("heldItemId")
+			if heldItemId then
+				local heldItem = getHeldItem(heldItemId)
+				if heldItem then
+					description = description .. " Held Item: " .. heldItem.name .. "."
+				end
+			end
+			
+			-- Append status conditions
+
+			local conditionsDesc = ""
+			local persistentConditions = {
+				{attr = "pokePoisonTicks", name = "Poisoned"},
+				{attr = "pokeBurnTicks", name = "Burning"},
+				{attr = "pokeEnergyTicks", name = "Electrified"},
+				{attr = "pokeParalyzeTicks", name = "Paralyzed"},
+				{attr = "pokeDrunkTicks", name = "Drunk"},
+				{attr = "pokeSleepTicks", name = "Sleeping"},
+				{attr = "pokeFreezeTicks", name = "Frozen"},
+				{attr = "pokeDazzleTicks", name = "Dazzled"},
+				{attr = "pokeCurseTicks", name = "Cursed"},
+				{attr = "pokeBleedTicks", name = "Bleeding"}
+			}
+			
+			for _, cond in ipairs(persistentConditions) do
+				local ticks = thing:getSpecialAttribute(cond.attr)
+				if ticks and ticks > 0 then
+					if conditionsDesc == "" then
+						conditionsDesc = " Status: " .. cond.name
+					else
+						conditionsDesc = conditionsDesc .. ", " .. cond.name
+					end
+				end
+			end
+			
+			if conditionsDesc ~= "" then
+				description = description .. conditionsDesc .. "."
+			end
 		end
+
 	end
 	if thing:isPlayer() and thing ~= self then
 		if thing:getAccountType() == ACCOUNT_TYPE_TUTOR then
@@ -294,9 +335,50 @@ function Player:onLookInTrade(partner, item, distance)
 		end
 		if pokeName ~= nil and pokeLevel ~= nil and healthStr ~= nil then			
 			description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. Love: +%s. %s", description, pokeName, pokeLevel, pokeBoost, pokeLove, healthStr)
+			
+			-- Append status conditions
+			local conditionsDesc = ""
+			local persistentConditions = {
+				{attr = "pokePoisonTicks", name = "Poisoned"},
+				{attr = "pokeBurnTicks", name = "Burning"},
+				{attr = "pokeEnergyTicks", name = "Electrified"},
+				{attr = "pokeParalyzeTicks", name = "Paralyzed"},
+				{attr = "pokeDrunkTicks", name = "Drunk"},
+				{attr = "pokeSleepTicks", name = "Sleeping"},
+				{attr = "pokeFreezeTicks", name = "Frozen"},
+				{attr = "pokeDazzleTicks", name = "Dazzled"},
+				{attr = "pokeCurseTicks", name = "Cursed"},
+				{attr = "pokeBleedTicks", name = "Bleeding"}
+			}
+			
+			for _, cond in ipairs(persistentConditions) do
+				local ticks = item:getSpecialAttribute(cond.attr)
+				if ticks and ticks > 0 then
+					if conditionsDesc == "" then
+						conditionsDesc = " Status: " .. cond.name
+					else
+						conditionsDesc = conditionsDesc .. ", " .. cond.name
+					end
+				end
+			end
+			
+			if conditionsDesc ~= "" then
+				description = description .. conditionsDesc .. "."
+			end
+			
+			-- Append Held Item
+			local heldItemId = item:getSpecialAttribute("heldItemId")
+			if heldItemId then
+				local heldItem = getHeldItem(heldItemId)
+				if heldItem then
+					description = description .. " Held Item: " .. heldItem.name .. "."
+				end
+			end
 		end
+
 	end
 	self:sendTextMessage(MESSAGE_INFO_DESCR, description)
+
 end
 
 function Player:onLookInShop(itemType, count)
@@ -586,3 +668,4 @@ function Player:onGainSkillTries(skill, tries)
 	end
 	return tries * configManager.getNumber(configKeys.RATE_SKILL)
 end
+

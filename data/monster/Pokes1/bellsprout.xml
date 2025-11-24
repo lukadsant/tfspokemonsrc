@@ -55,11 +55,7 @@
 
 	</evolutions>
 	<attacks>
-		<attack name="melee" interval="2000" min="-75" max="-75" />
-		<attack name="vine whip" interval="9000" chance="40"/>
-		<attack name="acid" interval="3000" chance="40" target="1"/>
-		<attack name="razor leaf" interval="5000" chance="40" target="1"/>
-		<attack name="poison powder" interval="10000" chance="40"/>
+		<attack name="sleep powder" interval="7000" chance="90"/>
 
 	</attacks>
 	<defenses armor="0" defense="35" >

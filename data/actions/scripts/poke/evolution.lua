@@ -1,5 +1,31 @@
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
+	-- Held Item Logic
+	if target and target:isItem() and target:isPokeball() then
+		local heldItem = getHeldItem(item:getId())
+		if heldItem then
+			local currentHeldId = target:getSpecialAttribute("heldItemId")
+			if currentHeldId then
+				-- Swap logic: Give back the old item
+				local oldItem = getHeldItem(currentHeldId)
+				if oldItem then
+					player:addItem(currentHeldId, 1)
+					player:sendTextMessage(MESSAGE_INFO_DESCR, "You took back " .. oldItem.name .. ".")
+				else
+					-- Fallback if item data is missing, just give the item ID back
+					player:addItem(currentHeldId, 1)
+					player:sendTextMessage(MESSAGE_INFO_DESCR, "You took back the held item.")
+				end
+			end
+
+			target:setSpecialAttribute("heldItemId", item:getId())
+			player:sendTextMessage(MESSAGE_INFO_DESCR, "You equipped " .. heldItem.name .. " to your pokemon.")
+			item:remove(1)
+			return true
+		end
+	end
+
 	if not hasSummons(player) then
+
 		player:sendCancelMessage("Sorry, not possible. You need a summon to evolve.")
 		return true
 	end
@@ -73,3 +99,4 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	end
 	return false
 end
+
