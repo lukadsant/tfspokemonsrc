@@ -362,14 +362,14 @@ function Monster:onSpawn(position, startup, artificial)
 			pcall(function() mttd = mt:getTargetDistance() end)
 			local name = self:getName()
 			local id = self:getId()
-			print(string.format("[nature_debug] MonsterType defaults for %s id=%s -> isHostile=%s isPassive=%s targetDistance=%s", tostring(name), tostring(id), tostring(mthostile), tostring(mtpassive), tostring(mttd)))
+
 			-- also print storage values if present
 			if type(self.getStorageValue) == "function" and nature_behaviors and nature_behaviors.STORAGE_KEYS then
 				local keys = nature_behaviors.STORAGE_KEYS
 				local sh = self:getStorageValue(keys.HOSTILE)
 				local sp = self:getStorageValue(keys.PASSIVE)
 				local sr = self:getStorageValue(keys.RUNONHEALTH)
-				print(string.format("[nature_debug] storage for %s id=%s -> hostile=%s passive=%s runon=%s", tostring(name), tostring(id), tostring(sh), tostring(sp), tostring(sr)))
+
 			end
 		end
 	end)

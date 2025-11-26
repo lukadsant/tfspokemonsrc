@@ -121,6 +121,20 @@ function Item:getSpecialAttribute(...)
     end
 end
 
+function Item:removeSpecialAttribute(key)
+    if self:hasAttribute(ITEM_ATTRIBUTE_SPECIAL) then
+        local tmp = self:getAttribute(ITEM_ATTRIBUTE_SPECIAL)
+        local tab = unserializeTable(tmp)
+        if tab then
+            tab[key] = nil
+            tmp = serializeTable(tab)
+            self:setAttribute(ITEM_ATTRIBUTE_SPECIAL, tmp)
+            return true
+        end
+    end
+    return false
+end
+
 if not PLAYER_STORAGE then
     PLAYER_STORAGE = {}
 end
@@ -161,4 +175,5 @@ end
 --        db.query(string.format("INSERT INTO `player_misc` (`player_id`, `info`) VALUES (%d, %s)", self:getGuid(), db.escapeBlob(tmp, #tmp)))
 --    end
 --end
+
 

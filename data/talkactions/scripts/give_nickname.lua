@@ -234,3 +234,4 @@ if not string.trim then
         return (s:gsub("^%s*(.-)%s*$", "%1"))
     end
 end
+
