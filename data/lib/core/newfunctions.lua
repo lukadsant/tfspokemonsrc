@@ -2486,13 +2486,15 @@ function applyHeldItemEffects(cid, heldItemId)
 	elseif itemData.effect == "heal_turn" then
 		local function healLoop(cid, amount, interval)
 			local c = Creature(cid)
-			if not c then return end
+			-- Stop if creature doesn't exist or if effect was cancelled
+			if not c or not activeHeldItemEvents[cid] then return end
 			c:addHealth(amount)
 			c:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
-			-- Store the event ID so it can be cancelled later
+			-- Schedule next iteration and store event ID
 			activeHeldItemEvents[cid] = addEvent(healLoop, interval, cid, amount, interval)
 		end
-		healLoop(cid, itemData.value, itemData.interval)
+		-- Schedule the first heal event and store its ID
+		activeHeldItemEvents[cid] = addEvent(healLoop, itemData.interval, cid, itemData.value, itemData.interval)
 	end
 end
 
