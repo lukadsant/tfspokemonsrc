@@ -18,6 +18,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			end
 
 			target:setSpecialAttribute("heldItemId", item:getId())
+			updatePokeballDescription(target)
 			player:sendTextMessage(MESSAGE_INFO_DESCR, "You equipped " .. heldItem.name .. " to your pokemon.")
 			item:remove(1)
 			return true
