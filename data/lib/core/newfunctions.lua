@@ -2461,14 +2461,6 @@ function sendBurnEffect(cid)
 end
 
 
-function sendBurnEffect(cid)
-	local creature = Creature(cid)
-	if not creature then return end
-	if creature:getCondition(CONDITION_FIRE) then
-		creature:getPosition():sendMagicEffect(CONST_ME_HITBYFIRE)
-		addEvent(sendBurnEffect, 2000, cid)
-	end
-end
 
 function applyHeldItemEffects(cid, heldItemId)
 	local creature = Creature(cid)
