@@ -2473,14 +2473,27 @@ function applyHeldItemEffects(cid, heldItemId)
 		-- Deprecated: Stat boost is now handled in monsterhealthchange.lua for specific damage types
 		-- if itemData.stat == "attack" then ... end
 	elseif itemData.effect == "heal_turn" then
-		local function healLoop(cid, amount, interval)
+		-- Helper function to get the currently held item ID; adjust as needed for your codebase
+		local function getCreatureHeldItemId(cid)
+			local c = Creature(cid)
+			if not c then return nil end
+			local item = c:getSlotItem(CONST_SLOT_AMMO)
+			if item then
+				return item:getId()
+			end
+			return nil
+		end
+
+		local function healLoop(cid, amount, interval, heldItemId)
 			local c = Creature(cid)
 			if not c then return end
+			-- Check if the held item is still present
+			if getCreatureHeldItemId(cid) ~= heldItemId then return end
 			c:addHealth(amount)
 			c:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
-			addEvent(healLoop, interval, cid, amount, interval)
+			addEvent(healLoop, interval, cid, amount, interval, heldItemId)
 		end
-		healLoop(cid, itemData.value, itemData.interval)
+		healLoop(cid, itemData.value, itemData.interval, heldItemId)
 	end
 end
 
