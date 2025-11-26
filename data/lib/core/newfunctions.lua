@@ -2460,11 +2460,22 @@ function sendBurnEffect(cid)
 	end
 end
 
+-- Table to track active held item effect events by creature ID
+activeHeldItemEvents = activeHeldItemEvents or {}
 
+function cancelHeldItemEffects(cid)
+	if activeHeldItemEvents[cid] then
+		stopEvent(activeHeldItemEvents[cid])
+		activeHeldItemEvents[cid] = nil
+	end
+end
 
 function applyHeldItemEffects(cid, heldItemId)
 	local creature = Creature(cid)
 	if not creature then return end
+	
+	-- Cancel any existing held item effects before applying new ones
+	cancelHeldItemEffects(cid)
 	
 	local itemData = getHeldItem(heldItemId)
 	if not itemData then return end
@@ -2478,7 +2489,8 @@ function applyHeldItemEffects(cid, heldItemId)
 			if not c then return end
 			c:addHealth(amount)
 			c:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
-			addEvent(healLoop, interval, cid, amount, interval)
+			-- Store the event ID so it can be cancelled later
+			activeHeldItemEvents[cid] = addEvent(healLoop, interval, cid, amount, interval)
 		end
 		healLoop(cid, itemData.value, itemData.interval)
 	end
@@ -2899,6 +2911,8 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 	if message then
 		player:say("Thanks, " .. summon:getName() .. "!", TALKTYPE_MONSTER_SAY)
 	end
+	-- Cancel any active held item effects before removing the summon
+	cancelHeldItemEffects(summon:getId())
 	summon:remove()	
 	return true
 end
