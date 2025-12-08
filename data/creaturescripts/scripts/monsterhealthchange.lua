@@ -186,7 +186,34 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 		end
 	end
 
+	-- Ability System: Reactive Triggers
+	local defenderAbility = getPokemonAbility(creature)
+	if defenderAbility then
+		local defDefinition = getAbilityDefinition(defenderAbility)
+		if defDefinition and defDefinition.onHealthChange then
+			local newDamage = defDefinition.onHealthChange(creature, attacker, (primaryDamage or 0) + (secondaryDamage or 0), primaryType)
+			if newDamage then
+				-- Simplified: Apply ratio to primary damage for now
+				local ratio = newDamage / ((primaryDamage or 0) + (secondaryDamage or 0))
+				if primaryDamage then primaryDamage = math.floor(primaryDamage * ratio) end
+				if secondaryDamage then secondaryDamage = math.floor(secondaryDamage * ratio) end
+			end
+		end
+	end
+
+	local attackerAbility = getPokemonAbility(attacker)
+	if attackerAbility then
+		local atkDefinition = getAbilityDefinition(attackerAbility)
+		if atkDefinition and atkDefinition.onAttack then
+			local newDamage = atkDefinition.onAttack(attacker, creature, (primaryDamage or 0) + (secondaryDamage or 0), primaryType)
+			if newDamage then
+				local ratio = newDamage / ((primaryDamage or 0) + (secondaryDamage or 0))
+				if primaryDamage then primaryDamage = math.floor(primaryDamage * ratio) end
+				if secondaryDamage then secondaryDamage = math.floor(secondaryDamage * ratio) end
+			end
+		end
+	end
+
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
-
 

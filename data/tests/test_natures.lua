@@ -119,4 +119,3 @@ function runNatureTests(player)
 	end
 	return true
 end
-

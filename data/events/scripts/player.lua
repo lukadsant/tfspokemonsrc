@@ -136,7 +136,8 @@ function Player:onLook(thing, position, distance)
 		local pokeBoost = thing:getSpecialAttribute("pokeBoost") or 0
 		local pokeLove = thing:getSpecialAttribute("pokeLove") or 0
 		local ownerName = thing:getSpecialAttribute("owner")
-		local pokeHealth = tonumber(thing:getSpecialAttribute("pokeHealth")) or 0
+		local attrHealth = thing:getSpecialAttribute("pokeHealth")
+		local pokeHealth = (type(attrHealth) == "number" or type(attrHealth) == "string") and tonumber(attrHealth) or 0
 		local healthStr = ""
 		if ownerName then
 			healthStr = "It belongs to " .. ownerName .. "."
@@ -173,6 +174,15 @@ function Player:onLook(thing, position, distance)
 					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s Nature: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, natureStr)
 				else
 					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s", description, pokeName, pokeLevel, pokeBoost, healthStr)
+				end
+			end
+			
+			-- Ability System: Show ability in description
+			local abilityId = thing:getSpecialAttribute("pokeAbility")
+			if abilityId and POKEMON_ABILITIES[pokeName] then
+				local abilityName = POKEMON_ABILITIES[pokeName][abilityId]
+				if abilityName then
+					description = description .. " Ability: " .. abilityName .. "."
 				end
 			end
 			-- append stored nickname if any (pokeball description may already include this via description special attribute)
@@ -335,6 +345,15 @@ function Player:onLookInTrade(partner, item, distance)
 		end
 		if pokeName ~= nil and pokeLevel ~= nil and healthStr ~= nil then			
 			description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. Love: +%s. %s", description, pokeName, pokeLevel, pokeBoost, pokeLove, healthStr)
+			
+			-- Ability System: Show ability in description
+			local abilityId = item:getSpecialAttribute("pokeAbility")
+			if abilityId and POKEMON_ABILITIES[pokeName] then
+				local abilityName = POKEMON_ABILITIES[pokeName][abilityId]
+				if abilityName then
+					description = description .. " Ability: " .. abilityName .. "."
+				end
+			end
 			
 			-- Append status conditions
 			local conditionsDesc = ""
@@ -668,4 +687,3 @@ function Player:onGainSkillTries(skill, tries)
 	end
 	return tries * configManager.getNumber(configKeys.RATE_SKILL)
 end
-

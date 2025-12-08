@@ -61,8 +61,7 @@
 
 	</attacks>
 	<defenses armor="0" defense="100" >
-		<defense name="passive water" interval="40000" chance="100"/>
-
+		<defense name="ability_trigger" interval="40000" chance="100"/>
 	</defenses>
 	<elements>
 	</elements>

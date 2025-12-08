@@ -64,4 +64,3 @@ HeldItems = {
 function getHeldItem(itemId)
     return HeldItems[itemId]
 end
-
