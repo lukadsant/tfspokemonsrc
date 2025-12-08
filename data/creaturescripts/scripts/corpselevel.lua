@@ -33,7 +33,26 @@ function onDeath(creature, corpse, killer, mostDamage, unjustified, mostDamage_u
 							end
 						end
 					end
-				print("[CorpseLevel] " .. creature:getName() .. " died with skull=" .. tostring(skull) .. (nature ~= nil and (", nature=" .. tostring(nature)) or ""))
+
+				
+				-- Ability System: Persist ability to corpse
+				local abilityId = getPokemonAbility(creature)
+				local abilityName = "None"
+				if abilityId then
+					-- Find the numeric ID from the name to store it (since we store IDs)
+					local name = creature:getName()
+					if POKEMON_ABILITIES[name] then
+						for id, aName in pairs(POKEMON_ABILITIES[name]) do
+							if aName == abilityId then
+								corpse:setSpecialAttribute("corpseAbility", id)
+								abilityName = aName
+								break
+							end
+						end
+					end
+				end
+
+				print("[CorpseLevel] " .. creature:getName() .. " died with skull=" .. tostring(skull) .. (nature ~= nil and (", nature=" .. tostring(nature)) or "") .. ", ability=" .. abilityName)
 			end
 		else
 			print("WARNING! Creature " .. creature:getName() .. " not possible to set corpse level!")

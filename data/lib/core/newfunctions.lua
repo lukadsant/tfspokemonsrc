@@ -94,7 +94,7 @@ balls = {
 pokeball = {emptyId = 26662, usedOn = 26661, usedOff = 26672, effectFail = 734, effectSucceed = 735, missile = 55, effectRelease = 308, chanceMultiplier = 1.0},
 greatball = {emptyId = 26660, usedOn = 26663, usedOff = 26675, effectFail = 738, effectSucceed = 739, missile = 57, effectRelease = 309, chanceMultiplier = 1.2},
 superball = {emptyId = 26659, usedOn = 26669, usedOff = 26674, effectFail = 736, effectSucceed = 737, missile = 56, effectRelease = 879, chanceMultiplier = 1.3},
-ultraball = {emptyId = 26688, usedOn = 26670, usedOff = 26681, effectFail = 740, effectSucceed = 741, missile = 58, effectRelease = 311, chanceMultiplier = 1.4},
+ultraball = {emptyId = 26688, usedOn = 26670, usedOff = 26681, effectFail = 740, effectSucceed = 741, missile = 58, effectRelease = 311, chanceMultiplier = 1000.0},
 premierball = {emptyId = 26683, usedOn = 26666, usedOff = 26678, effectFail = 321, effectSucceed = 322, missile = 129, effectRelease = 310, chanceMultiplier = 1.5},
 safariball = {emptyId = 26685, usedOn = 26667, usedOff = 26679, effectFail = 323, effectSucceed = 324, missile = 128, effectRelease = 315, chanceMultiplier = 1.0},
 lamp = {emptyId = 2272, usedOn = 2325, usedOff = 23255, effectFail = 734, effectSucceed = 735, missile = 55, effectRelease = 308, chanceMultiplier = 1.0}
@@ -2602,6 +2602,15 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 				-- which will set the name if it differs (avoids noisy prevented-overwrite logs)
 				addEvent(doSetMonsterNicknameByMaster, 50, player:getId(), storedNickname)
 			end
+			
+			-- Ability System: Transfer ability from ball to creature
+			local abilityId = ball:getSpecialAttribute("pokeAbility")
+			if not abilityId then
+				-- Retroactive: Assign random ability to existing pokemon
+				abilityId = math.random(1, 3)
+				ball:setSpecialAttribute("pokeAbility", abilityId)
+			end
+			setPokemonAbility(monster, abilityId)
 		
 			if storedNickname ~= nil and storedNickname ~= "" then
 				-- We already pass the stored nickname into the C++ constructor so the name
@@ -2912,6 +2921,8 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 	if message then
 		player:say("Thanks, " .. summon:getName() .. "!", TALKTYPE_MONSTER_SAY)
 	end
+	-- Ability System: Cleanup
+	setPokemonAbility(summon, nil)
 	summon:remove()	
 	return true
 end
@@ -2933,6 +2944,14 @@ function doEvolveSummon(cid, evolutionName, ancient)
 		if ancient then
 			item:setSpecialAttribute("owner", master:getName())
 			master:setStorageValue(storageEvolutionAncient, 1)
+		end
+		
+		-- Ability System: Persist ability on evolution
+		local oldAbilityId = item:getSpecialAttribute("pokeAbility")
+		if oldAbilityId then
+			item:setSpecialAttribute("pokeAbility", oldAbilityId)
+		else
+			item:setSpecialAttribute("pokeAbility", 1) -- Default if missing
 		end
 --		local portrait = master:getSlotItem(CONST_SLOT_HEAD)
 --		local removePortrait = nil
@@ -3008,7 +3027,7 @@ function Item.isPokeball(self)
 	return false
 end
 
-function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, corpseNature, corpseNickname)
+function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, corpseNature, corpseNickname, abilityId)
 	local player = Player(cid)
 	if player then
 		name = firstToUpper(name)
@@ -3048,6 +3067,8 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, c
 			addBall:setSpecialAttribute("pokeMaxHealth", maxHealth)
 			addBall:setSpecialAttribute("pokeHealth", maxHealth)
 			addBall:setSpecialAttribute("pokeLove", 0)
+			-- Ability System: Assign ability (passed from catch or random)
+			addBall:setSpecialAttribute("pokeAbility", abilityId or math.random(1, 3))
 			-- persist skull (sex) and nature into the pokeball so summoned monster keeps the same skull and nature
 			if corpseSkull ~= nil then
 				addBall:setSpecialAttribute("pokeSkull", corpseSkull)
@@ -3387,6 +3408,15 @@ function updatePokeballDescription(ball)
 			end
 		end
 		local desc = "It contains a " .. name .. ". Level: " .. level .. ". Boost: +" .. boost .. ". " .. healthStr
+		
+		-- Ability System: Show ability in description
+		local abilityId = ball:getSpecialAttribute("pokeAbility")
+		if abilityId and POKEMON_ABILITIES[name] then
+			local abilityName = POKEMON_ABILITIES[name][abilityId]
+			if abilityName then
+				desc = desc .. " Ability: " .. abilityName .. "."
+			end
+		end
 		if sexStr then
 			desc = desc .. " Sex: " .. sexStr
 		end
@@ -3988,4 +4018,3 @@ function Player:getCatchRemainNumber(table)
 	end
 	return catchRemain
 end
-

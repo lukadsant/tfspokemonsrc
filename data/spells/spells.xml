@@ -254,6 +254,8 @@
 	<instant group="attack" name="smog" words="##m241" aggressive="1" direction="0" blockwalls="0" needtarget="0" needlearn="1" script="moves/poison/smog.lua" />
 	<instant group="attack" name="ultimate kick" words="##m242" aggressive="1" direction="0" blockwalls="0" needtarget="0" needlearn="1" script="moves/fighting/ultimate_kick.lua" />
 
+	<instant group="attack" name="ability_trigger" words="##m243" aggressive="1" direction="0" blockwalls="0" needtarget="0" needlearn="1" script="abilities/trigger.lua" />
+
 
 
 <!--

@@ -19,4 +19,3 @@ function onCastSpell(creature, variant, isHotkey)
 
 	return true
 end
-
