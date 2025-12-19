@@ -7,3 +7,6 @@ dofile('data/lib/compat/compat.lua')
 -- Miscellaneous library ORTS
 --dofile('data/lib/miscellaneous/miscellaneous.lua')
 
+dofile('data/lib/regions.lua')
+
+

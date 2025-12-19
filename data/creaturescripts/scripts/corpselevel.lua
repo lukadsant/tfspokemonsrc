@@ -6,6 +6,11 @@ function onDeath(creature, corpse, killer, mostDamage, unjustified, mostDamage_u
 		local level = creature:getLevel()
 		if level then
 			corpse:setSpecialAttribute("corpseLevel", level)
+			-- Persist the creature boost (IV)
+			if creature.getBoost then
+				local boost = creature:getBoost() or 0
+				corpse:setSpecialAttribute("corpseBoost", boost)
+			end
 			-- Persist the creature skull (used as sex/gender) so capture scripts can read it later
 			local skull = creature:getSkull()
 			if skull ~= nil then

@@ -7,7 +7,7 @@ stonesId = { -- lixo
 }
 --legendaryPokemons = {"Zapdos", "Articuno", "Moltres", "Mew", "Mewtwo", "Raikou", "Entei", "Suicune", "Ho-oh", "Lugia", "Celebi", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Shiny Zapdos", "Shiny Articuno", "Shiny Moltres", "Shiny Mew", "Shiny Mewtwo", "Shiny Raikou", "Shiny Entei", "Shiny Suicune", "Shiny Ho-oh", "Shiny Lugia", "Shiny Celebi", "Shiny Regirock", "Shiny Regice", "Shiny Registeel", "Shiny Latias", "Shiny Latios", "Shiny Kyogre", "Shiny Groudon", "Shiny Rayquaza"}
 
-maxBoost = 50
+maxBoost = 31
 summonMaxLevel = 200 -- maximum level of pokes
 maxVitamins = 10
 shinyChance = 2
@@ -15,11 +15,42 @@ flyFloor = 460
 moveWords = {"m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8", "m9", "m10", "m11", "m12"}
 legendaryIndex = {144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386}
 arenaLastPlayerId = 0
+-- Characteristic System (Flavor Text based on IV)
+CHARACTERISTICS = {
+	[0] = {"Loves to eat", "Proud of its power", "Sturdy body", "Likes to run", "Highly curious", "Strong willed"},
+	[1] = {"Takes plenty of siestas", "Often dozes off", "Likes to thrash about", "Capable of taking hits", "Alert to sounds", "Mischievous", "Somewhat vain"},
+	[2] = {"Nods off a lot", "Often scatters things", "A little quick tempered", "Highly persistent", "Impetuous and silly", "Thoroughly cunning", "Strongly defiant"},
+	[3] = {"Scatters things often", "Likes to fight", "Good endurance", "Somewhat of a clown", "Often lost in thought", "Hates to lose"},
+	[4] = {"Likes to relax", "Quick tempered", "Good perseverance", "Quick to flee", "Very finicky", "Somewhat stubborn"}
+}
+
+function getCharacteristic(iv)
+	if not iv then return nil end
+	local remainder = iv % 5
+	local options = CHARACTERISTICS[remainder]
+	if not options then return nil end
+	-- Pick a random characteristic from the list for this remainder
+	-- Since we want it to be deterministic for the same pokemon but random across different ones, 
+	-- we might want to seed it or just pick random. 
+	-- However, the user request says "vamos pegar um aleatório".
+	-- To make it consistent for the same pokemon (so it doesn't change every look), 
+	-- we should ideally base it on something static like uniqueID or just pick one.
+	-- But since we don't store which one was picked, we can just pick random for now 
+	-- OR better: use the IV itself to pick deterministically if possible? 
+	-- The user said "como todos stats dos iv serão iguais vamos pegar um aleatório".
+	-- If we pick random every time onLook is called, it will change every time the player looks.
+	-- That might be weird. 
+	-- Let's try to make it pseudo-deterministic based on the IV itself if possible, but the lists have different lengths.
+	-- Actually, the user's request implies "flavor text", usually this is static per pokemon.
+	-- But without storing it, it will change.
+	-- Let's just pick random for now as requested.
+	return options[math.random(1, #options)]
+end
 
 damageMultiplierMoves = {areawaves = 2.75, singletargetweak = 2.0, singletarget = 3.5, singletargetstrong = 4.0, areatarget = 3.0, frontlinear = 5.0, frontarea = 4.0, passive = 3.0, ultimate = 6.0}
 summonLevelDamageBuff = 0.008 -- buff due to summon's level
 playerLevelDamageBuff = 0.0005 -- buff due to player's level
-summonBoostDamageBuff = 0.008 -- buff due to summon's boost
+summonBoostDamageBuff = 0.01131 -- buff due to summon's boost
 summonLoveDamageBuff = 0.0002 -- buff due to summon's love
 vitaminStatusBuff = 1.2
 hunterDamageBuff = 1.1
@@ -1550,7 +1581,7 @@ function Monster.getTotalHealth(self)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMaxHealth() * statusGainFormula(0, self:getLevel(), 0, 0))
+		return math.floor(monsterType:getMaxHealth() * statusGainFormula(0, self:getLevel(), self:getBoost(), 0))
 	end
 	return 0
 end
@@ -1637,7 +1668,7 @@ function Monster.getTotalMeleeAttack(self)
 			total = total + math.floor(aveMelee * vitamins / maxVitamins * vitaminStatusBuff)
 		end
 	elseif self:isMonster() then
-		total = math.floor(aveMelee * statusGainFormula(0, self:getLevel(), 0, 0))
+		return math.floor(aveMelee * statusGainFormula(0, self:getLevel(), self:getBoost(), 0))
 	end
 	-- apply nature multipliers (boost/reduce)
 	total = applyNatureModifier(total, "attack", self)
@@ -1757,7 +1788,7 @@ function Monster.getTotalMagicAttack(self)
 			total = total + math.floor(monsterType:getMoveMagicAttackBase() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
 	elseif self:isMonster() then
-		total = math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(0, self:getLevel(), 0, 0))
+		total = math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(0, self:getLevel(), self:getBoost(), 0))
 	end
 	-- apply nature multipliers (boost/reduce)
 	total = applyNatureModifier(total, "magicAttack", self)
@@ -1821,7 +1852,7 @@ function Monster.getTotalDefense(self)
 			total = total + math.floor(monsterType:getDefense() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
 	elseif self:isMonster() then
-		total = math.floor(monsterType:getDefense() * statusGainFormula(0, self:getLevel(), 0, 0))
+		total = math.floor(monsterType:getDefense() * statusGainFormula(0, self:getLevel(), self:getBoost(), 0))
 	end
 	-- apply nature multipliers (boost/reduce)
 	total = applyNatureModifier(total, "defense", self)
@@ -1876,7 +1907,7 @@ function Monster.getTotalMagicDefense(self)
 			total = total + math.floor(monsterType:getMoveMagicDefenseBase() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
 	elseif self:isMonster() then
-		total = math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(0, self:getLevel(), 0, 0))
+		total = math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(0, self:getLevel(), self:getBoost(), 0))
 	end
 	-- apply nature multipliers (boost/reduce)
 	total = applyNatureModifier(total, "magicDefense", self)
@@ -1942,7 +1973,7 @@ function Monster.getTotalSpeed(self)
 			total = total + math.floor(monsterType:getBaseSpeed() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
 	elseif self:isMonster() then
-		total = math.floor(monsterType:getBaseSpeed() * statusGainFormula(0, self:getLevel(), 0, 0))
+		total = math.floor(monsterType:getBaseSpeed() * statusGainFormula(0, self:getLevel(), self:getBoost(), 0))
 	end
 	-- apply nature multipliers (boost/reduce)
 	total = applyNatureModifier(total, "speed", self)
@@ -3022,7 +3053,7 @@ function Item.isPokeball(self)
 	return false
 end
 
-function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, corpseNature, corpseNickname, abilityId)
+function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, corpseNature, corpseNickname, abilityId, meetRegion)
 	local player = Player(cid)
 	if player then
 		name = firstToUpper(name)
@@ -3064,6 +3095,11 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, c
 			addBall:setSpecialAttribute("pokeLove", 0)
 			-- Ability System: Assign ability (passed from catch or random)
 			addBall:setSpecialAttribute("pokeAbility", abilityId or math.random(1, 3))
+			-- Characteristic System: Assign flavor text based on IV
+			local characteristic = getCharacteristic(boost)
+			if characteristic then
+				addBall:setSpecialAttribute("pokeCharacteristic", characteristic)
+			end
 			-- persist skull (sex) and nature into the pokeball so summoned monster keeps the same skull and nature
 			if corpseSkull ~= nil then
 				addBall:setSpecialAttribute("pokeSkull", corpseSkull)
@@ -3078,6 +3114,16 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, c
 					addBall:setSpecialAttribute("pokeNickname", safeNick)
 				end
 			end
+			-- Meet Info System: Save capture region
+			if meetRegion then
+				addBall:setSpecialAttribute("meetRegion", meetRegion)
+			else
+				addBall:setSpecialAttribute("meetRegion", "Unknown Area")
+			end
+			-- Meet Info System: Save extra info
+			addBall:setSpecialAttribute("firstLevel", level)
+			addBall:setSpecialAttribute("catchDate", os.date("%d/%m/%Y"))
+			addBall:setSpecialAttribute("originalOwner", player:getName())
 			-- add human-readable sex and nature info into the item description for easier inspection
 			local sexStr = "unknown"
 			if corpseSkull ~= nil then

@@ -6,7 +6,7 @@ local stoneMachineId_on = 26697
 local stoneMachineId_off = 26698
 
 function necessaryStones(boostLevel)
-	return math.ceil(1.3 * boostLevel)
+	return math.ceil(3.3 * boostLevel)
 end
 
 function doChangeBackBoostMachine(buttonMachinePos, ballMachinePos, stoneMachinePos)
@@ -69,7 +69,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			if stone:getName() == stoneName or stone:getName() == stone2Name then
 				local currentBoost = ball:getSpecialAttribute("pokeBoost") or 0
 				if currentBoost >= maxBoost then
-					player:sendCancelMessage("Sorry, not possible. Your pokemon is at the maximum boost.")
+					player:sendCancelMessage("Sorry, not possible. Your pokemon is at the maximum IV.")
 					return true
 				end
 				local newBoost = currentBoost + 1
@@ -79,15 +79,20 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 					ballMachine:transform(ballMachineId_on)
 					stoneMachine:transform(stoneMachineId_on)
 					ball:setSpecialAttribute("pokeBoost", newBoost)
+					-- Characteristic System: Re-roll flavor text on IV change
+					local characteristic = getCharacteristic(newBoost)
+					if characteristic then
+						ball:setSpecialAttribute("pokeCharacteristic", characteristic)
+					end
 					addEvent(doChangeBackBoostMachine, 3000, buttonMachinePos, ballMachinePos, stoneMachinePos)
 				else
-					player:sendCancelMessage("Sorry, not possible. You need " .. neededStones .. " stones to boost this pokemon.")
+					player:sendCancelMessage("Sorry, not possible. You need " .. neededStones .. " stones to IV this pokemon.")
 					return true
 				end
 			else
 				local word = stoneName
 				if race2 ~= nil and race2 ~= "none" and race2 ~= race then word = word .. " or " .. stone2Name end
-				player:sendCancelMessage("Sorry, not possible. You need " .. word .." to boost this pokemon.")
+				player:sendCancelMessage("Sorry, not possible. You need " .. word .." to IV this pokemon.")
 				return true
 			end
 		else
