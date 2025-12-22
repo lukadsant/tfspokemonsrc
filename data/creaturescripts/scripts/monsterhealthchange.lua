@@ -80,6 +80,37 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	local formulaDamage = damageFormula(masterLevel, summonLevel, summonBoost, summonLove)
 	localDamageMultiplier = localDamageMultiplier * formulaDamage
 
+	-- EV System: Attacker Damage Boost
+	if attacker:isPokemon() and attacker:getMaster() and attacker:getMaster():isPlayer() then
+		local atkBall = attacker:getMaster():getUsingBall()
+		if atkBall then
+			local evAtkVal = 0
+			if primaryTypeName == "physical" or primaryTypeName == "normal" or primaryTypeName == "fighting" or primaryTypeName == "flying" or primaryTypeName == "ground" or primaryTypeName == "rock" or primaryTypeName == "bug" or primaryTypeName == "ghost" or primaryTypeName == "poison" or primaryTypeName == "steel" then
+				-- Assuming Physical types. NOTE: Type mapping in Tibia/Pokemon is complex. 
+				-- Simplified assumption: "physical" combat type vs others.
+				-- But `primaryTypeName` comes from `getCombatName(primaryType)`.
+				-- Tibia combats: PHYSICAL, ENERGY, EARTH, FIRE, LIFEDRAIN...
+				-- If primaryType is COMBAT_PHYSICAL -> evAtk. Else -> evSpA.
+				if primaryTypeName == "physical" then
+					evAtkVal = atkBall:getSpecialAttribute("pokeEvAtk") or 0
+				else
+					evAtkVal = atkBall:getSpecialAttribute("pokeEvSpA") or 0
+				end
+			else
+				-- non-physical types (magic?)
+				if primaryTypeName == "physical" then
+					evAtkVal = atkBall:getSpecialAttribute("pokeEvAtk") or 0
+				else
+					evAtkVal = atkBall:getSpecialAttribute("pokeEvSpA") or 0
+				end
+			end
+			
+			if evAtkVal > 0 then
+				localDamageMultiplier = localDamageMultiplier * (1 + (evAtkVal * EV_MULTIPLIER))
+			end
+		end
+	end
+
 	-- Held Item Damage Boost
 	if attacker:getMaster() and attacker:getMaster():isPlayer() then
 		local ball = attacker:getMaster():getUsingBall()
@@ -96,8 +127,27 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	end
 
 
+	-- EV System: Defender Defense Boost
+	local effectiveDefense = creature:getTotalDefense()
+	local effectiveMagicDefense = creature:getTotalMagicDefense()
+	
+	if creature:isPokemon() and creature:getMaster() and creature:getMaster():isPlayer() then
+		local defBall = creature:getMaster():getUsingBall()
+		if defBall then
+			local evDef = defBall:getSpecialAttribute("pokeEvDef") or 0
+			local evSpD = defBall:getSpecialAttribute("pokeEvSpD") or 0
+			
+			if evDef > 0 then
+				effectiveDefense = math.floor(effectiveDefense * (1 + (evDef * EV_MULTIPLIER)))
+			end
+			if evSpD > 0 then
+				effectiveMagicDefense = math.floor(effectiveMagicDefense * (1 + (evSpD * EV_MULTIPLIER)))
+			end
+		end
+	end
+
 	if secondaryTypeName == "physical" then
-		local defenseDamping = (1-creature:getTotalDefense()/600)
+		local defenseDamping = (1-effectiveDefense/600)
 		if defenseDamping <= 0.5 then 
 			defenseDamping = 0.5
 		elseif defenseDamping >= 1 then
@@ -105,8 +155,8 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 		end
 		localDamageMultiplier = localDamageMultiplier * defenseDamping
 	else
-		if primaryTypeName ~= "physical" and creature:getTotalMagicDefense() > 0 then	
-			local defenseDamping = (1-creature:getTotalMagicDefense()/600)
+		if primaryTypeName ~= "physical" and effectiveMagicDefense > 0 then	
+			local defenseDamping = (1-effectiveMagicDefense/600)
 			if defenseDamping <= 0.5 then 
 				defenseDamping = 0.5
 			elseif defenseDamping >= 1 then

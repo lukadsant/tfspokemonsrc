@@ -59,6 +59,24 @@ catcherCatchBuff = 1.1
 explorerExperienceBuff = 1.15
 healerHealBuff = 2.0
 
+-- EV System Constants
+EV_MULTIPLIER = 0.001388 -- ~35% stats at 252 EVs
+EV_MAX_TOTAL = 510
+EV_MAX_STAT = 252
+
+-- EV Yields Table (Examples)
+EV_YIELDS = {
+    ["Rat"] = {spe=1},
+    ["Rotworm"] = {hp=1},
+    ["Dragon"] = {atk=3},
+    ["Dragon Lord"] = {atk=3},
+    ["Demon"] = {spa=3},
+    ["Giant Spider"] = {spe=2},
+    ["Bellsprout"] = {def=2},
+    ["Pikachu"] = {spe=2},
+    ["Charizard"] = {spa=3},
+}
+
 storageDelay = 1000
 storageDelayBag = 1001
 baseStorageTries = 61000
@@ -1490,8 +1508,8 @@ end
 
 function getNeededExp(level) return (50 * (level * level * level - 6 * level * level + 17 * level - 12) / 3) end
 
-function statusGainFormula(playerLevel, summonLevel, summonBoost, pokeLove)
-	return (1.0 + summonLevel * summonLevelDamageBuff + playerLevel * playerLevelDamageBuff + summonBoost * summonBoostDamageBuff + pokeLove * summonLoveDamageBuff)
+function statusGainFormula(playerLevel, summonLevel, summonBoost, pokeLove, ev)
+	return (1.0 + summonLevel * summonLevelDamageBuff + playerLevel * playerLevelDamageBuff + summonBoost * summonBoostDamageBuff + pokeLove * summonLoveDamageBuff + (ev or 0) * EV_MULTIPLIER)
 end
 
 function damageFormula(playerLevel, summonLevel, summonBoost, pokeLove)
@@ -2607,6 +2625,35 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			player:say(monster:getName() .. ", I need your help!", TALKTYPE_MONSTER_SAY)
 		end
 		player:addSummon(monster)
+		
+		-- EV System: Recalculate Max Health with EVs and upgrade if needed
+		local evHP = ball:getSpecialAttribute("pokeEvHP") or 0
+		if evHP > 0 then
+			local baseHealth = monsterType:getMaxHealth()
+			local newMaxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), summonLevel, summonBoost, ball:getSpecialAttribute("pokeLove") or 0, evHP))
+			monster:setMaxHealth(newMaxHealth)
+			-- Scale current health if we want, or just let max increase?
+			-- Usually if max increases, current often stays, or we can scale it.
+			-- Let's just ensure it doesn't exceed new max.
+			-- Actually if we just gained EV, current health might be old max.
+		end
+		
+		-- EV System: Apply Speed EV
+		local evSpe = ball:getSpecialAttribute("pokeEvSpe") or 0
+		if evSpe > 0 then
+			local baseSpeed = monster:getSpeed()
+			-- Approx formula: Spe * (1 + ev * 0.001388)
+			-- But statusGainFormula is (1 + ... + ev * mult)
+			-- Base speed modification:
+			local speedBonus = math.floor(baseSpeed * (evSpe * EV_MULTIPLIER))
+			if speedBonus > 0 then
+			    -- Use changeSpeed (modifier) or setSpeed (base)? 
+			    -- Lua API `changeSpeed` adds/removes. `setSpeed` sets base.
+			    -- We want to ADD to the base speed derived from level/boost.
+				monster:changeSpeed(speedBonus)
+			end
+		end
+
 		-- persist the originating ball UID on the monster so we can reliably
 		-- find the exact pokeball on recall (avoids mismatches when multiple
 		-- identical balls exist and selection heuristics pick the wrong one)
@@ -3085,7 +3132,9 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, c
 		end
 		if addBall then
 			local baseHealth = monsterType:getMaxHealth()
-			local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), level, boost, 0))
+			-- EV System: Apply HP EV if present (though here it's 0 for new catches usually)
+			local evHP = 0
+			local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), level, boost, 0, evHP))
 			addBall:setSpecialAttribute("pokeName", name)
 			addBall:setSpecialAttribute("pokeLevel", level)
 			addBall:setSpecialAttribute("pokeBoost", boost)
@@ -3093,6 +3142,13 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg, corpseSkull, c
 			addBall:setSpecialAttribute("pokeMaxHealth", maxHealth)
 			addBall:setSpecialAttribute("pokeHealth", maxHealth)
 			addBall:setSpecialAttribute("pokeLove", 0)
+			-- EV System: Initialize EVs
+			addBall:setSpecialAttribute("pokeEvHP", 0)
+			addBall:setSpecialAttribute("pokeEvAtk", 0)
+			addBall:setSpecialAttribute("pokeEvDef", 0)
+			addBall:setSpecialAttribute("pokeEvSpA", 0)
+			addBall:setSpecialAttribute("pokeEvSpD", 0)
+			addBall:setSpecialAttribute("pokeEvSpe", 0)
 			-- Ability System: Assign ability (passed from catch or random)
 			addBall:setSpecialAttribute("pokeAbility", abilityId or math.random(1, 3))
 			-- Characteristic System: Assign flavor text based on IV
