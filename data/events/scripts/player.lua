@@ -109,14 +109,16 @@ function Player:onLook(thing, position, distance)
 					tdStr = annotate("defense", tdStr)
 					tsStr = annotate("speed", tsStr)
 
+
+
 					if sexStr and natureStr then
-						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Sex: %s. Nature: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, sexStr, natureStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
+						description = string.format("%s\nIt belongs to %s. Level: %s. IV: +%s. Sex: %s. Nature: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, sexStr, natureStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
 					elseif sexStr then
-						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Sex: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, sexStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
+						description = string.format("%s\nIt belongs to %s. Level: %s. IV: +%s. Sex: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, sexStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
 					elseif natureStr then
-						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Nature: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, natureStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
+						description = string.format("%s\nIt belongs to %s. Level: %s. IV: +%s. Nature: %s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, natureStr, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
 					else
-						description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
+						description = string.format("%s\nIt belongs to %s. Level: %s. IV: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, th, taStr, tmaStr, tmdStr, tdStr, tsStr, pokeLove)
 					end
 
 					-- show nickname if summon has a display name different from base pokeName
@@ -124,6 +126,36 @@ function Player:onLook(thing, position, distance)
 					local baseName = item and item:getSpecialAttribute("pokeName") or nil
 					if summonDisplay and baseName and summonDisplay ~= baseName then
 						description = string.format("%s\nNickname: %s.", description, summonDisplay)
+					end
+
+					-- Meet Info System
+					local meetRegion = item:getSpecialAttribute("meetRegion")
+					if not meetRegion or meetRegion == "" then
+						meetRegion = "Unknown Area"
+					end
+					local meetRegion = item:getSpecialAttribute("meetRegion")
+					if not meetRegion or meetRegion == "" then
+						meetRegion = "Unknown Area"
+					end
+					description = string.format("%s\nMeet Info: %s.", description, meetRegion)
+
+					local firstLevel = item:getSpecialAttribute("firstLevel")
+					local catchDate = item:getSpecialAttribute("catchDate")
+					local originalOwner = item:getSpecialAttribute("originalOwner")
+					if firstLevel and catchDate and originalOwner then
+						description = string.format("%s\nCaught by %s on %s at Level %s.", description, originalOwner, catchDate, firstLevel)
+					end
+
+					-- Characteristic System
+					local characteristic = item:getSpecialAttribute("pokeCharacteristic")
+					if not characteristic then
+						characteristic = getCharacteristic(pokeBoost)
+						if characteristic then
+							item:setSpecialAttribute("pokeCharacteristic", characteristic)
+						end
+					end
+					if characteristic then
+						description = string.format("%s\nCharacteristic: %s.", description, characteristic)
 					end
 				end
 			end
@@ -163,17 +195,19 @@ function Player:onLook(thing, position, distance)
 			-- read stored nature and map to human-readable string
 			local pokeNature = thing:getSpecialAttribute("pokeNature")
 			local natureStr = getNatureName(pokeNature)
+
+
 			if sexStr then
 				if natureStr then
-					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s Sex: %s. Nature: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, sexStr, natureStr)
+					description = string.format("%s\nIt contains a %s. Level: %s. IV: +%s. %s Sex: %s. Nature: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, sexStr, natureStr)
 				else
-					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s Sex: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, sexStr)
+					description = string.format("%s\nIt contains a %s. Level: %s. IV: +%s. %s Sex: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, sexStr)
 				end
 			else
 				if natureStr then
-					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s Nature: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, natureStr)
+					description = string.format("%s\nIt contains a %s. Level: %s. IV: +%s. %s Nature: %s.", description, pokeName, pokeLevel, pokeBoost, healthStr, natureStr)
 				else
-					description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s", description, pokeName, pokeLevel, pokeBoost, healthStr)
+					description = string.format("%s\nIt contains a %s. Level: %s. IV: +%s. %s", description, pokeName, pokeLevel, pokeBoost, healthStr)
 				end
 			end
 			
@@ -189,6 +223,32 @@ function Player:onLook(thing, position, distance)
 			local storedNick = thing:getSpecialAttribute("pokeNickname")
 			if storedNick and storedNick ~= "" then
 				description = string.format("%s\nNickname: %s.", description, storedNick)
+			end
+
+			-- Meet Info System
+			local meetRegion = thing:getSpecialAttribute("meetRegion")
+			if not meetRegion or meetRegion == "" then
+				meetRegion = "Unknown Area"
+			end
+			description = string.format("%s\nMeet Info: %s.", description, meetRegion)
+
+			local firstLevel = thing:getSpecialAttribute("firstLevel")
+			local catchDate = thing:getSpecialAttribute("catchDate")
+			local originalOwner = thing:getSpecialAttribute("originalOwner")
+			if firstLevel and catchDate and originalOwner then
+				description = string.format("%s\nCaught by %s on %s at Level %s.", description, originalOwner, catchDate, firstLevel)
+			end
+
+			-- Characteristic System
+			local characteristic = thing:getSpecialAttribute("pokeCharacteristic")
+			if not characteristic then
+				characteristic = getCharacteristic(pokeBoost)
+				if characteristic then
+					thing:setSpecialAttribute("pokeCharacteristic", characteristic)
+				end
+			end
+			if characteristic then
+				description = string.format("%s\nCharacteristic: %s.", description, characteristic)
 			end
 			
 			-- Append Held Item
@@ -344,7 +404,7 @@ function Player:onLookInTrade(partner, item, distance)
 			healthStr = "It is fainted."
 		end
 		if pokeName ~= nil and pokeLevel ~= nil and healthStr ~= nil then			
-			description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. Love: +%s. %s", description, pokeName, pokeLevel, pokeBoost, pokeLove, healthStr)
+			description = string.format("%s\nIt contains a %s. Level: %s. IV: +%s. Love: +%s. %s", description, pokeName, pokeLevel, pokeBoost, pokeLove, healthStr)
 			
 			-- Ability System: Show ability in description
 			local abilityId = item:getSpecialAttribute("pokeAbility")
@@ -392,6 +452,20 @@ function Player:onLookInTrade(partner, item, distance)
 				if heldItem then
 					description = description .. " Held Item: " .. heldItem.name .. "."
 				end
+			end
+
+			-- Meet Info System
+			local meetRegion = item:getSpecialAttribute("meetRegion")
+			if not meetRegion or meetRegion == "" then
+				meetRegion = "Unknown Area"
+			end
+			description = string.format("%s\nMeet Info: %s.", description, meetRegion)
+
+			local firstLevel = item:getSpecialAttribute("firstLevel")
+			local catchDate = item:getSpecialAttribute("catchDate")
+			local originalOwner = item:getSpecialAttribute("originalOwner")
+			if firstLevel and catchDate and originalOwner then
+				description = string.format("%s\nCaught by %s on %s at Level %s.", description, originalOwner, catchDate, firstLevel)
 			end
 		end
 

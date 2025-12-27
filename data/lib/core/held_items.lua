@@ -56,6 +56,12 @@ HeldItems = {
         effect = "cure_status",
         condition = "sleep",
         consumable = true
+    },
+    -- Lodestone -> EV Training Item
+    [26749] = {
+        name = "Lodestone",
+        type = "held",
+        effect = "ev_training"
     }
 }
 

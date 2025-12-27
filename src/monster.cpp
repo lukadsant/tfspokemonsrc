@@ -57,7 +57,7 @@ Monster::Monster(MonsterType* mtype, uint16_t lvl, uint16_t bst, Skulls_t initSk
 		health = mType->info.health + (mType->info.health * (g_config.getDouble(ConfigManager::MONSTERLEVEL_BONUSHEALTH) * level)); //pota
 		healthMax = mType->info.healthMax + (mType->info.healthMax * (g_config.getDouble(ConfigManager::MONSTERLEVEL_BONUSHEALTH) * level)); //pota
 		baseSpeed = mType->info.baseSpeed + (mType->info.baseSpeed * (g_config.getDouble(ConfigManager::MONSTERLEVEL_BONUSSPEED) * level)); //pota
-		boost = 0;
+		boost = uniform_random(0, 31); //pota: wild pokemon IVs
 	} else {
 		health = mType->info.health;
 		healthMax = mType->info.healthMax;

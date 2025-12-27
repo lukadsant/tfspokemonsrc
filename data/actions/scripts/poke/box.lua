@@ -22,7 +22,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 				print("WARNING! Pokemon " .. pokeName .. " not valid for box.")
 				return true
 			end
-			doAddPokeball(player:getId(), pokeName, math.random(monsterType:getMinLevel(), monsterType:getMaxLevel()), 0, getBallKey(balls.ultraball.emptyId), false, 0)
+			doAddPokeball(player:getId(), pokeName, math.random(monsterType:getMinLevel(), monsterType:getMaxLevel()), 0, getBallKey(balls.ultraball.emptyId), false, 0, nil, nil, nil, nil, "Unknown Area")
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Congratulations! You have found a " .. pokeName .. ".")
 			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
 			break
