@@ -912,6 +912,12 @@ void LuaScriptInterface::registerFunctions()
 	//Returns uid of the created item
 	lua_register(luaState, "doPlayerAddItem", LuaScriptInterface::luaDoPlayerAddItem);
 
+	//doSendPlayerExtendedOpcode(cid, opcode, buffer)
+	lua_register(luaState, "doSendPlayerExtendedOpcode", LuaScriptInterface::luaDoSendPlayerExtendedOpcode);
+
+	//isPlayerUsingOtclient(cid)
+	lua_register(luaState, "isPlayerUsingOtclient", LuaScriptInterface::luaIsPlayerUsingOtclient);
+
 	//doCreateItem(itemid, type/count, pos)
 	//Returns uid of the created item, only works on tiles.
 	lua_register(luaState, "doCreateItem", LuaScriptInterface::luaDoCreateItem);
@@ -1885,6 +1891,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Game", "getGameState", LuaScriptInterface::luaGameGetGameState);
 	registerMethod("Game", "setGameState", LuaScriptInterface::luaGameSetGameState);
 
+	registerMethod("Game", "setWorldTime", LuaScriptInterface::luaGameSetWorldTime);
+
 	registerMethod("Game", "getWorldType", LuaScriptInterface::luaGameGetWorldType);
 	registerMethod("Game", "setWorldType", LuaScriptInterface::luaGameSetWorldType);
 
@@ -2593,6 +2601,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("MonsterType", "getElementList", LuaScriptInterface::luaMonsterTypeGetElementList);
 
 	registerMethod("MonsterType", "getMoveList", LuaScriptInterface::luaMonsterTypeGetMoveList); //pota
+	registerMethod("MonsterType", "getTMList", LuaScriptInterface::luaMonsterTypeGetTMList); //pota
 
 	registerMethod("MonsterType", "getVoices", LuaScriptInterface::luaMonsterTypeGetVoices);
 	registerMethod("MonsterType", "getLoot", LuaScriptInterface::luaMonsterTypeGetLoot);
@@ -3053,6 +3062,35 @@ int LuaScriptInterface::luaDoCreateItem(lua_State* L)
 	}
 
 	pushBoolean(L, false);
+	return 1;
+}
+
+int LuaScriptInterface::luaDoSendPlayerExtendedOpcode(lua_State* L)
+{
+	//doSendPlayerExtendedOpcode(cid, opcode, buffer)
+	Player* player = getPlayer(L, 1);
+	if (!player) {
+		reportErrorFunc(getErrorDesc(LUA_ERROR_PLAYER_NOT_FOUND));
+		pushBoolean(L, false);
+		return 1;
+	}
+
+	uint8_t opcode = getNumber<uint8_t>(L, 2);
+	std::string buffer = getString(L, 3);
+	player->sendExtendedOpcode(opcode, buffer);
+	pushBoolean(L, true);
+	return 1;
+}
+
+int LuaScriptInterface::luaIsPlayerUsingOtclient(lua_State* L)
+{
+	//isPlayerUsingOtclient(cid)
+	Player* player = getPlayer(L, 1);
+	if (player) {
+		pushBoolean(L, player->isUsingOtclient());
+	} else {
+		lua_pushnil(L);
+	}
 	return 1;
 }
 
@@ -4375,6 +4413,14 @@ int LuaScriptInterface::luaGameSetGameState(lua_State* L)
 	GameState_t state = getNumber<GameState_t>(L, 1);
 	g_game.setGameState(state);
 	pushBoolean(L, true);
+	return 1;
+}
+
+int LuaScriptInterface::luaGameSetWorldTime(lua_State* L)
+{
+	// Game.setWorldTime(time)
+	g_game.setLightHour(getNumber<int32_t>(L, 1));
+	lua_pushboolean(L, true);
 	return 1;
 }
 
@@ -12133,6 +12179,7 @@ int LuaScriptInterface::luaMonsterTypeGetMoveList(lua_State* L) //pota
 		setField(L, "minCombatValue", spellBlock.minCombatValue);
 		setField(L, "maxCombatValue", spellBlock.maxCombatValue);
 		setField(L, "name", spellBlock.name); //pota
+		setField(L, "level", spellBlock.level); //pota
 		setField(L, "range", spellBlock.range);
 		setField(L, "speed", spellBlock.speed);
 		pushUserdata<CombatSpell>(L, static_cast<CombatSpell*>(spellBlock.spell));
@@ -12143,7 +12190,38 @@ int LuaScriptInterface::luaMonsterTypeGetMoveList(lua_State* L) //pota
 	return 1;
 }
 
+int LuaScriptInterface::luaMonsterTypeGetTMList(lua_State* L) //pota
+{
+	// monsterType:getTMList()
+	MonsterType* monsterType = getUserdata<MonsterType>(L, 1);
+	if (!monsterType) {
+		lua_pushnil(L);
+		return 1;
+	}
 
+	lua_createtable(L, monsterType->info.tms.size(), 0);
+
+	int index = 0;
+	for (const auto& spellBlock : monsterType->info.tms) {
+		lua_createtable(L, 0, 10);
+
+		setField(L, "chance", spellBlock.chance);
+		setField(L, "isCombatSpell", spellBlock.combatSpell ? 1 : 0);
+		setField(L, "isMelee", spellBlock.isMelee ? 1 : 0);
+		setField(L, "isTarget", spellBlock.isTarget ? 1 : 0);
+		setField(L, "minCombatValue", spellBlock.minCombatValue);
+		setField(L, "maxCombatValue", spellBlock.maxCombatValue);
+		setField(L, "name", spellBlock.name); //pota
+		setField(L, "level", spellBlock.level); //pota
+		setField(L, "range", spellBlock.range);
+		setField(L, "speed", spellBlock.speed);
+		pushUserdata<CombatSpell>(L, static_cast<CombatSpell*>(spellBlock.spell));
+		lua_setfield(L, -2, "spell");
+
+		lua_rawseti(L, -2, ++index);
+	}
+	return 1;
+}
 
 int LuaScriptInterface::luaMonsterTypeGetDefenseList(lua_State* L)
 {

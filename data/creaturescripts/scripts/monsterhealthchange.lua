@@ -58,6 +58,22 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	local primaryTypeName = getCombatName(primaryType)
 	local secondaryTypeName = getCombatName(secondaryType)
 
+    -- Weather Damage Modifiers
+    if attacker then
+        local weather, _ = getWeatherFromPosition(attacker:getPosition())
+        if weather == "Rain" or weather == "Thunderstorm" then
+            if primaryTypeName == "water" then
+                if primaryDamage then primaryDamage = math.floor(primaryDamage * 1.5) end
+                if secondaryDamage then secondaryDamage = math.floor(secondaryDamage * 1.5) end
+                Game.sendAnimatedText(attacker:getPosition(), "BOOST", TEXTCOLOR_BLUE)
+            elseif primaryTypeName == "fire" then
+                if primaryDamage then primaryDamage = math.floor(primaryDamage * 0.5) end
+                if secondaryDamage then secondaryDamage = math.floor(secondaryDamage * 0.5) end
+                Game.sendAnimatedText(attacker:getPosition(), "WEAKENED", TEXTCOLOR_LIGHTGREY)
+            end
+        end
+    end
+
 	local localDamageMultiplier = 1.0
 
 	local masterLevel
@@ -86,11 +102,6 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 		if atkBall then
 			local evAtkVal = 0
 			if primaryTypeName == "physical" or primaryTypeName == "normal" or primaryTypeName == "fighting" or primaryTypeName == "flying" or primaryTypeName == "ground" or primaryTypeName == "rock" or primaryTypeName == "bug" or primaryTypeName == "ghost" or primaryTypeName == "poison" or primaryTypeName == "steel" then
-				-- Assuming Physical types. NOTE: Type mapping in Tibia/Pokemon is complex. 
-				-- Simplified assumption: "physical" combat type vs others.
-				-- But `primaryTypeName` comes from `getCombatName(primaryType)`.
-				-- Tibia combats: PHYSICAL, ENERGY, EARTH, FIRE, LIFEDRAIN...
-				-- If primaryType is COMBAT_PHYSICAL -> evAtk. Else -> evSpA.
 				if primaryTypeName == "physical" then
 					evAtkVal = atkBall:getSpecialAttribute("pokeEvAtk") or 0
 				else
@@ -178,11 +189,26 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 		localDamageMultiplier = localDamageMultiplier / 1.5
 	end
 
+	-- Love System: Opponent Accuracy Penalty (Defender Love)
+	local evasionChance = 0
+	if isSummon(creature) then
+		evasionChance = LoveSystem.checkOpponentAccuracyPenalty(creature)
+	end
+	
 	if math.random(1, 100) <= criticalProbability then
-		localDamageMultiplier = localDamageMultiplier * 1.5
-		Game.sendAnimatedText(creature:getPosition(), "CRITICAL", TEXTCOLOR_RED)
+		-- Love System: Critical Chance Boost (Attacker Love)
+		local critBoost = 0
+		if isSummon(attacker) then
+			critBoost = LoveSystem.getCritChanceBoost(attacker)
+		end
+		
+		if math.random(1, 100) <= (criticalProbability + critBoost) then 			
+			localDamageMultiplier = localDamageMultiplier * 1.5
+			Game.sendAnimatedText(creature:getPosition(), "CRITICAL", TEXTCOLOR_RED)
+		end
 	else
-		if math.random(1, 100) <= blockedProbability then
+		-- Love System: Accuracy Penalty effectively increases Block/Miss chance
+		if math.random(1, 100) <= (blockedProbability + evasionChance) then
 			localDamageMultiplier = 0.0
 			Game.sendAnimatedText(creature:getPosition(), "BLOCKED", TEXTCOLOR_LIGHTGREY)
 		end
@@ -201,11 +227,34 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	if primaryDamage then primaryDamage = math.floor(primaryDamage * localDamageMultiplier) end
 	if secundaryDamage then secondaryDamage = math.floor(secondaryDamage * localDamageMultiplier) end
 
+	-- Love System: Sturdy (Survival Chance)
+	if isSummon(creature) then
+		local totalDamage = (primaryDamage or 0) + (secondaryDamage or 0)
+		if totalDamage >= creature:getHealth() then
+			local survivalChance = LoveSystem.checkSturdy(creature)
+			if survivalChance > 0 and math.random(1, 100) <= survivalChance then
+				-- Survive with 1 HP
+				local newDamage = creature:getHealth() - 1
+				if newDamage < 0 then newDamage = 0 end
+				
+				-- Adjust damage to leave 1 HP
+				-- Ratio approach to split between primary/secondary
+				if totalDamage > 0 then
+					local ratio = newDamage / totalDamage
+					primaryDamage = math.floor((primaryDamage or 0) * ratio)
+					secondaryDamage = math.floor((secondaryDamage or 0) * ratio)
+				else
+					primaryDamage = 0
+					secondaryDamage = 0
+				end
+				
+				Game.sendAnimatedText(creature:getPosition(), "STURDY", TEXTCOLOR_RED)
+				creature:getPosition():sendMagicEffect(CONST_ME_HEARTS)
+			end
+		end
+	end
+
 	-- Held Item: Sitrus Berry (Heal when HP < 50%)
-	-- We check this AFTER damage calculation but BEFORE applying it fully (or we simulate it)
-	-- Since this script returns damage, we can't easily "heal" here without side effects.
-	-- Better approach: Check current HP - estimated damage.
-	
 	if creature:isPokemon() and creature:getMaster() and creature:getMaster():isPlayer() then
 		local ball = creature:getMaster():getUsingBall()
 		if ball then
@@ -266,4 +315,3 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
-

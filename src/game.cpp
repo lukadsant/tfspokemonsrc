@@ -37,6 +37,7 @@
 #include "bed.h"
 #include "scheduler.h"
 #include "events.h"
+#include "networkmessage.h"
 #include "databasetasks.h"
 
 extern ConfigManager g_config;
@@ -3464,6 +3465,12 @@ bool Game::internalCreatureSay(Creature* creature, SpeakClasses type, const std:
 		if (Player* tmpPlayer = spectator->getPlayer()) {
 			if (!ghostMode || tmpPlayer->canSeeCreature(creature)) {
 				tmpPlayer->sendCreatureSay(creature, type, text, pos);
+
+				if (type == TALKTYPE_MONSTER_YELL || type == TALKTYPE_MONSTER_SAY) {
+					if (tmpPlayer->getOperatingSystem() >= CLIENTOS_OTCLIENT_LINUX) {
+						tmpPlayer->sendExtendedOpcode(85, text + ".mp3|false");
+					}
+				}
 			}
 		}
 	}
@@ -4373,6 +4380,62 @@ void Game::checkDecay()
 	cleanup();
 }
 
+Game::Season_t Game::getCurrentSeason() const
+{
+	std::time_t t = std::time(nullptr);
+	std::tm* now = std::localtime(&t);
+	int month = now->tm_mon; // 0-11
+
+	// Spring: Jan(0), May(4), Sep(8)
+	if (month == 0 || month == 4 || month == 8) return SEASON_SPRING;
+	// Summer: Feb(1), Jun(5), Oct(9)
+	if (month == 1 || month == 5 || month == 9) return SEASON_SUMMER;
+	// Autumn: Mar(2), Jul(6), Nov(10)
+	if (month == 2 || month == 6 || month == 10) return SEASON_AUTUMN;
+	// Winter: Apr(3), Aug(7), Dec(11)
+	return SEASON_WINTER;
+}
+
+int32_t Game::getSunriseStart() const
+{
+	switch (getCurrentSeason()) {
+		case SEASON_SUMMER: return 240; // 04:00
+		case SEASON_AUTUMN: return 360; // 06:00
+		case SEASON_WINTER: return 420; // 07:00
+		case SEASON_SPRING: default: return 300; // 05:00
+	}
+}
+
+int32_t Game::getDayStart() const
+{
+	switch (getCurrentSeason()) {
+		case SEASON_SUMMER: return 540; // 09:00
+		case SEASON_AUTUMN: return 600; // 10:00
+		case SEASON_WINTER: return 660; // 11:00
+		case SEASON_SPRING: default: return 600; // 10:00
+	}
+}
+
+int32_t Game::getSunsetStart() const
+{
+	switch (getCurrentSeason()) {
+		case SEASON_SUMMER: return 1140; // 19:00
+		case SEASON_AUTUMN: return 1080; // 18:00
+		case SEASON_WINTER: return 1020; // 17:00
+		case SEASON_SPRING: default: return 1020; // 17:00
+	}
+}
+
+int32_t Game::getNightStart() const
+{
+	switch (getCurrentSeason()) {
+		case SEASON_SUMMER: return 1260; // 21:00
+		case SEASON_AUTUMN: return 1200; // 20:00
+		case SEASON_WINTER: return 1140; // 19:00
+		case SEASON_SPRING: default: return 1200; // 20:00
+	}
+}
+
 void Game::checkLight()
 {
 	g_scheduler.addEvent(createSchedulerTask(EVENT_LIGHTINTERVAL, std::bind(&Game::checkLight, this)));
@@ -4383,38 +4446,59 @@ void Game::checkLight()
 		lightHour -= 1440;
 	}
 
-	if (std::abs(lightHour - SUNRISE) < 2 * lightHourDelta) {
-		lightState = LIGHT_STATE_SUNRISE;
-	} else if (std::abs(lightHour - SUNSET) < 2 * lightHourDelta) {
-		lightState = LIGHT_STATE_SUNSET;
-	}
-
 	int32_t newLightLevel = lightLevel;
+	uint8_t newLightColor = lightColor;
 	bool lightChange = false;
 
-	switch (lightState) {
-		case LIGHT_STATE_SUNRISE: {
-			newLightLevel += (LIGHT_LEVEL_DAY - LIGHT_LEVEL_NIGHT) / 30;
-			lightChange = true;
-			break;
-		}
-		case LIGHT_STATE_SUNSET: {
-			newLightLevel -= (LIGHT_LEVEL_DAY - LIGHT_LEVEL_NIGHT) / 30;
-			lightChange = true;
-			break;
-		}
-		default:
-			break;
+	int32_t sunrise = getSunriseStart();
+	int32_t day = getDayStart();
+	int32_t sunset = getSunsetStart();
+	int32_t night = getNightStart();
+
+	// Determine Phase
+	if (lightHour >= sunrise && lightHour < day) {
+		// Morning Phase
+		lightState = LIGHT_STATE_SUNRISE;
+
+		// Interpolate Level
+		float progress = static_cast<float>(lightHour - sunrise) / (day - sunrise);
+		newLightLevel = LIGHT_LEVEL_SUNSET + static_cast<int32_t>((LIGHT_LEVEL_DAY - LIGHT_LEVEL_SUNSET) * progress);
+
+		newLightColor = LIGHT_COLOR_MORNING; // Yellowish
+	}
+	else if (lightHour >= day && lightHour < sunset) {
+		// Day Phase
+		lightState = LIGHT_STATE_DAY;
+		newLightLevel = LIGHT_LEVEL_DAY;
+		newLightColor = LIGHT_COLOR_DAY; // White
+	}
+	else if (lightHour >= sunset && lightHour < night) {
+		// Evening Phase
+		lightState = LIGHT_STATE_SUNSET;
+
+		// Interpolate Level
+		float progress = static_cast<float>(lightHour - sunset) / (night - sunset);
+		newLightLevel = LIGHT_LEVEL_DAY - static_cast<int32_t>((LIGHT_LEVEL_DAY - LIGHT_LEVEL_SUNSET) * progress);
+
+		newLightColor = LIGHT_COLOR_EVENING; // Orange
+	}
+	else {
+		// Night Phase
+		lightState = LIGHT_STATE_NIGHT;
+
+		int32_t nightTime = (lightHour >= night) ? (lightHour - night) : (lightHour + (1440 - night));
+		int32_t nightDuration = (1440 - night) + sunrise;
+
+		float progress = static_cast<float>(nightTime) / nightDuration;
+		newLightLevel = LIGHT_LEVEL_SUNSET - static_cast<int32_t>((LIGHT_LEVEL_SUNSET - LIGHT_LEVEL_NIGHT) * progress);
+
+		newLightColor = LIGHT_COLOR_NIGHT; // Bluish
 	}
 
-	if (newLightLevel <= LIGHT_LEVEL_NIGHT) {
-		lightLevel = LIGHT_LEVEL_NIGHT;
-		lightState = LIGHT_STATE_NIGHT;
-	} else if (newLightLevel >= LIGHT_LEVEL_DAY) {
-		lightLevel = LIGHT_LEVEL_DAY;
-		lightState = LIGHT_STATE_DAY;
-	} else {
+	if (newLightLevel != lightLevel || newLightColor != lightColor) {
 		lightLevel = newLightLevel;
+		lightColor = newLightColor;
+		lightChange = true;
 	}
 
 	if (lightChange) {
@@ -4430,7 +4514,7 @@ void Game::checkLight()
 void Game::getWorldLightInfo(LightInfo& lightInfo) const
 {
 	lightInfo.level = lightLevel;
-	lightInfo.color = 0xD7;
+	lightInfo.color = lightColor;
 }
 
 void Game::addCommandTag(char tag)

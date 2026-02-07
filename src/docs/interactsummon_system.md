@@ -1,0 +1,207 @@
+Very Happy and happy]: 😁
+-(______) began poking you in the stomach
+-Your pokemon seems happy about the great weather
+-(______) is happy but shy
+-(______) is coming along happily
+-(______) is composed
+-(______) seems to be feeling great about walking with you!
+-(______) is glowing with health
+-(______) looks very happy
+-(______) put in extra effort
+-(______) is smelling the scents of the surounding air.
+-(______) is jumping for joy!
+-(______) is still feeling great!
+-Your pokemon has caught the scent of smoke
+-(______) is poking at your belly
+-Your pokemon stretched out its body and is relaxing
+-(______) greeted the two. (when standing in front of 2 trainers)
+-(______) looks like it wants to lead!
+-(______) is doing it's best to keep up with you
+-(______) is very eager! ( gym ) must have type advantage
+-(______) is happily cuddling up to you!
+-(______) is full of life!
+-(______) seems to be very happy!
+-(______) is so happy that it can't stand still!
+-(______) nodded slowly.
+-(______) greeted everyone!
+-(______) is very eager!
+-(______) greeted your mom
+-(______) is wandering around and listening to the different sounds
+-(______) looks very interested
+-(______) is somehow forcing itself to keep going
+-(______) gave you a sunny look!
+-(______) gives you a happy look and a smile
+-(______) is very composed and sure of itself (in a gym with a type advantage)
+- Your pokemon is smelling th scent of flowers
+-(______) seems very happy to see you!
+-(______) greeted Amphy!
+- Your pokemon is staring intently at the mountain peak
+-(______) faced this way and grinned
+-(______) happily cuddled up to you!
+-(______) is staring straight at the pokemon league
+-(______) is staring at the sea
+ 
+
+
+[No Emotion]: 😶
+-(______) is steadily poking at the ground.
+-(______) is standing guard
+-(______) is staring patiantly at nothing at all.
+-(______) is wandering around.
+-(______) spun around in a circle!
+-Your pokemon yawned loudly!
+-(CELEBI) danced happily ( Pokemon Exclusive )
+-(CELEBI) danced beautiful ( Pokemon Exclusive )
+-Your pokemon is looking around restlessly
+-Sniff sniff, something smells good! ( Day care center )
+-(______) seems dazzled after seeing the sky
+-Your pokemon is surveying the shelves restlessly ( In pokemart )
+-(______) is steadily poking at the ground.
+-(______) seems highly interested in the tree
+-(______) is playing around, Picking bits of grass.
+-(______) is looking this way and smiling.
+-Your pokemon is smelling the scent of the flowers. (When next to flowers in Cherrygrove City)
+-Your pokemon is staring intently at the sea! (On the beach)
+-(______) is gazing around restlessly
+-(______) let out a battle cry
+-(______) is staring intently at the shelves
+-(______) danced a wonderful dance!
+-Why is it doing warm-up exercises? (Cerulean Gym)
+-(______) is running along the side of the pool! (Cerulean Gym)
+-(______) is vigorously producing fire (must be a fire type)
+-(______) spat fire (must be a fire type)
+-(______) is very eager
+-(TYPHLOSION) emitted fire and shouted ( Pokemon Exclusive )
+-(______) is staring fixedly at the sea.
+-(______) Cried out, looking at the tall mountain!
+-(______) is vigorously breathing fire ( must be fire type)
+-(______) is stomping on the grass!
+-(MAGIKARP) is leaping around more than usual (lake of rage, During team rockets broadcast) ( Pokemon Exclusive )
+- Your pokemon is staring intently at the sea!
+-(______) is looking at the surging sea
+-(______) is playing on the sand
+-(______) is staring intently into the distance
+-(______) is on the lookout!
+-(______) is looking outside and frolicking!
+- Is there a stream nearby?
+-(______) roared!
+-(______) looked off into the distance and barked!
+-(______) Greeted Slowbro (Cerulean city, in front of Slowbro)
+-(______) seems happy to have taken a shower! (Celadon gym) (Grass,Water type)
+-(______) is fidgeting in front of everyone (maybe baby pokemon)
+ 
+
+[Sad]: 😟
+-(______) is dizzy
+-(______) is going to fall down! (when HP is red)
+-(______) is not happy. (During rain if the pokemon is a fire type)
+-(______) is stepping on your feet!
+-(______) seems to be about to fall over! (When HP is red.)
+-(______) is trying very hard to keep up with you... (When HP is yellow or paralyzed)
+-(______) seems a little tiered.
+-(______)'s burn looks painful! (when burnt)
+ 
+
+[Upset]: 😭
+-(______) is taking shelter in the grass from the rain
+-(______) is splashing around in the wet grass
+-It seems to have eaten something strange. It's making an odd face... (Olivine Cafe)
+-(______) is staring at the crumbling floor (burnt tower)
+-(______) seems to think that (Player) has disappeared! ( Morty's Gym )
+-(______) seems unhappy somehow...
+-(______) seems to feel a little claustrophobic.
+-(______) is a bit nervous about the narrow space!
+-(______) is making an unhappy face
+-(______) is splashing around in the grass (must be fire type)
+- Your pokemon doesn't like splashing around on the ground (must be fire type)
+-(______) is taking shelter in the grass from the rain (must be fire type)
+-(______) seems very cold (when frozen)
+- .....Your pokemon seems a little cold
+-(______) seems uneasy and is poking (PLAYER)
+-(______) Wants your attention now! Want to play along? (YES) Your pokemon seems to be having fun with (PLAYER)
+--------------------------------------------------------------(NO) Your pokemon is grumbling because it wants you to pay more attention to it
+-(______) is trembling with fear (Cemetery)
+-(______) seems somehow sad... (Cemetery)
+-(______) seems a bit uneasy and is shuffling around nervously, Say something? (YES) Your pokemon feels safer just by seeing (PLAYER)'s face
+---------------------------------------------------------------------------------------(NO) Oh! Your pokemon seems about to fall...
+-(______) is growling softly (Dragon type in Dragons Den)
+ 
+
+[Angry]: 😡
+-(______) let out a roar!
+-(______) is making a face like its angry!
+-(______) is staring at the persian statue and glaring.
+-(______) seems to be angry for some reason
+- Your pokemon turned to face the other way, showing a defiant expression.
+-(______) chewed on your feet, Scold it? (YES) your pokemon seems to be a bit dispondant...
+-------------------------------------------(NO) (-_-) Your pokemon ate something that tasted bad and is trying to spit it out!
+-(______) is glaring at the PERSIAN statue!
+-(______) is glaring at your foe!
+-(______) cried out
+-(______) is intimidating your foe!
+ 
+
+[Neutral]: (.....) 🫠
+-(______) is looking down steadily
+-(______) is blankly staring in this direction... -Want to call its name?- (Yes) ^_^ - your pokemon seems so happy
+---------------------------------------------------------------------------(No) (...) Your pokemon is in a daze.
+-(______) is nervous ( in a gym before beating gym leader ) ( must have type disadvantage )
+-(______) is surveying the area
+-(______) is sniffing at the floor
+-(______) is concerned about the swaying pillar (sprout tower)
+-Your pokemon is drooling a little (Olivine Cafe)
+-(______) seems very interested in the bicycles (bike shop)
+-(______) is preoccupied by the floor, which seems like it may collapse (burnt tower)
+-(______) is peering down
+-(______) is preoccupied by the ceiling, which seems like it may collapse (burnt tower)
+-(______) is somehow fighting off sleep...
+-(______) focused with a sharp gaze! (On the way to Victory Road.)
+-(______) is looking nervous. Would you like to say something? (YES) (______) seems shocked! ( ! )
+--------------------------------------------------------------------(NO) Unknown
+-(______) emitted fire and shouted! (must be a fire type)
+-(______) seems to be wandering around.
+-(______) is staring intently at the goods on display!
+-(______) is looking around absentmindedly.
+-(______) yawned very loudly!
+-(______) is relaxing comfortably.
+-(______) is staring steadfastly at (PLAYER)'s face
+-(______) is staring intently at (PLAYER)'s face
+-(______) is focusing its attention on you
+-(______) is staring into the depths
+-(______) is sniffing at the floor
+- Your pokemon is staring intently at nothing
+- Your pokemon turned to face the other way, showing a defiant expression.
+-(______) seems to relax as it hears the sound of rustling leaves...
+-(______) seems to be listening to the sound of rustling leaves
+-(______) focused with a sharp gaze!
+-(______) seems to be a bit nervous, Want to say something? (YES) Waah! your pokemon is acting very surprised!
+------------------------------------------------------------------(NO) Your pokemon appears to be somewhat hardened and unable to move.
+-(______) is concentrating.
+-(______) faced this way and nodded.
+-(______) has a sleepy look on its face... (Near Jigglypuff in Radio Tower.)
+-(______) seems a bit nervous...
+-(______) seems interested in Amphy...
+-(______) is looking at (PLAYER)'s footprints.
+-(______) is staring intently at the reflection of its face
+-(______) is gnawing at the ice
+-(______) is staring straight into (PLAYER)'s eyes.
+-(______) seems to want to play and is gazing at you expectedly, Will you give in? (YES) Your pokemon is indescribably happy!
+-----------------------------------------------------------------------------------------(NO) (sad) Oh! your pokemon seems about to cry!
+-(______) is staring at its reflection in the water
+-Your pokemon is gazing restlesly at you as if it wants to play, do you want to give in? (YES) Your pokemon jumped around happily
+-----------------------------------------------------------------------------------------------(NO) Unknown
+ 
+
+[Love]: ❤️
+-(______) suddenly started walking closer!
+-(______) cheeks are becoming rosy!
+-Woah (______) sudenly hugged you!
+-(______) nudged (Player), -Nudge back?- (YES) - Your pokemon is shouting hapily
+-----------------------------------------(NO)- (-_-) your pokemon seems a bit bored.
+-Woah! (______) is suddenly playful!
+-(______) is rubbing against your legs!
+-(______) blushes.
+-Ah! (______) cuddles you!
+-(______) is regarding you with adoration!
+-(______) got closer to (PLAYER)
+-(______) is keeping close to your feet.

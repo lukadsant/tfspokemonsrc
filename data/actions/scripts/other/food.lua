@@ -95,13 +95,26 @@ local foods = {
 	[18397] = {33, "Munch."}, -- mushroom pie
 	[19737] = {10, "Urgh."}, -- insectoid eggs
 	[20100] = {15, "Smack."}, -- soft cheese
-	[20101] = {12, "Smack."} -- rat cheese
+	[20101] = {12, "Smack."}, -- rat cheese
+	[33037] = {1, "Yum."} -- Sitrus Berry
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	local food = foods[item.itemid]
 	if food == nil then
 		return false
+	end
+
+	-- Love System: Feed Summon
+	-- Safety check: verify target is a creature first!
+	if target and isCreature(target) and isSummon(target) and target:getMaster() == player then
+		LoveSystem.adjustLove(target, "FEED")
+		-- Heal summon slightly based on food value
+		local heal = food[1] * 10
+		target:addHealth(heal)
+		target:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+		item:remove(1)
+		return true
 	end
 
 	local condition = player:getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT)

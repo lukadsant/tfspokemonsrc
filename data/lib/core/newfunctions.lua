@@ -2630,6 +2630,18 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			player:say(monster:getName() .. ", I need your help!", TALKTYPE_MONSTER_SAY)
 		end
 		player:addSummon(monster)
+		-- Battle Cry
+		local cry = name -- Default fallback
+		local voices = monsterType:getVoices()
+		if voices and #voices > 0 then
+			cry = voices[math.random(#voices)].text
+		end
+		addEvent(function(cid, text)
+			local m = Monster(cid)
+			if m then
+				m:say(text, TALKTYPE_MONSTER_SAY)
+			end
+		end, 2000, monster:getId(), cry)
 		
 		-- EV System: Recalculate Max Health with EVs and upgrade if needed
 		local evHP = ball:getSpecialAttribute("pokeEvHP") or 0

@@ -1,7 +1,9 @@
 -- Module: nature_behaviors.lua
 -- Prototype: map NATURE_* -> behavior table and apply to creatures via storage
 
-local M = {}
+-- Global "NatureBehaviors" table for access across scripts
+NatureBehaviors = {}
+local M = NatureBehaviors
 
 -- NOTE: Player storage API exists, but Creature storage isn't exposed in this codebase.
 -- Use a Lua-side instance map keyed by creature id to avoid relying on Creature:setStorageValue/getStorageValue.
@@ -117,13 +119,9 @@ function M.applyNatureBehavior(creature)
     createdAt = os.time(),
   }
 
-  print(string.format("[nature_behaviors] applied nature %s (%d) to %s id=%d", tostring(nature), tonumber(nature) or 0, tostring(name) or "<creature>", cid))
 
-  -- start periodic thinker for this instance if not already active
-  if not activeThinkers[cid] then
-    activeThinkers[cid] = true
-    pcall(function() startNatureThink(cid) end)
-  end
+
+
 
   return true
 end
@@ -131,96 +129,100 @@ end
 
 -- Periodic thinker: reads storage and enforces behavior (fallback when Monster:onThink isn't fired)
 local THINK_INTERVAL = 2000
-function startNatureThink(id)
-  if not id then return end
-  local function thinkOnce(creatureId)
-    local c = Creature(creatureId)
-    if not c then return end
-    -- read profile from Lua instances map (fallback to defaults)
-    local inst = instances[creatureId]
-    local hostile = 1
-    local passive = 1
-    local runon = 0
-    local targdist = 1
-    if inst and inst.profile then
-      hostile = inst.profile.hostile or hostile
-      passive = inst.profile.passive or passive
-      runon = inst.profile.runonhealth or runon
-      targdist = inst.profile.targetdistance or targdist
-    end
-
-    -- debug
-    pcall(function()
-      print(string.format("[nature_think] id=%s name=%s hostile=%s passive=%s runon=%s targdist=%s", tostring(creatureId), tostring(c:getName()), tostring(hostile), tostring(passive), tostring(runon), tostring(targdist)))
-    end)
-
-    -- passive: remove targets
-    if hostile == 0 and passive == 1 then
-      pcall(function()
-        local tlist = c:getTargetList()
-        if tlist then
-          for i = 1, #tlist do
-            local t = tlist[i]
-            if t then
-              print(string.format("[nature_think] passive: removing target %s from %s", tostring(t:getName() or "?"), tostring(c:getName() or "?")))
-              c:removeTarget(t)
-            end
-          end
-        end
-      end)
-    end
-
-    -- runonhealth: flee (drop targets)
-    if runon and runon > 0 then
-      pcall(function()
-        local hp = c:getHealth()
-        local maxhp = c:getMaxHealth()
-        if hp and maxhp and maxhp > 0 then
-          local pct = (hp / maxhp) * 100
-          if pct <= runon then
-            local tlist = c:getTargetList()
-            if tlist then
-              for i = 1, #tlist do
-                local t = tlist[i]
-                if t then
-                  print(string.format("[nature_think] runon: %s (%.1f%% <= %d%%) removing %s", tostring(c:getName() or "?"), pct, runon, tostring(t:getName() or "?")))
-                  c:removeTarget(t)
-                end
-              end
-            end
-          end
-        end
-      end)
-    end
-
-    -- hostile: set first nearby player if none
-    if hostile == 1 and passive == 0 then
-      pcall(function()
-        local ct = c:getTarget()
-        if not ct then
-          local pos = c:getPosition()
-          local specs = Game.getSpectators(pos, true, true)
-          if specs then
-            for _, sp in ipairs(specs) do
-              if sp and sp:isPlayer() then
-                print(string.format("[nature_think] hostile: %s id=%s setting target -> %s", tostring(c:getName() or "?"), tostring(c:getId() or "?"), tostring(sp:getName() or "?")))
-                c:setTarget(sp)
-                break
-              end
-            end
-          end
-        end
-      end)
-    end
-
-    -- re-schedule if creature still exists
-    if Creature(creatureId) then
-      addEvent(function(id) startNatureThink(id) end, THINK_INTERVAL, creatureId)
-    end
+-- Periodic thinker: reads storage and enforces behavior (called by Monster:onThink)
+function NatureBehaviors.onThink(creatureId)
+  -- print("[DEBUG] NatureBehaviors.onThink called for " .. tostring(creatureId))
+  local c = Creature(creatureId)
+  if not c then return end
+  
+  -- Exclude only PLAYER summons (allow wild monsters to run)
+  local master = c:getMaster()
+  if master and master:isPlayer() then
+      return
+  end
+  
+  -- read profile from Lua instances map (fallback to defaults)
+  local inst = instances[creatureId]
+  local hostile = 1
+  local passive = 1
+  local runon = 0
+  local targdist = 1
+  if inst and inst.profile then
+    hostile = inst.profile.hostile or hostile
+    passive = inst.profile.passive or passive
+    runon = inst.profile.runonhealth or runon
+    targdist = inst.profile.targetdistance or targdist
   end
 
-  -- schedule first call
-  addEvent(function(id) thinkOnce(id) end, THINK_INTERVAL, id)
+  -- passive: remove targets
+  if hostile == 0 and passive == 1 then
+    pcall(function()
+      local tlist = c:getTargetList()
+      if tlist then
+        for i = 1, #tlist do
+          local t = tlist[i]
+          if t then
+            -- print(string.format("[nature_think] passive: removing target %s from %s", tostring(t:getName() or "?"), tostring(c:getName() or "?")))
+            c:removeTarget(t)
+          end
+        end
+      end
+    end)
+  end
+
+  -- runonhealth: flee (drop targets)
+  if runon and runon > 0 then
+    pcall(function()
+      local hp = c:getHealth()
+      local maxhp = c:getMaxHealth()
+      if hp and maxhp and maxhp > 0 then
+        local pct = (hp / maxhp) * 100
+        if pct <= runon then
+          local tlist = c:getTargetList()
+          if tlist then
+            for i = 1, #tlist do
+              local t = tlist[i]
+              if t then
+                -- print(string.format("[nature_think] runon: %s (%.1f%% <= %d%%) removing %s", tostring(c:getName() or "?"), pct, runon, tostring(t:getName() or "?")))
+                c:removeTarget(t)
+              end
+            end
+          end
+        end
+      end
+    end)
+  end
+
+  -- hostile: set first nearby player if none
+  -- [DISABLED] This logic was biased towards players, ignoring summons.
+  -- The C++ Engine (Monster::searchTarget) handles target selection correctly.
+  -- if hostile == 1 and passive == 0 then
+  --   pcall(function()
+  --     local ct = c:getTarget()
+  --     if not ct then
+  --       local pos = c:getPosition()
+  --       local specs = Game.getSpectators(pos, true, true)
+  --       if specs then
+  --         for _, sp in ipairs(specs) do
+  --           if sp and sp:isPlayer() then
+  --             -- print(string.format("[nature_think] hostile: %s id=%s setting target -> %s", tostring(c:getName() or "?"), tostring(c:getId() or "?"), tostring(sp:getName() or "?")))
+  --             c:setTarget(sp)
+  --             break
+  --           end
+  --         end
+  --       end
+  --     end
+  --   end)
+  -- end
+  
+  -- Wild Mood Integration
+  pcall(function()
+      if c:getTarget() then
+          WildMoods.resetMood(c)
+      else
+          WildMoods.checkMood(c)
+      end
+  end)
 end
 
 -- Helper to expose profile read for other scripts

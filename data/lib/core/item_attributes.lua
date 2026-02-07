@@ -176,3 +176,19 @@ end
 --    end
 --end
 
+function Item:getMoveset()
+    return self:getSpecialAttribute("pokeMoves") or {}
+end
+
+function Item:setMoveset(moves)
+    return self:setSpecialAttribute("pokeMoves", moves)
+end
+
+function Item:getLearnedTMs()
+    return self:getSpecialAttribute("pokeLearnedTMs") or {}
+end
+
+function Item:setLearnedTMs(tms)
+    return self:setSpecialAttribute("pokeLearnedTMs", tms)
+end
+

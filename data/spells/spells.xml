@@ -242,6 +242,7 @@
 	<instant group="attack" name="water pulse" words="##m232" aggressive="1" direction="0" blockwalls="0" needtarget="0" needlearn="1" script="moves/water/water_pulse.lua" />
 
 	<instant group="attack" name="transform" words="##m233" aggressive="1" direction="0" blockwalls="0" needtarget="0" needlearn="1" script="moves/psychic/transform.lua" />
+    <instant group="attack" name="rain dance" words="##m244" aggressive="0" direction="0" blockwalls="0" needtarget="0" needlearn="1" script="moves/water/rain_dance.lua" />
 	<instant group="attack" name="metal claw" words="##m234" aggressive="1" direction="0" blockwalls="0" needtarget="0" needlearn="1" script="moves/steel/metal_claw.lua" />
 
 	<instant group="attack" name="passive fighting" words="##m235" aggressive="1" direction="0" blockwalls="0" needtarget="0" needlearn="1" script="passives/fighting/passive_fighting.lua" />

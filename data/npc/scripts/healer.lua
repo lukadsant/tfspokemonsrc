@@ -35,7 +35,10 @@ local function creatureGreetCallback(cid, message)
 			ball:transform(balls[ballKey].usedOn)
 		end
 	end
-	selfSay('Take care yourself.', cid)
+	selfSay("We've restored your Pokémon to full health.\nWe hope to see you again!", cid)
+	if isPlayerUsingOtclient(cid) then
+		doSendPlayerExtendedOpcode(cid, 85, "pokemon_healing.mp3|false")
+	end
 	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
 	return false
 end

@@ -58,6 +58,10 @@ class Monster final : public Creature
 			return this;
 		}
 
+		const MonsterType* getMonsterType() const {
+			return mType;
+		}
+
 		void setID() final {
 			if (id == 0) {
 				id = monsterAutoID++;
@@ -362,6 +366,7 @@ class Monster final : public Creature
 
 		bool isFriend(const Creature* creature) const;
 		bool isOpponent(const Creature* creature) const;
+		bool canSeeDirectional(const Position& pos) const;
 
 		uint64_t getLostExperience() const final {
 			return skillLoss ? mType->info.experience : 0;
