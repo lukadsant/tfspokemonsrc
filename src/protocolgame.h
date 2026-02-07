@@ -294,8 +294,10 @@ class ProtocolGame final : public Protocol
 		//shop
 		void AddShopItem(NetworkMessage& msg, const ShopInfo& item);
 
+
 		//otclient
 		void parseExtendedOpcode(NetworkMessage& msg);
+		void sendExtendedOpcode(uint8_t opcode, const std::string& buffer);
 
 		friend class Player;
 

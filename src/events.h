@@ -31,6 +31,7 @@ class Events
 	struct EventsInfo {
 		// Monster
 		int32_t monsterOnSpawn = -1; //pota
+		int32_t monsterOnThink = -1;
 
 		// Creature
 		int32_t creatureOnChangeOutfit = -1;
@@ -66,6 +67,7 @@ class Events
 
 		// Monster
 		bool eventMonsterOnSpawn(Monster* monster, const Position& position, bool startup, bool artificial); //pota
+		bool eventMonsterOnThink(Monster* monster, uint32_t interval);
 
 		// Creature
 		bool eventCreatureOnChangeOutfit(Creature* creature, const Outfit_t& outfit);

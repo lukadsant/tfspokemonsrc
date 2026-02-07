@@ -3,6 +3,12 @@ function onDeath(creature, corpse, killer, mostDamageKiller, unjustified, mostDa
     if player then
 	local item = player:getUsingBall()
 	if item then
+            
+            -- Love System: Penalty on Faint
+            local opponentLevel = 0
+            if killer then opponentLevel = killer:getLevel() end
+            LoveSystem.adjustLove(creature, "FAINT", {opponentLevel = opponentLevel})
+
         	item:setSpecialAttribute("pokeHealth", 0)
        		player:sendCancelMessage("Your pokemon has died.")
 		creature:unregisterEvent("MonsterDeath")

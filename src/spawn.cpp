@@ -142,6 +142,17 @@ void Spawns::startup()
 	started = true;
 }
 
+void Spawns::checkSpawns()
+{
+	if (!loaded || !isStarted()) {
+		return;
+	}
+
+	for (Spawn& spawn : spawnList) {
+		spawn.checkSpawn();
+	}
+}
+
 void Spawns::clear()
 {
 	for (Spawn& spawn : spawnList) {
@@ -232,17 +243,41 @@ void Spawn::startup()
 	for (const auto& it : spawnMap) {
 		uint32_t spawnId = it.first;
 		const spawnBlock_t& sb = it.second;
+
+		// Day/Night Spawn Check
+		int32_t currentLightHour = g_game.getLightHour();
+		int32_t sunrise = g_game.getSunriseStart();
+		int32_t night = g_game.getNightStart();
+
+		if (sb.mType->info.spawnTime == SPAWNTIME_DAY) {
+			if (currentLightHour < sunrise || currentLightHour >= night) {
+				continue;
+			}
+		} else if (sb.mType->info.spawnTime == SPAWNTIME_NIGHT) {
+			if (currentLightHour >= sunrise && currentLightHour < night) {
+				continue;
+			}
+		}
+
 		spawnMonster(spawnId, sb.mType, sb.pos, sb.direction, true);
 	}
 }
 
 void Spawn::checkSpawn()
 {
-	checkSpawnEvent = 0;
+	if (checkSpawnEvent != 0) {
+		g_scheduler.stopEvent(checkSpawnEvent);
+		checkSpawnEvent = 0;
+	}
 
 	cleanup();
 
 	uint32_t spawnCount = 0;
+
+	// Dynamic Time
+	int32_t sunrise = g_game.getSunriseStart();
+	int32_t night = g_game.getNightStart();
+	int32_t currentLightHour = g_game.getLightHour();
 
 	for (auto& it : spawnMap) {
 		uint32_t spawnId = it.first;
@@ -252,6 +287,17 @@ void Spawn::checkSpawn()
 
 		spawnBlock_t& sb = it.second;
 		if (OTSYS_TIME() >= sb.lastSpawn + sb.interval) {
+			// Day/Night Spawn Logic
+			if (sb.mType->info.spawnTime == SPAWNTIME_DAY) {
+				if (currentLightHour < sunrise || currentLightHour >= night) {
+					continue; // It's night, skip day monster
+				}
+			} else if (sb.mType->info.spawnTime == SPAWNTIME_NIGHT) {
+				if (currentLightHour >= sunrise && currentLightHour < night) {
+					continue; // It's day, skip night monster
+				}
+			}
+
 			if (findPlayer(sb.pos)) {
 				sb.lastSpawn = OTSYS_TIME();
 				continue;
@@ -266,6 +312,38 @@ void Spawn::checkSpawn()
 
 	if (spawnedMap.size() < spawnMap.size()) {
 		checkSpawnEvent = g_scheduler.addEvent(createSchedulerTask(getInterval(), std::bind(&Spawn::checkSpawn, this)));
+	}
+
+	// Cleanup out-of-time monsters
+	std::vector<Monster*> toRemove;
+
+	for (const auto& it : spawnedMap) {
+		Monster* monster = it.second;
+		if (!monster || monster->isRemoved()) continue; // Already handled by cleanup()
+
+		bool shouldRemove = false;
+		if (monster->getMonsterType()->info.spawnTime == SPAWNTIME_DAY) {
+			if (currentLightHour < sunrise || currentLightHour >= night) {
+				shouldRemove = true;
+			}
+		} else if (monster->getMonsterType()->info.spawnTime == SPAWNTIME_NIGHT) {
+			if (currentLightHour >= sunrise && currentLightHour < night) {
+				shouldRemove = true;
+			}
+		}
+
+		if (shouldRemove) {
+			// Only remove if not fighting and (optional) no player nearby or simple mechanic
+			// User asked for "going to sleep". Let's simply remove if idle.
+			// If fighting, let them finish.
+			if (!monster->getAttackedCreature()) {
+				toRemove.push_back(monster);
+			}
+		}
+	}
+
+	for (Monster* monster : toRemove) {
+		g_game.removeCreature(monster);
 	}
 }
 

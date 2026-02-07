@@ -1,5 +1,6 @@
 dofile('data/lib/core/constants.lua')
 dofile('data/lib/core/container.lua')
+dofile('data/lib/core/custom_effects.lua')
 dofile('data/lib/core/creature.lua')
 dofile('data/lib/core/game.lua')
 dofile('data/lib/core/item.lua')
@@ -15,3 +16,8 @@ dofile('data/lib/core/newfunctions.lua')
 dofile('data/lib/core/string.lua')
 dofile('data/lib/core/held_items.lua')
 
+
+dofile('data/lib/core/lovesystem.lua')
+dofile('data/lib/core/summon_interactions.lua')
+dofile('data/lib/core/wild_moods.lua')
+dofile('data/lib/core/nature_behaviors.lua')

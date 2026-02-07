@@ -193,6 +193,22 @@ bool Monsters::loadFromXml(bool reloading /*= false*/)
 	for (auto monsterNode : doc.child("monsters").children()) {
 		std::string name = monsterNode.attribute("name").as_string(); //pota
 		loadMonster("data/monster/" + std::string(monsterNode.attribute("file").as_string()), name, monsterScriptList, reloading); //pota
+
+		// Apply spawnType override from monsters.xml if present
+		if (pugi::xml_attribute attr = monsterNode.attribute("spawnType")) {
+			MonsterType* mType = getMonsterType(name);
+			if (mType) {
+				std::string spawnType = asLowerCaseString(attr.as_string());
+				if (spawnType == "day") {
+					mType->info.spawnTime = SPAWNTIME_DAY;
+				} else if (spawnType == "night") {
+					mType->info.spawnTime = SPAWNTIME_NIGHT;
+				} else {
+					mType->info.spawnTime = SPAWNTIME_ALL;
+				}
+			}
+		}
+
 		allMonsters.push_back(name); //pota
 	}
 
@@ -299,6 +315,10 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 			sb.maxCombatValue = sb.minCombatValue;
 			sb.minCombatValue = value;
 		}
+	}
+
+	if ((attr = node.attribute("level"))) {//pota
+		sb.level = pugi::cast<uint32_t>(attr.value());
 	}
 
 	if (auto spell = g_spells->getSpellByName(name)) {
@@ -836,6 +856,17 @@ bool Monsters::loadMonster(const std::string& file, const std::string& monsterNa
 		}
 	}
 
+	if ((attr = monsterNode.attribute("spawnType"))) {
+		std::string spawnType = asLowerCaseString(attr.as_string());
+		if (spawnType == "day") {
+			mType->info.spawnTime = SPAWNTIME_DAY;
+		} else if (spawnType == "night") {
+			mType->info.spawnTime = SPAWNTIME_NIGHT;
+		} else {
+			mType->info.spawnTime = SPAWNTIME_ALL;
+		}
+	}
+
 	if ((attr = monsterNode.attribute("experience"))) {
 		mType->info.experience = pugi::cast<uint64_t>(attr.value());
 	}
@@ -1089,6 +1120,17 @@ bool Monsters::loadMonster(const std::string& file, const std::string& monsterNa
 				mType->info.moves.emplace_back(std::move(sb));
 			} else {
 				std::cout << "[Warning - Monsters::loadMonster] Cant load move spell. " << file << std::endl;
+			}
+		}
+	}
+
+	if ((node = monsterNode.child("tms"))) { //pota
+		for (auto attackNode : node.children()) {
+			spellBlock_t sb;
+			if (deserializeSpell(attackNode, sb, monsterName)) {
+				mType->info.tms.emplace_back(std::move(sb));
+			} else {
+				std::cout << "[Warning - Monsters::loadMonster] Cant load TM spell. " << file << std::endl;
 			}
 		}
 	}

@@ -114,6 +114,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	if target:isCreature() then
 		if target ~= player and target:isMonster() then
+			if target:getMaster() == player then
+				SummonInteractions.interact(player, target)
+				return true
+			end
+
 			local name = player:getSummonNameFromBall()
 			if name == "Ditto" or name == "Shiny ditto" or name == "Xmas ditto" then
 				local ball = player:getUsingBall()

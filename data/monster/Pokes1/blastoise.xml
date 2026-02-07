@@ -43,6 +43,7 @@
 		<move name="hydro cannon" interval="17000"/>
 		<move name="skull bash" interval="9000"/>
 		<move name="hydro pump" interval="14000"/>
+		<move name="rain dance" interval="25000"/>
 
 	</moves>
 	<evolutions>
@@ -57,6 +58,7 @@
 		<attack name="hydro cannon" interval="17000" chance="40"/>
 		<attack name="skull bash" interval="9000" chance="40"/>
 		<attack name="hydro pump" interval="14000" chance="40"/>
+		<attack name="rain dance" interval="25000" chance="10"/>
 		<attack name="passive water" interval="40000" chance="40"/>
 
 	</attacks>

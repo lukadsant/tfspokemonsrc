@@ -64,6 +64,8 @@ bool Events::load()
 		if (className == "Monster") { //pota
 			if (methodName == "onSpawn") {
 				info.monsterOnSpawn = event;
+			} else if (methodName == "onThink") {
+				info.monsterOnThink = event;
 			}
 		} else if (className == "Creature") {
 			if (methodName == "onChangeOutfit") {
@@ -150,6 +152,31 @@ bool Events::eventMonsterOnSpawn(Monster* monster, const Position& position, boo
 	LuaScriptInterface::pushBoolean(L, artificial);
  
 	return scriptInterface.callFunction(4);
+}
+
+bool Events::eventMonsterOnThink(Monster* monster, uint32_t interval)
+{
+	// Monster:onThink(interval)
+	if (info.monsterOnThink == -1) {
+		return true;
+	}
+
+	if (!scriptInterface.reserveScriptEnv()) {
+		std::cout << "[Error - Events::eventMonsterOnThink] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface.getScriptEnv();
+	env->setScriptId(info.monsterOnThink, &scriptInterface);
+
+	lua_State* L = scriptInterface.getLuaState();
+	scriptInterface.pushFunction(info.monsterOnThink);
+
+	LuaScriptInterface::pushUserdata<Monster>(L, monster);
+	LuaScriptInterface::setMetatable(L, -1, "Monster");
+	lua_pushnumber(L, interval);
+
+	return scriptInterface.callFunction(2);
 }
 
 // Creature

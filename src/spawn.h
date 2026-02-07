@@ -58,6 +58,7 @@ class Spawn
 
 		bool isInSpawnZone(const Position& pos);
 		void cleanup();
+		void checkSpawn();
 
 	private:
 		//map of the spawned creatures
@@ -76,7 +77,6 @@ class Spawn
 
 		static bool findPlayer(const Position& pos);
 		bool spawnMonster(uint32_t spawnId, MonsterType* mType, const Position& pos, Direction dir, bool startup = false);
-		void checkSpawn();
 };
 
 class Spawns
@@ -87,6 +87,7 @@ class Spawns
 		bool loadFromXml(const std::string& filename);
 		void startup();
 		void clear();
+		void checkSpawns(); // Force check all spawns
 
 		bool isStarted() const {
 			return started;

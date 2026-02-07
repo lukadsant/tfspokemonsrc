@@ -422,6 +422,8 @@ class LuaScriptInterface
 		static int luaDoMoveCreature(lua_State* L);
 
 		static int luaDoPlayerAddItem(lua_State* L);
+		static int luaDoSendPlayerExtendedOpcode(lua_State* L);
+		static int luaIsPlayerUsingOtclient(lua_State* L);
 		static int luaDoTileAddItemEx(lua_State* L);
 		static int luaDoSetCreatureLight(lua_State* L);
 
@@ -544,6 +546,8 @@ class LuaScriptInterface
 
 		static int luaGameGetGameState(lua_State* L);
 		static int luaGameSetGameState(lua_State* L);
+
+		static int luaGameSetWorldTime(lua_State* L);
 
 		static int luaGameGetWorldType(lua_State* L);
 		static int luaGameSetWorldType(lua_State* L);
@@ -1232,6 +1236,7 @@ class LuaScriptInterface
 		static int luaMonsterTypeGetElementList(lua_State* L);
 
 		static int luaMonsterTypeGetMoveList(lua_State* L); //pota
+		static int luaMonsterTypeGetTMList(lua_State* L); //pota
 
 		static int luaMonsterTypeGetVoices(lua_State* L);
 		static int luaMonsterTypeGetLoot(lua_State* L);

@@ -46,6 +46,9 @@ function Player:onLook(thing, position, distance)
 				local pokeLevel = item:getSpecialAttribute("pokeLevel")
 				local pokeBoost = item:getSpecialAttribute("pokeBoost") or 0
 				local pokeLove = item:getSpecialAttribute("pokeLove") or 0
+				local pokeExperience = item:getSpecialAttribute("pokeExperience") or 0
+				local nextLevelExp = getNeededExp(pokeLevel + 1)
+				local missingExp = nextLevelExp - pokeExperience
 
 				-- read stored skull (sex) and map to human-readable string
 				local pokeSkull = item:getSpecialAttribute("pokeSkull")
@@ -139,6 +142,9 @@ function Player:onLook(thing, position, distance)
 					end
 					description = string.format("%s\nMeet Info: %s.", description, meetRegion)
 
+					-- Experience System
+					description = string.format("%s\nExperience: %d/%d. Missing: %d.", description, pokeExperience, nextLevelExp, missingExp)
+
 					local firstLevel = item:getSpecialAttribute("firstLevel")
 					local catchDate = item:getSpecialAttribute("catchDate")
 					local originalOwner = item:getSpecialAttribute("originalOwner")
@@ -167,6 +173,9 @@ function Player:onLook(thing, position, distance)
 		local pokeLevel = thing:getSpecialAttribute("pokeLevel")
 		local pokeBoost = thing:getSpecialAttribute("pokeBoost") or 0
 		local pokeLove = thing:getSpecialAttribute("pokeLove") or 0
+		local pokeExperience = thing:getSpecialAttribute("pokeExperience") or 0
+		local nextLevelExp = getNeededExp(pokeLevel + 1)
+		local missingExp = nextLevelExp - pokeExperience
 		local ownerName = thing:getSpecialAttribute("owner")
 		local attrHealth = thing:getSpecialAttribute("pokeHealth")
 		local pokeHealth = (type(attrHealth) == "number" or type(attrHealth) == "string") and tonumber(attrHealth) or 0
@@ -231,6 +240,9 @@ function Player:onLook(thing, position, distance)
 				meetRegion = "Unknown Area"
 			end
 			description = string.format("%s\nMeet Info: %s.", description, meetRegion)
+
+			-- Experience System
+			description = string.format("%s\nExperience: %d/%d. Missing: %d.", description, pokeExperience, nextLevelExp, missingExp)
 
 			local firstLevel = thing:getSpecialAttribute("firstLevel")
 			local catchDate = thing:getSpecialAttribute("catchDate")
@@ -362,9 +374,6 @@ function Player:onLookInBattleList(creature, distance)
 	local description = "You see " .. creature:getDescription(distance)
 	if isSummon(creature) then
 		local master = creature:getMaster()
---		local item = master:getSlotItem(CONST_SLOT_AMMO)
---		local pokeName = item:getSpecialAttribute("pokeName")
---		local pokeLevel = item:getSpecialAttribute("pokeLevel")
 		local pokeName = master:getName()
 		local pokeLevel = creature:getLevel()
 		if pokeName ~= nil and pokeLevel ~= nil then			
@@ -679,7 +688,13 @@ function Player:onGainExperience(source, exp, rawExp)
 			if level >= summonMaxLevel then
 				return exp
 			end
+			
 			local givenExp = exp * multiplier
+			
+			-- Love System: Exp Bonus
+			local expMultiplier = LoveSystem.getExpMultiplier(creature)
+			givenExp = math.floor(givenExp * expMultiplier)
+			
 			if vocation:getName() == "Explorer" then
 				givenExp = math.floor(givenExp / explorerExperienceBuff)
 			end
@@ -693,22 +708,17 @@ function Player:onGainExperience(source, exp, rawExp)
 			end
 			if newExp > getNeededExp(nextLevel)  then				
 				item:setSpecialAttribute("pokeLevel", nextLevel)
-				local love = item:getSpecialAttribute("pokeLove") or 0
 				local newMaxHealth = creature:getTotalHealth()
 				creature:setMaxHealth(newMaxHealth)
 				creature:changeSpeed(-creature:getSpeed() + creature:getTotalSpeed())			
 				creature:setHealth(newMaxHealth)
 				summonPos:sendMagicEffect(CONST_ME_HEARTS)
 				
-				if MonsterType(source:getName()):isLegendary() then 
-					love = love + 3
-				elseif level < source:getLevel() then
-					love = love + 2					
-				else
-					love = love + 1
-				end
+				-- Love System: Level Up Bonus
+				LoveSystem.adjustLove(creature, "LEVEL_UP")
+				local love = LoveSystem.getLove(creature)
+				-- item:setSpecialAttribute("pokeLove", love) -- handled by adjustLove
 
-				item:setSpecialAttribute("pokeLove", love)
 				doRemoveSummon(self:getId(), false, nil, false)
 				item:setSpecialAttribute("isBeingUsed", 1)
 				local cid = doReleaseSummon(self:getId(), summonPos, false, false)
@@ -721,7 +731,7 @@ function Player:onGainExperience(source, exp, rawExp)
 				local monsterType = MonsterType(summonName)
 				local statusGain = statusGainFormula(0, nextLevel, 0, 0) - statusGainFormula(0, level, 0, 0)
 				self:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Congratulations! Your pokemon evolved to level " .. nextLevel .. ".\nStatus bonus:\nHealth: " .. monsterType:getMaxHealth() * statusGain .. "\nAttack: " .. monsterType:getMeleeDamage() * statusGain .. "\nMagic Attack: " .. monsterType:getMoveMagicAttackBase() * statusGain .. "\nMagic Defense: " .. monsterType:getMoveMagicDefenseBase() * statusGain .. "\nDefense: " .. monsterType:getDefense() * statusGain .. "\nSpeed: " .. monsterType:getBaseSpeed() * statusGain)
-				self:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Your pokemon gained " .. love .. " love points.")
+				self:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Your pokemon now has " .. love .. " love points.")
 
 				local dittoTime = item:getSpecialAttribute("dittoTime")
 				if not dittoTime then

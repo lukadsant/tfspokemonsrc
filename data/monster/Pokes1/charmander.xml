@@ -36,12 +36,19 @@
 
 	</script>
 	<moves>
-		<move name="scratch" interval="3000" isTarget="1" range="1"/>
-		<move name="ember" interval="3000" isTarget="1"/>
-		<move name="flamethrower" interval="11000"/>
-		<move name="slash" interval="5000" isTarget="1" range="1"/>
-
+		<move name="scratch" interval="3000" isTarget="1" range="1" level="1"/>
+		<move name="growl" interval="3000" isTarget="1" level="1"/>
+		<move name="ember" interval="3000" isTarget="1" level="4"/>
+		<move name="smokescreen" interval="3000" level="8"/>
+		<move name="dragon breath" interval="3000" level="12"/>
+		<move name="fire fang" interval="3000" level="17"/>
+		<move name="slash" interval="5000" isTarget="1" range="1" level="20"/>
 	</moves>
+	<tms>
+		<move name="fire blast" interval="11000"/>
+		<move name="iron tail" interval="5000" isTarget="1" range="1"/>
+		<move name="toxic" interval="8000" isTarget="1" range="5"/>
+	</tms>
 	<evolutions>
 		<evolution name="Charmeleon" level="20" chance="60" itemName="fire stone" count="1"/>
 

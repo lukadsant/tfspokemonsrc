@@ -40,7 +40,10 @@
 	<talkaction words="/ts" script="testnatures.lua" />
 	<talkaction words="/setactionid" separator=" " script="set_actionid.lua" />
 	<talkaction words="/removeoutfit" separator=" " script="remove_outfit.lua" />
+	<talkaction words="/removeoutfit" separator=" " script="remove_outfit.lua" />
 	<talkaction words="/addpremium" separator=" " script="add_premium.lua" />
+	<talkaction words="/timetest" separator=" " script="timetest.lua" />
+	<talkaction words="/weather" separator=" " script="weather.lua" />
 
 	<!-- player talkactions -->
 	<talkaction words="!buypremium" script="buyprem.lua" />
@@ -62,6 +65,7 @@
 	<talkaction words="!commands" script="commands.lua" />
 	<talkaction words="!autoloot" script="autoloot.lua" />
 	<talkaction words="!catch" script="verify_catch.lua" />
+	<talkaction words="!moveset" separator=" " script="moveset.lua" />
 
 	<!-- test talkactions -->
 	<talkaction words="!z" separator=" " script="magiceffect.lua" />

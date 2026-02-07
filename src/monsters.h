@@ -64,6 +64,12 @@ struct evolutionBlock_t { //pota
 };
 
 
+enum SpawnTime_t {
+	SPAWNTIME_ALL,
+	SPAWNTIME_DAY,
+	SPAWNTIME_NIGHT
+};
+
 
 class BaseSpell;
 struct spellBlock_t {
@@ -79,6 +85,7 @@ struct spellBlock_t {
 		minCombatValue(other.minCombatValue),
 		maxCombatValue(other.maxCombatValue),
 		name(other.name), //pota
+		level(other.level), //pota
 		isTarget(other.isTarget), //pota
 		combatSpell(other.combatSpell),
 		isMelee(other.isMelee) {
@@ -92,6 +99,7 @@ struct spellBlock_t {
 	int32_t minCombatValue = 0;
 	int32_t maxCombatValue = 0;
 	std::string name = "none"; //pota
+	uint32_t level = 0; //pota
 	bool isTarget = false; //pota
 	bool combatSpell = false;
 	bool isMelee = false;
@@ -118,9 +126,12 @@ class MonsterType
 		std::vector<summonBlock_t> summons;
 
 
-		std::vector<spellBlock_t> moves; //pota
 
+		std::vector<spellBlock_t> moves; //pota
+		std::vector<spellBlock_t> tms; //pota
 		std::vector<evolutionBlock_t> evolutions; //pota
+
+
 
 
 		Skulls_t skull = SKULL_NONE;
@@ -130,6 +141,7 @@ class MonsterType
 		RaceType_t race2 = RACE_NONE; //pota
 
 		LightInfo light = {};
+		SpawnTime_t spawnTime = SPAWNTIME_ALL;
 		uint16_t lookcorpse = 0;
 
 		struct SkullOption {

@@ -40559,4 +40559,7 @@
 	<item id="30028" name="swamp" />
 	<item id="30035" name="tea" />
 	<item id="30043" name="mead" />
+	<item id="33037" article="a" name="sitrus berry" plural="sitrus berrys">
+		<attribute key = "description" value ="A Berry to be consumed by Pokémon. If a Pokémon holds one, it can restore its own HP by a small amount during battle."/>
+	</item>
 </items>

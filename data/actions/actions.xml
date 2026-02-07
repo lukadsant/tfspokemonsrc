@@ -59,6 +59,9 @@
 	<action fromid="26723" toid="26736" script="poke/evolution.lua" allowfaruse="1" />
 	<action fromid="26742" toid="26748" script="poke/evolution.lua" allowfaruse="1" />
 	<action itemid="26749" script="poke/evolution.lua" allowfaruse="1" />
+	
+	<!-- TMs -->
+	<action fromid="2145" toid="2147" script="poke/tm_system.lua" allowfaruse="1" />
 
 	<action itemid="26693" script="poke/boost.lua" />
 	<action itemid="27634" script="poke/bike.lua" />
@@ -179,6 +182,7 @@
 	<action itemid="18397" script="other/food.lua" />
 	<action itemid="19737" script="other/food.lua" />
 	<action fromid="20100" toid="20101" script="other/food.lua" />
+	<action itemid="33037" script="other/food.lua" />
 
 	<!-- Spellbooks -->
 	<action itemid="2175" script="other/spellbook.lua" />

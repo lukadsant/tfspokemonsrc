@@ -277,6 +277,9 @@ class Player final : public Creature, public Cylinder
 		OperatingSystem_t getOperatingSystem() const {
 			return operatingSystem;
 		}
+		bool isUsingOtclient() const {
+			return operatingSystem >= CLIENTOS_OTCLIENT_LINUX;
+		}
 		void setOperatingSystem(OperatingSystem_t clientos) {
 			operatingSystem = clientos;
 		}
@@ -582,6 +585,12 @@ class Player final : public Creature, public Cylinder
 		bool closeShopWindow(bool sendCloseShopWindow = true);
 		bool updateSaleShopList(const Item* item);
 		bool hasShopItemForSale(uint32_t itemId, uint8_t subType) const;
+
+		void sendExtendedOpcode(uint8_t opcode, const std::string& buffer) {
+			if (client) {
+				client->sendExtendedOpcode(opcode, buffer);
+			}
+		}
 
 		void setChaseMode(chaseMode_t mode);
 		void setFightMode(fightMode_t mode) {

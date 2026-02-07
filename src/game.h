@@ -457,6 +457,35 @@ class Game
 		int32_t getLightHour() const {
 			return lightHour;
 		}
+		void setLightHour(int32_t hour) {
+			lightHour = hour;
+			checkLight(); // Force update
+			map.spawns.checkSpawns(); // Force spawn check for day/night update
+		}
+
+		static constexpr int32_t LIGHT_LEVEL_DAY = 250;
+		static constexpr int32_t LIGHT_LEVEL_NIGHT = 40;
+		static constexpr int32_t LIGHT_LEVEL_SUNSET = 120; // Transition target
+
+		// Time in minutes (Dynamic based on Season)
+		int32_t getSunriseStart() const;
+		int32_t getDayStart() const;
+		int32_t getSunsetStart() const;
+		int32_t getNightStart() const;
+
+		enum Season_t {
+			SEASON_SPRING,
+			SEASON_SUMMER,
+			SEASON_AUTUMN,
+			SEASON_WINTER
+		};
+		Season_t getCurrentSeason() const;
+
+		// Colors
+		static constexpr int32_t LIGHT_COLOR_MORNING = 210;
+		static constexpr int32_t LIGHT_COLOR_DAY = 215; // White
+		static constexpr int32_t LIGHT_COLOR_EVENING = 198;
+		static constexpr int32_t LIGHT_COLOR_NIGHT = 35;
 
 		bool loadExperienceStages();
 		uint64_t getExperienceStage(uint32_t level);
@@ -548,17 +577,16 @@ class Game
 		ModalWindow offlineTrainingWindow { std::numeric_limits<uint32_t>::max(), "Choose a Skill", "Please choose a skill:" };
 		Commands commands;
 
-		static constexpr int32_t LIGHT_LEVEL_DAY = 250;
-		static constexpr int32_t LIGHT_LEVEL_NIGHT = 40;
-		static constexpr int32_t SUNSET = 1305;
-		static constexpr int32_t SUNRISE = 430;
+
+
 
 		GameState_t gameState = GAME_STATE_NORMAL;
 		WorldType_t worldType = WORLD_TYPE_PVP;
 
 		LightState_t lightState = LIGHT_STATE_DAY;
 		uint8_t lightLevel = LIGHT_LEVEL_DAY;
-		int32_t lightHour = SUNRISE + (SUNSET - SUNRISE) / 2;
+		uint8_t lightColor = LIGHT_COLOR_DAY;
+		int32_t lightHour = 600; // Default to 10:00, will be updated by checkLight
 		// (1440 minutes/day)/(3600 seconds/day)*10 seconds event interval
 		int32_t lightHourDelta = 1400 * 10 / 3600;
 

@@ -24,14 +24,17 @@
 #endif
 
 #include "monster.h"
+#include <cmath>
 #include "game.h"
 #include "spells.h"
 #include "configmanager.h" //pota
 #include "tools.h"
+#include "events.h"
 
 extern Game g_game;
 extern Monsters g_monsters;
 extern ConfigManager g_config; //pota
+extern Events* g_events;
 
 int32_t Monster::despawnRange;
 int32_t Monster::despawnRadius;
@@ -224,6 +227,49 @@ void Monster::removeList()
 bool Monster::canSee(const Position& pos) const
 {
 	return Creature::canSee(getPosition(), pos, 9, 9);
+}
+
+bool Monster::canSeeDirectional(const Position& pos) const
+{
+	const Position& myPos = getPosition();
+	if (myPos == pos) {
+		return true;
+	}
+
+	int32_t diffX = Position::getDistanceX(pos, myPos);
+	int32_t diffY = Position::getDistanceY(pos, myPos);
+
+	if (diffX > 5 || diffY > 5) {
+		return false;
+	}
+	
+	if (pos.getX() < myPos.getX()) diffX = -diffX;
+	if (pos.getY() < myPos.getY()) diffY = -diffY;
+
+	// atan2(y, x) returns angle in radians
+	double angleToTarget = std::atan2(diffY, diffX) * 180.0 / 3.14159265359;
+
+	double facingAngle = 0.0;
+	switch (getDirection()) {
+		case DIRECTION_NORTH: facingAngle = -90.0; break;
+		case DIRECTION_SOUTH: facingAngle = 90.0; break;
+		case DIRECTION_EAST: facingAngle = 0.0; break;
+		case DIRECTION_WEST: facingAngle = 180.0; break;
+		default: return true;
+	}
+
+	double angleDiff = std::abs(angleToTarget - facingAngle);
+	if (angleDiff > 180.0) {
+		angleDiff = 360.0 - angleDiff;
+	}
+
+	if (angleDiff <= 50.0) {
+		return true;
+	} else if (angleDiff <= 90.0) {
+		return uniform_random(1, 100) <= 30;
+	}
+
+	return false;
 }
 
 void Monster::onAttackedCreatureDisappear(bool)
@@ -714,6 +760,13 @@ BlockType_t Monster::blockHit(Creature* attacker, CombatType_t combatType, int32
 {
 	BlockType_t blockType = Creature::blockHit(attacker, combatType, damage, checkDefense, checkArmor);
 
+	if (attacker) {
+		if (std::find(targetList.begin(), targetList.end(), attacker) == targetList.end()) {
+			addTarget(attacker, true);
+			g_game.addMagicEffect(getPosition(), CONST_ME_YELLOW_RINGS);
+		}
+	}
+
 	if (damage != 0) {
 		int32_t elementMod = 0;
 		auto it = mType->info.elementMap.find(combatType);
@@ -759,7 +812,7 @@ bool Monster::selectTarget(Creature* creature)
 		return false;
 	}
 
-	if (isPassive()) {
+	if (isPassive() && !isFleeing()) {
 		if (creature->getMaster() && creature->getMaster()->getPlayer()) {
 			if (!hasBeenAttacked(creature->getMaster()->getPlayer()->getID())) {
 				return false;
@@ -771,32 +824,37 @@ bool Monster::selectTarget(Creature* creature)
 		}
 	}
 
-	if (creature->getPlayer() && creature->getPlayer()->getSummonCount() > 0) {
+	// Directional Vision & Effect Logic
+	bool bypassVision = false;
+
+	// Exception 1: Self-defense (Attacked by creature)
+	if (hasBeenAttacked(creature->getID())) {
+		bypassVision = true;
+	}
+
+	// Exception 2: Summons following Master's attack
+	if (isSummon() && getMaster()) {
+		if (creature == getMaster()->getAttackedCreature()) {
+			bypassVision = true;
+		}
+	}
+
+	// Exception 3: Persistence (Keep tracking current targets regardless of angle)
+	if (creature == attackedCreature || creature == followCreature) {
+		bypassVision = true;
+	}
+
+	if (!bypassVision && !canSeeDirectional(creature->getPosition())) {
 		return false;
 	}
 
+	// Visual Indication of "Noticing"
+	// Triggers if we are switching to this target (and it's not the current one)
+	if (followCreature != creature) {
+		g_game.addMagicEffect(getPosition(), CONST_ME_YELLOW_RINGS);
+	}
 
-//	if (isPassive() && !hasBeenAttacked(creature->getID())) {
-//		return false;
-//	}
-
-
-//	if (isPassive()) { //pota
-//		if (hasBeenAttacked(creature->getID()) && creature->isSummon()) {
-//			std::cout << "Entrou 1" << std::endl;
-//			Player* masterPlayer = creature->getMaster()->getPlayer();
-//
-//				std::cout << "Entrou 2" << std::endl;
-//				addTarget(masterPlayer);
-//
-//		} else {
-//			return false;
-//		}
-//	}
-
-
-
-	if (isHostile() || isSummon()) {
+	if (isHostile() || isSummon() || isFleeing()) {
 		if (setAttackedCreature(creature) && !isSummon()) {
 			g_dispatcher.addTask(createTask(std::bind(&Game::checkCreatureAttack, &g_game, getID())));
 		}
@@ -859,6 +917,10 @@ void Monster::onEndCondition(ConditionType_t type)
 
 void Monster::onThink(uint32_t interval)
 {
+	if (!g_events->eventMonsterOnThink(this, interval)) {
+		return;
+	}
+
 	Creature::onThink(interval);
 
 	if (mType->info.thinkEvent != -1) {
@@ -915,6 +977,18 @@ void Monster::onThink(uint32_t interval)
 				} else if (isFleeing()) {
 					if (attackedCreature && !canUseAttack(getPosition(), attackedCreature)) {
 						searchTarget(TARGETSEARCH_ATTACKRANGE);
+					}
+				}
+
+				// Alive Behavior: If we have targets (sense presence) but no selected target (cone), move randomly
+				if (!followCreature && !targetList.empty()) {
+					if (uniform_random(1, 100) <= 30) { // 30% chance to move when alert
+						Direction dir;
+						if (getRandomStep(getPosition(), dir)) {
+							listWalkDir.clear();
+							listWalkDir.push_front(dir);
+							startAutoWalk(listWalkDir);
+						}
 					}
 				}
 			}

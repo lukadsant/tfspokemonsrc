@@ -18,10 +18,12 @@ ABILITY_DEFINITIONS = {
     ["Rain Dish"] = {
         description = "The Pokemon gradually regains HP in rain.",
         onThink = function(creature)
-            -- Placeholder for weather check, for now just heal
-            creature:addHealth(creature:getMaxHealth() * 0.05)
-            creature:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-            Game.sendAnimatedText(creature:getPosition(), "RAIN DISH!", TEXTCOLOR_BLUE)
+            local weather, _ = getWeatherFromPosition(creature:getPosition())
+            if weather == "Rain" or weather == "Thunderstorm" then
+                creature:addHealth(creature:getMaxHealth() * 0.05)
+                creature:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+                Game.sendAnimatedText(creature:getPosition(), "RAIN DISH!", TEXTCOLOR_BLUE)
+            end
         end
     },
     ["Mega Launcher"] = {
