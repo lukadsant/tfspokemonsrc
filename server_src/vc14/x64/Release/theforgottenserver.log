@@ -1,0 +1,84 @@
+﻿  otpch.cpp
+  actions.cpp
+  ban.cpp
+  baseevents.cpp
+  bed.cpp
+  chat.cpp
+  combat.cpp
+  commands.cpp
+  condition.cpp
+  configmanager.cpp
+  connection.cpp
+..\src\condition.cpp(1598): warning C4100: 'creature': parâmetro formal não referenciado
+  container.cpp
+  creature.cpp
+  creatureevent.cpp
+  cylinder.cpp
+  database.cpp
+  databasemanager.cpp
+  databasetasks.cpp
+  depotchest.cpp
+  depotlocker.cpp
+  events.cpp
+  fileloader.cpp
+  game.cpp
+  globalevent.cpp
+  groups.cpp
+  guild.cpp
+..\src\creature.cpp(55): warning C4100: 'viewRangeY': parâmetro formal não referenciado
+..\src\creature.cpp(55): warning C4100: 'viewRangeX': parâmetro formal não referenciado
+  house.cpp
+  housetile.cpp
+  inbox.cpp
+  ioguild.cpp
+  iologindata.cpp
+  iomap.cpp
+  iomapserialize.cpp
+  iomarket.cpp
+  item.cpp
+  items.cpp
+  luascript.cpp
+  mailbox.cpp
+  map.cpp
+  monster.cpp
+  monsters.cpp
+  mounts.cpp
+  movement.cpp
+  networkmessage.cpp
+  npc.cpp
+  otserv.cpp
+  outfit.cpp
+  outputmessage.cpp
+  party.cpp
+  player.cpp
+  position.cpp
+  protocol.cpp
+  protocolgame.cpp
+  protocollogin.cpp
+  protocolold.cpp
+  quests.cpp
+  raids.cpp
+  rsa.cpp
+  scheduler.cpp
+  scriptmanager.cpp
+  server.cpp
+  signals.cpp
+  spawn.cpp
+  spells.cpp
+  protocolstatus.cpp
+  talkaction.cpp
+  tasks.cpp
+  teleport.cpp
+  thing.cpp
+  tile.cpp
+  tools.cpp
+  trashholder.cpp
+  vocation.cpp
+  waitlist.cpp
+  weapons.cpp
+  wildcardtree.cpp
+..\src\tile.cpp(1367): warning C4800: 'uint32_t': forçando valor para bool 'true' ou 'false' (aviso de desempenho)
+  Gerando código
+  Finalizada a geração de código
+  theforgottenserver.vcxproj -> C:\src\forgottenserver-1.2_20210201\forgottenserver-1.2\vc14\x64\Release\theforgottenserver.exe
+  theforgottenserver.vcxproj -> C:\src\forgottenserver-1.2_20210201\forgottenserver-1.2\vc14\x64\Release\theforgottenserver.pdb (Full PDB)

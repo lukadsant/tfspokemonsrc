@@ -1,0 +1,10 @@
+Module
+  name: game_shaders
+  description: Manage game shaders
+  author: edubart
+  website: www.otclient.info
+  scripts: [ shaders.lua ]
+  sandboxed: true
+  autoload: true
+  @onLoad: init()
+  @onUnload: terminate()

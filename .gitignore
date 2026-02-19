@@ -1,2 +1,14 @@
 src/cotire/
-data/world/global_dash.otbm
+server/data/world/global_dash.otbm
+
+# Large Binary Files (>50MB)
+*.spr
+*.zip
+pokedash_linux64
+theforgottenserver
+
+# IDE/Build Artifacts
+*.sdf
+*.VC.db
+*.gch
+*.pch

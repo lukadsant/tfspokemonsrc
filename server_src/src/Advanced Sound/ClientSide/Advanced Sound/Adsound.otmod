@@ -1,0 +1,13 @@
+Module
+  name: Advanced Sound
+  description: sound lib with 3d sound mod
+  author: vyctor17
+  website: https://www.youtube.com/user/MrVyctor17
+  
+  autoload: true
+  autoload-priority: 1000
+  sandbox: true
+  
+  scripts: [ Adsound ]
+  @onLoad: init()
+  @onUnload: terminate()

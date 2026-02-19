@@ -1,0 +1,8 @@
+WeatherOverlay < UIWidget
+  id: weatherOverlay
+  anchors.top: parent.top
+  anchors.left: parent.left
+  phantom: true
+  opacity: 0.5
+  visible: false
+  image-repeated: true
