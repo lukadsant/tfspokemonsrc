@@ -19,6 +19,9 @@ smartWalkDir = nil
 walkFunction = nil
 hookedMenuOptions = {}
 lastDirTime = g_clock.millis()
+joystickCursor = nil
+joystickTargetIndex = 0
+joystickPokeIndex = 1  -- currently selected pokemon slot (1-6)
 
 function init()
   g_ui.importStyle('styles/countwindow')
@@ -26,8 +29,19 @@ function init()
   connect(g_game, {
     onGameStart = onGameStart,
     onGameEnd = onGameEnd,
-    onLoginAdvice = onLoginAdvice,
+    onLoginAdvice = onLoginAdvice
   }, true)
+
+  if g_joysticks then
+    connect(g_joysticks, {
+      onJoystickDir = onJoystickDir,
+      onJoystickMouse = onJoystickMouse,
+      onJoystickButton = onJoystickButton,
+      onJoystickTargetCycle = onJoystickTargetCycle,
+      onJoystickDpad = onJoystickDpad,
+      onJoystickSelect = onJoystickSelect
+    })
+  end
 
   -- Call load AFTER game window has been created and 
   -- resized to a stable state, otherwise the saved 
@@ -331,6 +345,184 @@ function changeWalkDir(dir, pop)
         smartWalkDir = SouthEast
         break
       end
+    end
+  end
+end
+
+function onJoystickDir(dir)
+  if not g_game.isOnline() then return end
+  if dir >= 0 and dir <= 3 then
+    smartWalk(dir)
+  elseif dir == -1 then
+    -- cancel walk? Or do nothing since walk is discrete in tibia
+    g_game.cancelWalk()
+  end
+end
+
+function onJoystickButton(moveId)
+  if not g_game.isOnline() then return end
+  -- moveId maps to m1, m2, m3... (spell/attack moves)
+  -- Uses the same system as the pokemonmoves spell bar
+  g_game.talk('m' .. moveId)
+end
+
+function onJoystickTargetCycle()
+  if not g_game.isOnline() then return end
+
+  -- Get all creatures from the battle panel
+  local battlePanel = modules.game_battle.battlePanel
+  if not battlePanel then return end
+
+  local childCount = battlePanel:getChildCount()
+  if childCount == 0 then return end
+
+  -- Collect visible monsters/wild pokemons (skip local player, other players and NPCs)
+  local targets = {}
+  for i = 1, childCount do
+    local child = battlePanel:getChildByIndex(i)
+    if child and child:isVisible() and child.creature then
+      local creature = child.creature
+      if not creature:isLocalPlayer() and not creature:isPlayer() and not creature:isNpc() then
+        table.insert(targets, creature)
+      end
+    end
+  end
+
+  if #targets == 0 then return end
+
+  -- Determine the index to start from using our persistent joystickTargetIndex
+  local startIndex = joystickTargetIndex or 0
+
+  -- If there is a real active target, sync our index with it
+  local currentTarget = g_game.getAttackingCreature()
+  if currentTarget then
+    for i, creature in ipairs(targets) do
+      if creature:getId() == currentTarget:getId() then
+        startIndex = i
+        break
+      end
+    end
+  end
+
+  -- Wrap/clamp startIndex if out of bounds
+  if startIndex > #targets or startIndex < 1 then
+    startIndex = 0
+  end
+
+  -- Cycle to next target and save persistently
+  local nextIndex = (startIndex % #targets) + 1
+  joystickTargetIndex = nextIndex
+
+  -- Attack!
+  g_game.attack(targets[nextIndex])
+end
+
+function onJoystickSelect()
+  if not g_game.isOnline() then return end
+  local pokeballbar = modules.game_pokeballbar
+  if pokeballbar then
+    pokeballbar.toggleBarMode()
+  end
+end
+
+function onJoystickDpad(dir, hasLB)
+  if not g_game.isOnline() then return end
+
+  -- If LB/L1 modifier is held, control Pokeball Bar instead of Pokemon Bar!
+  if hasLB then
+    local pokeballbar = modules.game_pokeballbar
+    if pokeballbar then
+      if dir == 3 then
+        -- D-pad Left: previous pokeball
+        pokeballbar.selectPrevPokeball()
+      elseif dir == 1 then
+        -- D-pad Right: next pokeball
+        pokeballbar.selectNextPokeball()
+      elseif dir == 0 then
+        -- D-pad Up: enter crosshair target capture mode using the selected pokeball
+        pokeballbar.onJoystickCapture()
+      end
+      return
+    end
+  end
+
+  -- Access the pokemonbar module data
+  local pokebar = modules.game_pokemonbar
+  if not pokebar then return end
+
+  -- Get the pokebar window and count available pokemon
+  local pkb = pokebar.pkb
+  if not pkb or not pkb:isVisible() then return end
+
+  local mainWindow = pkb:recursiveGetChildById('mainWindow')
+  if not mainWindow then return end
+
+  -- Count available pokemon slots
+  local pokeCount = 0
+  for i = 1, 6 do
+    if pkb:recursiveGetChildById('poke' .. i) then
+      pokeCount = i
+    else
+      break
+    end
+  end
+
+  if pokeCount == 0 then return end
+
+  -- Clamp current index
+  if joystickPokeIndex < 1 then joystickPokeIndex = 1 end
+  if joystickPokeIndex > pokeCount then joystickPokeIndex = pokeCount end
+
+  if dir == 3 then
+    -- D-pad Left: previous pokemon
+    joystickPokeIndex = joystickPokeIndex - 1
+    if joystickPokeIndex < 1 then joystickPokeIndex = pokeCount end
+    highlightPokeSlot(pkb, joystickPokeIndex, pokeCount)
+  elseif dir == 1 then
+    -- D-pad Right: next pokemon
+    joystickPokeIndex = joystickPokeIndex + 1
+    if joystickPokeIndex > pokeCount then joystickPokeIndex = 1 end
+    highlightPokeSlot(pkb, joystickPokeIndex, pokeCount)
+  elseif dir == 0 then
+    -- D-pad Up: summon selected pokemon
+    g_game.talk('!p ' .. joystickPokeIndex)
+  elseif dir == 2 then
+    -- D-pad Down: desummon (recall pokemon)
+    g_game.talk('!p back')
+  end
+end
+
+function highlightPokeSlot(pkb, selectedIndex, pokeCount)
+  -- Remove highlight from all slots, add to selected
+  for i = 1, pokeCount do
+    local pokeWidget = pkb:recursiveGetChildById('poke' .. i)
+    if pokeWidget then
+      if i == selectedIndex then
+        pokeWidget:setBorderColor('#ffff00ff')
+        pokeWidget:setBorderWidth(2)
+      else
+        pokeWidget:setBorderWidth(0)
+      end
+    end
+  end
+end
+
+function onJoystickMouse(x, y, active)
+  if active then
+    if not joystickCursor then
+      joystickCursor = g_ui.createWidget('UIWidget', rootWidget)
+      joystickCursor:setId('joystickCursor')
+      joystickCursor:setSize({width = 16, height = 16})
+      joystickCursor:setBackgroundColor('#ffff00ff')
+      joystickCursor:setPhantom(true)
+      joystickCursor:raise()
+    end
+    joystickCursor:setPosition({x = x - 3, y = y - 3})
+    joystickCursor:show()
+    joystickCursor:raise()
+  else
+    if joystickCursor then
+      joystickCursor:hide()
     end
   end
 end
@@ -743,6 +935,34 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
   end
 
   return false
+end
+
+function interactWithFront()
+  local player = g_game.getLocalPlayer()
+  if not player then return end
+
+  local pos = player:getPosition()
+  local dir = player:getDirection()
+  if dir == North then pos.y = pos.y - 1
+  elseif dir == East then pos.x = pos.x + 1
+  elseif dir == South then pos.y = pos.y + 1
+  elseif dir == West then pos.x = pos.x - 1
+  elseif dir == NorthEast then pos.x = pos.x + 1 pos.y = pos.y - 1
+  elseif dir == SouthEast then pos.x = pos.x + 1 pos.y = pos.y + 1
+  elseif dir == SouthWest then pos.x = pos.x - 1 pos.y = pos.y + 1
+  elseif dir == NorthWest then pos.x = pos.x - 1 pos.y = pos.y - 1
+  end
+
+  local tile = g_map.getTile(pos)
+  if not tile then return end
+
+  local lookThing = tile:getTopLookThing()
+  local useThing = tile:getTopUseThing()
+  local creatureThing = tile:getTopCreature()
+
+  if lookThing or useThing or creatureThing then
+    createThingMenu(g_window.getMousePosition(), lookThing, useThing, creatureThing)
+  end
 end
 
 function moveStackableItem(item, toPos)

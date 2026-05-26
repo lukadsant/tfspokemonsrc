@@ -132,6 +132,10 @@ set(framework_SOURCES ${framework_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/platform/unixplatform.cpp
     ${CMAKE_CURRENT_LIST_DIR}/platform/platform.cpp
     ${CMAKE_CURRENT_LIST_DIR}/platform/platform.h
+
+    # joystick (always compiled, SDL2 usage is guarded by #ifdef WITH_JOYSTICK)
+    ${CMAKE_CURRENT_LIST_DIR}/platform/joystickmanager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/platform/joystickmanager.h
 )
 
 set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/luafunctions.cpp
@@ -276,7 +280,7 @@ else()
         set(SYSTEM_LIBRARIES "")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-        set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -rdynamic -Wl,-rpath,./libs") # rdynamic is needed by backtrace.h used in crash handler
+        set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -no-pie -rdynamic -Wl,-rpath,./libs") # rdynamic is needed by backtrace.h used in crash handler
         set(SYSTEM_LIBRARIES dl rt)
     endif()
 endif()
@@ -551,3 +555,19 @@ endif()
 include_directories(${framework_INCLUDE_DIRS})
 add_definitions(${framework_DEFINITIONS})
 
+# optional joystick support via SDL2
+option(WITH_JOYSTICK "Enable joystick/gamepad support via SDL2" ON)
+if(WITH_JOYSTICK)
+    find_package(SDL2 QUIET)
+    if(SDL2_FOUND)
+        set(framework_INCLUDE_DIRS ${framework_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS})
+        set(framework_LIBRARIES ${framework_LIBRARIES} ${SDL2_LIBRARIES})
+        add_definitions(-DWITH_JOYSTICK)
+        include_directories(${SDL2_INCLUDE_DIRS})
+        message(STATUS "Joystick support: ON (SDL2 found)")
+    else()
+        message(STATUS "Joystick support: OFF (SDL2 not found, install libsdl2-dev)")
+    endif()
+else()
+    message(STATUS "Joystick support: OFF (disabled)")
+endif()

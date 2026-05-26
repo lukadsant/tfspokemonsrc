@@ -25,6 +25,7 @@
 #include <framework/core/clock.h>
 #include <framework/core/eventdispatcher.h>
 #include <framework/platform/platformwindow.h>
+#include <framework/platform/joystickmanager.h>
 #include <framework/ui/uimanager.h>
 #include <framework/graphics/graphics.h>
 #include <framework/graphics/particlemanager.h>
@@ -64,6 +65,8 @@ void GraphicalApplication::init(std::vector<std::string>& args)
     // initialize sound
     g_sounds.init();
 #endif
+
+    g_joysticks.init();
 }
 
 void GraphicalApplication::deinit()
@@ -89,6 +92,8 @@ void GraphicalApplication::terminate()
     // terminate sound
     g_sounds.terminate();
 #endif
+
+    g_joysticks.terminate();
 
     g_mouse.terminate();
 
@@ -208,6 +213,8 @@ void GraphicalApplication::poll()
 #ifdef FW_SOUND
     g_sounds.poll();
 #endif
+
+    g_joysticks.poll();
 
     // poll window input events
     g_window.poll();

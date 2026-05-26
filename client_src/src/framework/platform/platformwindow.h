@@ -52,6 +52,8 @@ public:
     virtual void showMouse() = 0;
     virtual void hideMouse() = 0;
     virtual void displayFatalError(const std::string& message) { }
+    virtual void warpMouse(const Point& pos) { }
+    virtual void simulateMouseButton(const Point& pos, int button, bool pressed) { }
 
     int loadMouseCursor(const std::string& file, const Point& hotSpot);
     virtual void setMouseCursor(int cursorId) = 0;

@@ -44,10 +44,10 @@
 
 	</script>
 	<moves>
-		<move name="vine whip" interval="9000"/>
-		<move name="acid" interval="3000" isTarget="1"/>
-		<move name="razor leaf" interval="5000" isTarget="1"/>
-		<move name="poison powder" interval="10000"/>
+		<move name="vine whip" interval="9000" level="1"/>
+		<move name="acid" interval="3000" isTarget="1" level="23"/>
+		<move name="razor leaf" interval="5000" isTarget="1" level="39"/>
+		<move name="poison powder" interval="10000" level="15"/>
 
 	</moves>
 	<evolutions>
@@ -55,7 +55,11 @@
 
 	</evolutions>
 	<attacks>
-		<attack name="sleep powder" interval="7000" chance="90"/>
+		<attack name="melee" interval="2000" min="-50" max="-50" />
+		<attack name="vine whip" interval="9000" chance="40" level="1"/>
+		<attack name="poison powder" interval="10000" chance="40" level="15"/>
+		<attack name="acid" interval="3000" chance="40" target="1" level="23"/>
+		<attack name="razor leaf" interval="5000" chance="40" target="1" level="39"/>
 
 	</attacks>
 	<defenses armor="0" defense="35" >

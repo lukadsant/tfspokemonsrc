@@ -54,6 +54,7 @@ public:
     int getBackgroundPaneMaxFps() { return m_backgroundFrameCounter.getMaxFps(); }
 
     bool isOnInputEvent() { return m_onInputEvent; }
+    void setOnInputEvent(bool v) { m_onInputEvent = v; }
 
 protected:
     void resize(const Size& size);

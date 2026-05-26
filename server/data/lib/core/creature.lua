@@ -31,6 +31,7 @@ end
 function Creature:addSummon(monster) --pota tfs 1.3
 	local summon = Monster(monster)
 	if not summon then
+		print("[Creature:addSummon] Error: Could not cast monster to Monster object.")
 		return false
 	end
 
@@ -38,7 +39,10 @@ function Creature:addSummon(monster) --pota tfs 1.3
 	summon:setFollowCreature(nil)
 	summon:setDropLoot(false)
 --	summon:setSkillLoss(false)
-	summon:setMaster(self)
+	local result = summon:setMaster(self)
+	if not result then
+		return false
+	end
 
 	return true
 end

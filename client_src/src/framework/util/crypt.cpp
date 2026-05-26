@@ -326,36 +326,58 @@ void Crypt::rsaGenerateKey(int bits, int e)
 
 void Crypt::rsaSetPublicKey(const std::string& n, const std::string& e)
 {
-    BN_dec2bn(&m_rsa->n, n.c_str());
-    BN_dec2bn(&m_rsa->e, e.c_str());
-
-    // clear rsa cache
-    if(m_rsa->_method_mod_n) { BN_MONT_CTX_free(m_rsa->_method_mod_n); m_rsa->_method_mod_n = NULL; }
+    BIGNUM *bn_n = NULL, *bn_e = NULL;
+    BN_dec2bn(&bn_n, n.c_str());
+    BN_dec2bn(&bn_e, e.c_str());
+    RSA_set0_key(m_rsa, bn_n, bn_e, NULL);
 }
 
 void Crypt::rsaSetPrivateKey(const std::string& p, const std::string& q, const std::string& d)
 {
-    BN_dec2bn(&m_rsa->p, p.c_str());
-    BN_dec2bn(&m_rsa->q, q.c_str());
-    BN_dec2bn(&m_rsa->d, d.c_str());
+    BIGNUM *bn_p = NULL, *bn_q = NULL, *bn_d = NULL;
+    BN_dec2bn(&bn_p, p.c_str());
+    BN_dec2bn(&bn_q, q.c_str());
+    BN_dec2bn(&bn_d, d.c_str());
 
-    // clear rsa cache
-    if(m_rsa->_method_mod_p) { BN_MONT_CTX_free(m_rsa->_method_mod_p); m_rsa->_method_mod_p = NULL; }
-    if(m_rsa->_method_mod_q) { BN_MONT_CTX_free(m_rsa->_method_mod_q); m_rsa->_method_mod_q = NULL; }
+    // get existing n and e to preserve them
+    const BIGNUM *old_n = NULL, *old_e = NULL;
+    RSA_get0_key(m_rsa, &old_n, &old_e, NULL);
+
+    // set d into key (n and e are already set, passing NULL keeps them)
+    RSA_set0_key(m_rsa, NULL, NULL, bn_d);
+    RSA_set0_factors(m_rsa, bn_p, bn_q);
 }
 
 bool Crypt::rsaCheckKey()
 {
     // only used by server, that sets both public and private
     if(RSA_check_key(m_rsa)) {
+        const BIGNUM *n = NULL, *e = NULL, *d = NULL;
+        const BIGNUM *p = NULL, *q = NULL;
+        RSA_get0_key(m_rsa, &n, &e, &d);
+        RSA_get0_factors(m_rsa, &p, &q);
+
         BN_CTX *ctx = BN_CTX_new();
         BN_CTX_start(ctx);
 
         BIGNUM *r1 = BN_CTX_get(ctx), *r2 = BN_CTX_get(ctx);
-        BN_mod(m_rsa->dmp1, m_rsa->d, r1, ctx);
-        BN_mod(m_rsa->dmq1, m_rsa->d, r2, ctx);
+        BIGNUM *dmp1 = BN_new(), *dmq1 = BN_new(), *iqmp = BN_new();
 
-        BN_mod_inverse(m_rsa->iqmp, m_rsa->q, m_rsa->p, ctx);
+        // dmp1 = d mod (p-1)
+        BN_sub(r1, p, BN_value_one());
+        BN_mod(dmp1, d, r1, ctx);
+
+        // dmq1 = d mod (q-1)
+        BN_sub(r2, q, BN_value_one());
+        BN_mod(dmq1, d, r2, ctx);
+
+        // iqmp = q^-1 mod p
+        BN_mod_inverse(iqmp, q, p, ctx);
+
+        RSA_set0_crt_params(m_rsa, dmp1, dmq1, iqmp);
+
+        BN_CTX_end(ctx);
+        BN_CTX_free(ctx);
         return true;
     }
     else {

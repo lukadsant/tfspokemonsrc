@@ -1,0 +1,37 @@
+PokeballBarWindow < UIWindow
+  id: pokeballBarWindow
+  size: 200 42
+  padding: 3
+  image-source: /images/ui/window
+  image-border: 6
+  phantom: false
+  draggable: true
+
+  UIWidget
+    id: mainPanel
+    anchors.fill: parent
+
+PokeballSlot < UIButton
+  size: 32 32
+  focusable: false
+  phantom: true
+  anchors.left: parent.left
+  anchors.top: parent.top
+
+  UIItem
+    id: itemWidget
+    anchors.fill: parent
+    margin: 2
+    phantom: true
+    virtual: true
+
+  Label
+    id: count
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    text-auto-resize: true
+    font: verdana-11px-rounded
+    color: #ffffff
+    margin-right: 1
+    margin-bottom: -2
+    phantom: true

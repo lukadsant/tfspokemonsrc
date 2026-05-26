@@ -22,3 +22,5 @@ dofile('data/lib/core/summon_interactions.lua')
 dofile('data/lib/core/wild_moods.lua')
 dofile('data/lib/core/nature_behaviors.lua')
 dofile('data/lib/core/npcdialog_lib.lua')
+dofile('data/lib/core/area_levels.lua')
+

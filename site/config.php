@@ -29,13 +29,13 @@
 	// ------------------------ \\
 
 	// phpmyadmin username for OT server: (DONT USE "root" if ur hosting to public.).
-	$config['sqlUser'] = 'root';
+	$config['sqlUser'] = 'pokedash_user';
 
 	// phpmyadmin password for OT server:
-	$config['sqlPassword'] = '';
+	$config['sqlPassword'] = '123456';
 
 	// The database name to connect to. (This is usually same as username).
-	$config['sqlDatabase'] = 'pokedashpota';
+	$config['sqlDatabase'] = 'pokedash_db';
 
 	// Hostname is usually localhost or 127.0.0.1.
 	$config['sqlHost'] = '127.0.0.1';
@@ -320,9 +320,9 @@
 	// Leave on black square in map and player should get teleported to their selected town.
 	// If chars get buggy set this position to a beginner location to force players there.
 	$config['default_pos'] = array(
-		'x' => 5,
-		'y' => 5,
-		'z' => 2,
+		'x' => 718,
+		'y' => 1189,
+		'z' => 6,
 	);
 
 	$config['war_status'] = array(

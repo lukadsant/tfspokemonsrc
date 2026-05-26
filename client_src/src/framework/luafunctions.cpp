@@ -45,6 +45,7 @@
 #ifdef FW_GRAPHICS
 #include <framework/graphics/graphics.h>
 #include <framework/platform/platformwindow.h>
+#include <framework/platform/joystickmanager.h>
 #include <framework/graphics/particlemanager.h>
 #include <framework/graphics/fontmanager.h>
 #include <framework/ui/ui.h>
@@ -260,6 +261,9 @@ void Application::registerLuaFunctions()
     // PlatformWindow
     g_lua.registerSingletonClass("g_window");
     g_lua.bindSingletonFunction("g_window", "move", &PlatformWindow::move, &g_window);
+    
+    g_lua.registerSingletonClass("g_joysticks");
+    g_lua.bindSingletonFunction("g_joysticks", "isInitialized", &JoystickManager::isInitialized, &g_joysticks);
     g_lua.bindSingletonFunction("g_window", "resize", &PlatformWindow::resize, &g_window);
     g_lua.bindSingletonFunction("g_window", "show", &PlatformWindow::show, &g_window);
     g_lua.bindSingletonFunction("g_window", "hide", &PlatformWindow::hide, &g_window);

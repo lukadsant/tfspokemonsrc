@@ -35,6 +35,14 @@ Regioes = {
                 ["Clear"] = 80,
                 ["Cloudy"] = 20
             }
+        },
+        ["Route 1"] = {
+            areas = {
+                {from={x=713,y=1120,z=7}, to={x=730,y=1171,z=7}}
+            },
+            weatherProbabilities = {
+                ["Clear"] = 100
+            }
         }
     }
 }

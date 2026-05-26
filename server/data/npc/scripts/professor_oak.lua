@@ -18,12 +18,63 @@ function onCreatureSay(cid, type, msg)      npcHandler:onCreatureSay(cid, type, 
 function onThink()                          npcHandler:onThink()                        end
 
 local function creatureSayCallback(cid, type, msg)
-	if not npcHandler:isFocused(cid) then
+	local player = Player(cid)
+	if not player or not npcHandler:isFocused(cid) then
 		return false
 	end	
-	if msgcontains(msg, 'bye') or msgcontains(msg, 'no') or msgcontains(msg, 'nao') then
+	if msgcontains(msg, 'bye') or msgcontains(msg, 'no') or msgcontains(msg, 'nao') or msgcontains(msg, 'fechar') then
 		selfSay('Tudo bem, volte se mudar de ideia.', cid)
+		if closeNpcDialog then
+			closeNpcDialog(player)
+		end
 		npcHandler:releaseFocus(cid)
+	elseif player:getStorageValue(storageStarter) <= 0 then
+		if msgcontains(msg, 'pokemon') or msgcontains(msg, 'inicial') or msgcontains(msg, 'starter') then
+			selfSay('Ola, novo treinador! Eu posso te dar o seu primeiro Pokemon. Qual voce prefere: {Charmander}, {Squirtle} ou {Bulbasaur}?', cid)
+			npcHandler.topic[cid] = 10
+			if openNpcDialog then
+				openNpcDialog(player, Npc():getId(), "Qual voce prefere: Charmander, Squirtle ou Bulbasaur?", "Charmander&Squirtle&Bulbasaur&Fechar")
+			end
+		elseif npcHandler.topic[cid] == 10 then
+			local starterName = ""
+			if msgcontains(msg, 'charmander') then
+				starterName = "Charmander"
+			elseif msgcontains(msg, 'squirtle') then
+				starterName = "Squirtle"
+			elseif msgcontains(msg, 'bulbasaur') then
+				starterName = "Bulbasaur"
+			end
+
+			if starterName ~= "" then
+				selfSay('Excelente escolha! Aqui esta o seu ' .. starterName .. '. Cuide bem dele!', cid)
+				
+				local monsterType = MonsterType(starterName)
+				local baseHealth = monsterType:getMaxHealth()
+				local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), 1, 0, 0))
+				local backpack = player:getSlotItem(CONST_SLOT_BACKPACK)
+				local addPokeball = backpack:addItem(26661, 1)
+				
+				if addPokeball then
+					addPokeball:setSpecialAttribute("pokeName", starterName)
+					addPokeball:setSpecialAttribute("pokeLevel", 1)
+					addPokeball:setSpecialAttribute("pokeExperience", 0)
+					addPokeball:setSpecialAttribute("pokeBoost", 0)
+					addPokeball:setSpecialAttribute("pokeMaxHealth", maxHealth)
+					addPokeball:setSpecialAttribute("pokeHealth", maxHealth)
+					addPokeball:setSpecialAttribute("pokeLove", 0)
+					player:setStorageValue(storageStarter, 1)
+				else
+					selfSay('Voce precisa de espaco na mochila para receber seu Pokemon!', cid)
+				end
+				if closeNpcDialog then
+					closeNpcDialog(player)
+				end
+				npcHandler.topic[cid] = 0
+				npcHandler:releaseFocus(cid)
+			else
+				selfSay('Por favor, escolha entre {Charmander}, {Squirtle} ou {Bulbasaur}.', cid)
+			end
+		end
 	elseif (msgcontains(msg, 'quest') or msgcontains(msg, 'mission') or msgcontains(msg, 'help') or msgcontains(msg, 'ajuda')  or msgcontains(msg, 'problema')) then
 		local player = Player(cid)
 		if player:getStorageValue(storageOakRequest) > 0 then
@@ -72,6 +123,9 @@ local function creatureSayCallback(cid, type, msg)
 		if player:getStorageValue(storageCathemAll) <= 0 then
 			selfSay('Gostaria de me ajudar a catalogar todos os pokemons? Para isso preciso que voce capture todos os pokemons nao lendarios.', cid)
 			npcHandler.topic[cid] = 1
+			if openNpcDialog then
+				openNpcDialog(player, Npc():getId(), "Gostaria de me ajudar a catalogar todos os pokemons?", "Sim&Nao&Fechar")
+			end
 		elseif player:getStorageValue(storageCathemAll) == 1 then
 			local catchRemainTable = {}
 			for i = 1, 386 do
@@ -96,18 +150,45 @@ local function creatureSayCallback(cid, type, msg)
 			end
 		else
 			selfSay('Voce ja me ajudou antes. Obrigado!', cid)
+			if closeNpcDialog then
+				closeNpcDialog(player)
+			end
 			npcHandler:releaseFocus(cid)			
 		end
 	elseif (msgcontains(msg, 'yes') or msgcontains(msg, 'sim')) and npcHandler.topic[cid] == 1 then
 		local player = Player(cid)
 		selfSay('Muito obrigado! Volte quando tiver capturado todos eles que entao te darei um premio.', cid)
 		player:setStorageValue(storageCathemAll, 1)
+		if closeNpcDialog then
+			closeNpcDialog(player)
+		end
 		npcHandler:releaseFocus(cid)
 	end
 	return true
 end
 
+local function creatureGreetCallback(cid)
+	local player = Player(cid)
+	if not player then return false end
+
+	local msg = "Ola, " .. player:getName() .. ". Meu nome e Professor Oak e pesquiso os pokemons ha anos. Preciso de ajuda para catalogar os Pokemons e resolver um problema."
+	local options = "Mission&Catch"
+
+	if player:getStorageValue(storageStarter) <= 0 then
+		msg = "Ola, novo treinador! Eu posso te dar o seu primeiro Pokemon. Gostaria de escolher um?"
+		options = "Starter&" .. options
+	end
+
+	options = options .. "&Fechar"
+
+	if openNpcDialog then
+		openNpcDialog(player, Npc():getId(), msg, options)
+	end
+
+	npcHandler:addFocus(cid)
+	return true
+end
+
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
-npcHandler:setCallback(CALLBACK_ONTHINK, creatureOnThinkCallback)
-npcHandler:setCallback(CALLBACK_ONRELEASEFOCUS, creatureOnReleaseFocusCallback)
+npcHandler:setCallback(CALLBACK_GREET, creatureGreetCallback)
 npcHandler:addModule(FocusModule:new())

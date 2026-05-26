@@ -1,0 +1,5 @@
+/home/lukadsant/Downloads/pokedashpota1.0_release/poketibia/client_src/build/CMakeFiles/rebuild_cache.dir
+/home/lukadsant/Downloads/pokedashpota1.0_release/poketibia/client_src/build/CMakeFiles/edit_cache.dir
+/home/lukadsant/Downloads/pokedashpota1.0_release/poketibia/client_src/build/src/CMakeFiles/rebuild_cache.dir
+/home/lukadsant/Downloads/pokedashpota1.0_release/poketibia/client_src/build/src/CMakeFiles/otclient.dir
+/home/lukadsant/Downloads/pokedashpota1.0_release/poketibia/client_src/build/src/CMakeFiles/edit_cache.dir

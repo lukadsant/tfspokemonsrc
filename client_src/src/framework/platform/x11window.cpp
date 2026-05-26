@@ -871,6 +871,31 @@ void X11Window::hideMouse()
     XDefineCursor(m_display, m_window, m_cursor);
 }
 
+void X11Window::warpMouse(const Point& pos)
+{
+    // Update internal mouse state and fire input event
+    // This moves the game's visual cursor without relying on XWarpPointer
+    // (which doesn't work reliably on Wayland/XWayland)
+    Point oldPos = m_inputEvent.mousePos;
+    m_inputEvent.reset();
+    m_inputEvent.type = Fw::MouseMoveInputEvent;
+    m_inputEvent.mouseMoved = pos - oldPos;
+    m_inputEvent.mousePos = pos;
+    if(m_onInputEvent)
+        m_onInputEvent(m_inputEvent);
+}
+
+void X11Window::simulateMouseButton(const Point& pos, int button, bool pressed)
+{
+    m_inputEvent.reset();
+    m_inputEvent.type = pressed ? Fw::MousePressInputEvent : Fw::MouseReleaseInputEvent;
+    m_inputEvent.mouseButton = (Fw::MouseButton)button;
+    m_inputEvent.mousePos = pos;
+    m_mouseButtonStates[button] = pressed;
+    if(m_onInputEvent)
+        m_onInputEvent(m_inputEvent);
+}
+
 void X11Window::setMouseCursor(int cursorId)
 {
     if(cursorId >= (int)m_cursors.size() || cursorId < 0)

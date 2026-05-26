@@ -179,10 +179,16 @@ function enableChat()
 
   consoleTextEdit:setVisible(true)
   consoleTextEdit:setText("")
+  consoleTextEdit:focus()
 
   g_keyboard.unbindKeyUp("Space")
   g_keyboard.unbindKeyUp("Enter")
   g_keyboard.unbindKeyUp("Escape")
+  g_keyboard.unbindKeyUp("T")
+  g_keyboard.unbindKeyDown("Space")
+  g_keyboard.unbindKeyDown("Enter")
+  g_keyboard.unbindKeyDown("Escape")
+  g_keyboard.unbindKeyDown("T")
 
   gameInterface.unbindWalkKey("W")
   gameInterface.unbindWalkKey("D")
@@ -193,6 +199,14 @@ function enableChat()
   gameInterface.unbindWalkKey("Q")
   gameInterface.unbindWalkKey("C")
   gameInterface.unbindWalkKey("Z")
+
+  g_keyboard.bindKeyUp("Escape", function()
+    scheduleEvent(function()
+      if not consoleToggleChat:isChecked() then
+        consoleToggleChat:setChecked(true)
+      end
+    end, 100)
+  end)
 
   consoleToggleChat:setTooltip(tr("Disable chat mode, allow to walk using ASDW"))
 end
@@ -207,11 +221,10 @@ function disableChat()
     if consoleToggleChat:isChecked() then
       consoleToggleChat:setChecked(false)
     end
-    enableChat()
+    return true
   end
-  g_keyboard.bindKeyUp("Space", quickFunc)
-  g_keyboard.bindKeyUp("Enter", quickFunc)
-  g_keyboard.bindKeyUp("Escape", quickFunc)
+  g_keyboard.bindKeyDown("T", quickFunc)
+  g_keyboard.bindKeyDown("Space", function() modules.game_interface.interactWithFront() return true end)
 
   gameInterface.bindWalkKey("W", North)
   gameInterface.bindWalkKey("D", East)
@@ -794,11 +807,23 @@ end
 
 function sendCurrentMessage()
   local message = consoleTextEdit:getText()
-  if #message == 0 then return end
+  if #message == 0 then
+    scheduleEvent(function()
+      if not consoleToggleChat:isChecked() then
+        consoleToggleChat:setChecked(true)
+      end
+    end, 100)
+    return
+  end
   consoleTextEdit:clearText()
 
-  -- send message
   sendMessage(message)
+
+  scheduleEvent(function()
+    if not consoleToggleChat:isChecked() then
+      consoleToggleChat:setChecked(true)
+    end
+  end, 50)
 end
 
 function addFilter(filter)
@@ -1408,6 +1433,11 @@ end
 function online()
   defaultTab = addTab(tr('Default'), true)
   serverTab = addTab(tr('Server Log'), false)
+
+  if not consoleToggleChat:isChecked() then
+    consoleToggleChat:setChecked(true)
+    disableChat()
+  end
 
   if g_game.getClientVersion() < 862 then
     g_keyboard.bindKeyDown('Ctrl+R', openPlayerReportRuleViolationWindow)

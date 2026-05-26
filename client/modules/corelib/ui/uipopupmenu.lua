@@ -9,6 +9,8 @@ function UIPopupMenu.create()
   layout:setFitChildren(true)
   menu:setLayout(layout)
   menu.isGameMenu = false
+  menu.options = {}
+  menu.selectedIndex = 0
   return menu
 end
 
@@ -35,9 +37,13 @@ function UIPopupMenu:display(pos)
   rootWidget:addChild(self)
   self:setPosition(pos)
   self:grabMouse()
+  self:grabKeyboard()
   self:focus()
-  --self:grabKeyboard()
   currentMenu = self
+
+  if #self.options > 0 then
+    self:updateSelection(1)
+  end
 end
 
 function UIPopupMenu:onGeometryChange(oldRect, newRect)
@@ -72,6 +78,24 @@ function UIPopupMenu:addOption(optionName, optionCallback, shortcut)
   end
 
   self:setWidth(math.max(self:getWidth(), width))
+  table.insert(self.options, optionWidget)
+end
+
+function UIPopupMenu:updateSelection(index)
+  if #self.options == 0 then return end
+
+  if self.selectedIndex > 0 and self.options[self.selectedIndex] then
+    self.options[self.selectedIndex]:setHovered(false)
+  end
+
+  if index > #self.options then
+    index = 1
+  elseif index < 1 then
+    index = #self.options
+  end
+
+  self.selectedIndex = index
+  self.options[index]:setHovered(true)
 end
 
 function UIPopupMenu:addSeparator()
@@ -87,6 +111,7 @@ function UIPopupMenu:onDestroy()
     currentMenu = nil
   end
   self:ungrabMouse()
+  self:ungrabKeyboard()
 end
 
 function UIPopupMenu:onMousePress(mousePos, mouseButton)
@@ -101,6 +126,17 @@ function UIPopupMenu:onKeyPress(keyCode, keyboardModifiers)
   if keyCode == KeyEscape then
     self:destroy()
     return true
+  elseif keyCode == KeyKeyUp or keyCode == KeyW then
+    self:updateSelection(self.selectedIndex - 1)
+    return true
+  elseif keyCode == KeyKeyDown or keyCode == KeyS then
+    self:updateSelection(self.selectedIndex + 1)
+    return true
+  elseif keyCode == KeyEnter or keyCode == KeySpace then
+    if self.selectedIndex > 0 and self.options[self.selectedIndex] then
+      self.options[self.selectedIndex]:onClick()
+      return true
+    end
   end
   return false
 end

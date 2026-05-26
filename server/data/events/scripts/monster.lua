@@ -303,11 +303,28 @@ local christmasPokes =
 
 function Monster:onSpawn(position, startup, artificial)
     -- print("[DEBUG] Monster:onSpawn triggered for " .. self:getName()) -- DEBUG LOG
+
+	local name = self:getName()
+
+	-- Area-Based Level Limiter
 	if not artificial then
-		local name = self:getName()
+		local region, subregion = getRegionFromPosition(position)
+		if AreaLevelLimits and AreaLevelLimits[subregion] then
+			local limits = AreaLevelLimits[subregion]
+			local currentLevel = self:getLevel()
+			if currentLevel < limits.min or currentLevel > limits.max then
+				local newLevel = math.random(limits.min, limits.max)
+				-- print("[DEBUG] Limiting level for " .. name .. " in " .. subregion .. ": " .. currentLevel .. " -> " .. newLevel)
+				Game.createMonster(name, position, false, false, newLevel, 0, nil, nil, nil, true) -- artificial = true
+				return false -- cancel current spawn
+			end
+		end
+	end
 
-
+	if not artificial then
 	-- Debug: compare XML (MonsterType) defaults vs applied storage
+
+
 		local monsterType = MonsterType(name)
 		if math.random(1, 100) <= shinyChance then
 			if monsterType:hasShiny() > 0 then

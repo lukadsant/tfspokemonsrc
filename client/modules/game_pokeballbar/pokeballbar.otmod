@@ -1,0 +1,12 @@
+Module
+  name: game_pokeballbar
+  description: Pokeball Bar - shows empty pokeballs from inventory
+  author: PokeDash
+  reloadable: true
+  autoload: true
+  autoload-priority: 1000
+  sandboxed: true
+
+  @onLoad: init()
+  @onUnload: terminate()
+  scripts: [ pokeballbar ]

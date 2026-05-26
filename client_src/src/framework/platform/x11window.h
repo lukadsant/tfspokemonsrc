@@ -65,6 +65,8 @@ public:
     void swapBuffers();
     void showMouse();
     void hideMouse();
+    void warpMouse(const Point& pos);
+    void simulateMouseButton(const Point& pos, int button, bool pressed);
 
     void setMouseCursor(int cursorId);
     void restoreMouseCursor();

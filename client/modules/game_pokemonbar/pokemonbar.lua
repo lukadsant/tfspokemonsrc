@@ -1,9 +1,9 @@
 -- bar by Pota
-local pokes = {}
+pokes = {}
 local pokesNumber = 6
 local OPCODE_POKEBAR = 53
 local side = 'horizontal'
-local pkb -- window widget
+pkb = nil -- window widget (non-local for joystick access)
 local pokeBarWindow -- UIWindow
 local hideLevel = false -- hide pokes that can not be used due to level dependence
 

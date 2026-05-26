@@ -133,6 +133,8 @@ storageItemQuestItem = 91017
 storageItemQuestTime = 91018
 storageItemQuestDifficulty = 91019
 
+storageStarter = 91100
+
 slotItems = {38680, 38681, 38682, 2263, 2270, 26820}
 badgesPortraits = {26614, 26609, 26615, 26612, 26613, 26616, 26610, 26611, 38689, 38683, 38685, 38690, 38684, 38688, 38686, 38687}
 badgeContainer = 38680
@@ -2559,7 +2561,6 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 	local name = ball:getSpecialAttribute("pokeName")
 	-- debug: log which ball is being read and which nickname is stored (temporary)
 	if ball and ball.uid then
-		print("doReleaseSummon: using ball uid=", tostring(ball.uid), " pokeName=", tostring(ball:getSpecialAttribute("pokeName")), " pokeNickname=", tostring(ball:getSpecialAttribute("pokeNickname")))
 	end
 	-- mark this ball as last used for a short period so talkactions can find the exact instance
 	pcall(function() ball:setSpecialAttribute("lastSummonAt", os.time()) end)
@@ -2629,7 +2630,11 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 		if message then
 			player:say(monster:getName() .. ", I need your help!", TALKTYPE_MONSTER_SAY)
 		end
-		player:addSummon(monster)
+		if not player:addSummon(monster) then
+			print("[doReleaseSummon] Error: player:addSummon failed. Removing monster to prevent wild spawn.")
+			monster:remove()
+			return false
+		end
 		-- Battle Cry
 		local cry = name -- Default fallback
 		local voices = monsterType:getVoices()

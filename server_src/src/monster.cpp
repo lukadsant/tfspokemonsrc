@@ -656,16 +656,23 @@ void Monster::onCreatureLeave(Creature* creature)
 
 bool Monster::searchTarget(TargetSearchType_t searchType /*= TARGETSEARCH_DEFAULT*/)
 {
-	std::list<Creature*> resultList;
+	std::list<Creature*> summonList;
+	std::list<Creature*> otherList;
 	const Position& myPos = getPosition();
 
 	for (Creature* creature : targetList) {
 		if (followCreature != creature && isTarget(creature)) {
 			if (searchType == TARGETSEARCH_RANDOM || canUseAttack(myPos, creature)) {
-				resultList.push_back(creature);
+				if (creature->isSummon() && creature->getMaster() && creature->getMaster()->getPlayer()) {
+					summonList.push_back(creature);
+				} else {
+					otherList.push_back(creature);
+				}
 			}
 		}
 	}
+
+	std::list<Creature*>& resultList = summonList.empty() ? otherList : summonList;
 
 	switch (searchType) {
 		case TARGETSEARCH_NEAREST: {
@@ -1143,15 +1150,26 @@ bool Monster::canUseSpell(const Position& pos, const Position& targetPos,
 void Monster::onThinkTarget(uint32_t interval)
 {
 	if (!isSummon()) {
-		if (mType->info.changeTargetSpeed != 0) {
+		bool forceCheck = false;
+		if (attackedCreature && attackedCreature->getPlayer()) {
+			for (Creature* creature : targetList) {
+				if (creature->isSummon() && creature->getMaster() && creature->getMaster()->getPlayer()) {
+					forceCheck = true;
+					break;
+				}
+			}
+		}
+
+		if (mType->info.changeTargetSpeed != 0 || forceCheck) {
 			bool canChangeTarget = true;
+			uint32_t changeSpeed = mType->info.changeTargetSpeed != 0 ? mType->info.changeTargetSpeed : 2000;
 
 			if (targetChangeCooldown > 0) {
 				targetChangeCooldown -= interval;
 
 				if (targetChangeCooldown <= 0) {
 					targetChangeCooldown = 0;
-					targetChangeTicks = mType->info.changeTargetSpeed;
+					targetChangeTicks = changeSpeed;
 				} else {
 					canChangeTarget = false;
 				}
@@ -1160,11 +1178,12 @@ void Monster::onThinkTarget(uint32_t interval)
 			if (canChangeTarget) {
 				targetChangeTicks += interval;
 
-				if (targetChangeTicks >= mType->info.changeTargetSpeed) {
+				if (targetChangeTicks >= changeSpeed) {
 					targetChangeTicks = 0;
-					targetChangeCooldown = mType->info.changeTargetSpeed;
+					targetChangeCooldown = changeSpeed;
 
-					if (mType->info.changeTargetChance >= uniform_random(1, 100)) {
+					uint32_t chance = mType->info.changeTargetChance != 0 ? mType->info.changeTargetChance : (forceCheck ? 100 : 0);
+					if (chance >= uniform_random(1, 100)) {
 						if (getTargetDistance() <= 1) {
 							searchTarget(TARGETSEARCH_RANDOM);
 						} else {
